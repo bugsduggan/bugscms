@@ -7,6 +7,14 @@ function generate_page($tag) {
 	$page = array();
 
 	switch ($tag) {
+		case 'admin':
+			$page['tag'] = $tag;
+			$page['template'] = 'admin.tpl';
+			if (!is_logged_in()) {
+				$page['template'] = 'error.tpl';
+				$page['error'] = generate_error(403, 'AUTH_REQUIRED');
+			}
+			break;
 		case 'article':
 			$page['tag'] = $tag;
 			$page['template'] = 'article.tpl';
@@ -47,8 +55,9 @@ function generate_navbar() {
 
 	$navbar['default'] = array('link' => 'index.php', 'text' => $config['site_name']);
 	$navbar['item'] = array(array('active' => 'true', 'link' => 'index.php', 'text' => 'home'));
-	$navbar['login_action'] = 'login';
-	$navbar['logout_action'] = 'logout';
+	$navbar['admin_link'] = 'index.php?page=admin';
+	$navbar['login_link'] = 'index.php?action=login';
+	$navbar['logout_link'] = 'index.php?action=logout';
 
 	return $navbar;
 }

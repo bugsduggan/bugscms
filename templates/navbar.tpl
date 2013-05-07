@@ -19,9 +19,10 @@
         </ul>
 				<ul class="nav pull-right">
 				{if $show_admin_buttons}
-					<li><a href="index.php?action={$page.navbar.logout_action}">Logout</a></li>
+					<li><a href="{$page.navbar.admin_link}">Admin</a></li>
+					<li><a href="{$page.navbar.logout_link}">Logout</a></li>
 				{else}
-				<form class="navbar-form" method="post" action="index.php?action={$page.navbar.login_action}">
+				<form class="navbar-form" method="post" action="{$page.navbar.login_link}">
 					<input type="text" class="span2 search-query" id="username" name="username" placeholder="Username">
 					<input type="password" class="span2 search-query" id="password" name="password" placeholder="Password">
 					<button type="submit" class="btn btn-primary">Login</button>

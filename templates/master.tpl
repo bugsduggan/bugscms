@@ -37,7 +37,11 @@
 			<div class="row">
 			<div class="column span3">
 			<p class="lead">User debug</p>
+			{if isset($page.user)}
 			<p class="muted">$uid = '{$page.user.uid}'</p>
+			{else}
+			<p class="muted">not logged in</p>
+			{/if}
 			{block name=user_debug}{/block}
 			</div>
 			<div class="column span3">
