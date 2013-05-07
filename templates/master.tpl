@@ -61,6 +61,7 @@
 			{if $debug}
 			<hr>
 			<p class="muted">$page_tag = '{$page.tag}'</p>
+			<p class="muted">$template = '{$page.template}'</p>
 			{block name=debug}{/block}
 			{/if}
 
