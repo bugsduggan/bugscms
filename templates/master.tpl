@@ -1,8 +1,10 @@
+{config_load $smarty.const.CONFIG}
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="utf-8">
-    <title>Bootstrap, from Twitter</title>
+    <title>{#site_name#} :: {$page_title|default : 'Blank page'}</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="">
     <meta name="author" content="">
@@ -28,7 +30,7 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="brand" href="#">Project name</a>
+          <a class="brand" href="#">{#site_name#}</a>
           <div class="nav-collapse collapse">
             <ul class="nav">
               <li class="active"><a href="#">Home</a></li>
@@ -42,8 +44,19 @@
 
     <div class="container">
 
-      <h1>Bootstrap starter template</h1>
-      <p>Use this document as a way to quick start any new project.<br> All you get is this message and a barebones HTML document.</p>
+			{block name=page_header}
+			<div class="page-header">
+				<h1>{lorem_ipsum style=single count=2}</h1>
+			</div>
+			{/block}
+
+			{block name=sub_header}
+			<p class="lead">{lorem_ipsum style=single lorem=false}</p>
+			{/block}
+
+			{block name=content}
+			{lorem_ipsum style=paragraph lorem=true}
+			{/block}
 
     </div> <!-- /container -->
 
