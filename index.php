@@ -74,6 +74,7 @@ if ($page == 'home') {
  		'link_text' => $row['link_text']
  	);
 
+	$news_data = array();
 	if ($top['id'] && $left['id'] && $center['id'] && $right['id']) {
 		$news_data = array(
 			'top' => $top,
