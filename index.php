@@ -67,6 +67,12 @@ switch($action_tag) {
 	case 'logout':
 		logout();
 		break;
+	case 'create_page':
+		create_page();
+		break;
+	case 'store_page':
+		store_page();
+		break;
 }
 
 /*

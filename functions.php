@@ -35,10 +35,11 @@ function generate_page($tag) {
 		case 'page_edit':
 			$page['tag'] = $tag;
 			$page['template'] = 'edit_page.tpl';
-			$page['form_action'] = 'index.php?action=store_page';
 			if (isset($_GET['aid'])) {
 			 	if($_GET['aid'] <= get_latest_aid()) {
 					$page['article'] = get_article($_GET['aid']);
+					$page['form_action'] = 'index.php?action=store_page';
+					$page['form_verb'] = 'update';
 				} else {
 					$page['template'] = 'error.tpl';
 					$page['error'] = generate_error(404, 'PAGE_NOT_FOUND');
@@ -46,6 +47,8 @@ function generate_page($tag) {
 			} else {
 				$page['article'] = array();
 				$page['article']['aid'] = get_latest_aid() + 1;
+				$page['form_action'] = 'index.php?action=create_page';
+				$page['form_verb'] = 'create';
 			}
 			break;
 		case 'error':
@@ -187,6 +190,36 @@ function get_latest_aid() {
 
 	$db->close();
 	return $result;
+}
+
+function create_page() {
+	global $config;
+	$db = new SQLite3($config['db_name']);
+
+	$aid = $_POST['aid'];
+	$title = SQLite3::escapeString($_POST['title']);
+	$subtitle = SQLite3::escapeString($_POST['subtitle']);
+	$body = SQLite3::escapeString($_POST['body']);
+
+	$db->exec("INSERT INTO articles VALUES (".$aid.",'".$title."','".$subtitle."','".$body."')");
+
+	$db->close();
+	header('Location:index.php?page=article&aid='.$aid);
+}
+
+function store_page() {
+	global $config;
+	$db = new SQLite3($config['db_name']);
+
+	$aid = $_POST['aid'];
+	$title = SQLite3::escapeString($_POST['title']);
+	$subtitle = SQLite3::escapeString($_POST['subtitle']);
+	$body = SQLite3::escapeString($_POST['body']);
+
+	$db->exec("UPDATE articles SET title='".$title."',subtitle='".$subtitle."',body='".$body."' WHERE aid=".$aid);
+
+	$db->close();
+	header('Location:index.php?page=article&aid='.$aid);
 }
 
 /*

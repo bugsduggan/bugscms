@@ -10,7 +10,6 @@
 <form class="form-horizontal" method="post" action="{$page.form_action}">
 
 	<input type="hidden" name="aid" value="{$page.article.aid}">
-	<input type="hidden" name="author_id" value="{$page.user.uid}">
 
 	<div class="control-group">
 		<label class="control-label" for="title">Title</label>
@@ -35,7 +34,7 @@
 
 	<div class="form-controls pull-right">
 		<button type="reset" class="btn">Clear</button>
-		<button type="submit" class="btn btn-primary">Submit</button>
+		<button type="submit" class="btn btn-primary">{$page.form_verb|capitalize}</button>
 	</div>
 
 </form>
