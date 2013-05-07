@@ -27,6 +27,37 @@ if ($config['debug'] == 'true') {
 
 $page = (isset($_GET['page']) ? $_GET['page'] : 'home');
 
+if ($page == 'home') {
+	$top_article = array(
+		'headline' => 'Top Headline',
+		'body' => 'Lorem ipsum dolor sit amet',
+		'link' => 'index.php',
+		'link_text' => 'Click me!'
+	);
+	$story1 = array(
+		'headline' => 'Headline 1',
+		'body' => 'Lorem ipsum dolor sit amet',
+		'link' => 'index.php',
+		'link_text' => 'Click me!'
+	);
+	$story2 = array(
+		'headline' => 'Headline 2',
+		'body' => 'Lorem ipsum dolor sit amet',
+		'link' => 'index.php',
+		'link_text' => 'Click me!'
+	);
+	$story3 = array(
+		'headline' => 'Headline 3',
+		'body' => 'Lorem ipsum dolor sit amet',
+		'link' => 'index.php',
+		'link_text' => 'Click me!'
+	);
+	$smarty->assign('top_article', $top_article);
+	$smarty->assign('story1', $story1);
+	$smarty->assign('story2', $story2);
+	$smarty->assign('story3', $story3);
+}
+
 $smarty->assign('page', $page);
 $smarty->display($page.'.tpl');
 

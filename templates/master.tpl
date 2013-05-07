@@ -23,6 +23,8 @@
 		{block name=body}
 		{/block}
 
+		{include "footer.tpl"}
+
     <script src="js/jquery.js"></script>
     <script src="js/bootstrap.js"></script>
 		{block name=javascript}{/block}
