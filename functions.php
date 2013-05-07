@@ -30,7 +30,23 @@ function generate_page($tag) {
 		case 'install':
 			$page['tag'] = $tag;
 			$page['template'] = 'install.tpl';
-			$page['form_action'] = 'install';
+			$page['form_action'] = 'index.php?action=install';
+			break;
+		case 'page_edit':
+			$page['tag'] = $tag;
+			$page['template'] = 'edit_page.tpl';
+			$page['form_action'] = 'index.php?action=store_page';
+			if (isset($_GET['aid'])) {
+			 	if($_GET['aid'] <= get_latest_aid()) {
+					$page['article'] = get_article($_GET['aid']);
+				} else {
+					$page['template'] = 'error.tpl';
+					$page['error'] = generate_error(404, 'PAGE_NOT_FOUND');
+				}
+			} else {
+				$page['article'] = array();
+				$page['article']['aid'] = get_latest_aid() + 1;
+			}
 			break;
 		case 'error':
 			$page['tag'] = $tag;
