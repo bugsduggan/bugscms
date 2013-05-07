@@ -7,9 +7,16 @@ function generate_page($tag) {
 	$page = array();
 
 	switch ($tag) {
+		case 'article':
+			$page['tag'] = $tag;
+			$page['template'] = 'article.tpl';
+			$page['article'] = get_article(
+													(isset($_GET['aid']) ? $_GET['aid'] : get_latest_aid()));
+			break;
 		case 'home':
 			$page['tag'] = $tag;
-			$page['template'] = 'master.tpl';
+			$page['template'] = 'article.tpl';
+			$page['article'] = get_top_story();
 			break;
 		case 'install':
 			$page['tag'] = $tag;
@@ -23,7 +30,7 @@ function generate_page($tag) {
 																			(isset($_GET['errmsg']) ? $_GET['errmsg'] : 'UNKNOWN_ERROR'));
 			break;
 		default:
-			$page['tag'] = 'error';
+			$page['tag'] = $tag;
 			$page['template'] = 'error.tpl';
 			$page['error'] = generate_error(404, 'PAGE_NOT_FOUND');
 			break;
@@ -116,6 +123,34 @@ function get_user() {
 }
 
 /*
+ * article functions
+ */
+function get_top_story() {
+	return get_article(get_latest_aid());
+}
+
+function get_article($aid) {
+	global $config;
+	$db = new SQLite3($config['db_name']);
+
+	if ($aid > get_latest_aid())
+		$aid = get_latest_aid();
+	$result = $db->querySingle("SELECT * FROM articles WHERE aid = ".$aid, true);
+
+	return $result;
+}
+
+function get_latest_aid() {
+	global $config;
+	$db = new SQLite3($config['db_name']);
+
+	$result = $db->querySingle("SELECT aid FROM articles ORDER BY aid DESC LIMIT 1");
+
+	$db->close();
+	return $result;
+}
+
+/*
  * install functions
  */
 function install_db() {
@@ -125,9 +160,22 @@ function install_db() {
 	$password = sha1($_POST['password']);
 	$email = $_POST['email'];
 
+	$gen = new LoremIpsumGenerator();
+
 	$db = new SQLite3($config['db_name']);
 	$db->exec("CREATE TABLE users (uid INTEGER PRIMARY KEY, username TEXT NOT NULL, password TEXT NOT NULL, email TEXT NOT NULL)");
 	$db->exec("INSERT INTO users VALUES(1, '".$username."', '".$password."', '".$email."')");
+	$db->exec("CREATE TABLE articles (aid INTEGER PRIMARY KEY, title TEXT NOT NULL, subtitle TEXT, body TEXT NOT NULL)");
+
+	if ($config['populate_lorum'] == 'true') {
+		for ($i = 1; $i <= 5; $i++) {
+			$raw_title = $gen->getContent(5, 'plain', true)." ".$i;
+			$raw_body = $gen->getContent(50, 'html', true);
+			$title = SQLite3::escapeString($raw_title);
+			$body = SQLite3::escapeString($raw_body);
+			$db->exec("INSERT INTO articles (title, body) VALUES('".$title."', '".$body."')");
+		}
+	}
 
 	$db->close();
 	if (auth($username, $password))
@@ -145,14 +193,14 @@ function lorem_ipsum($params, $smarty) {
 
 	$style=(isset($params['style']) ? $params['style'] : 'paragraph');
 	$count=(isset($params['count']) ? $params['count'] : 5);
-	$lorem=(isset($params['lorem']) ? $params['lorem'] : false);
+	$lorem=(isset($params['lorem']) ? $params['lorem'] : true);
 	$p_size=(isset($params['p_size']) ? $params['p_size'] : 50);
 
 	if ($style == 'single') {
-		$result = $generator->getContent($wordCount=$count, $format='plain', $loremipsum=$lorem);
+		$result = ucfirst($generator->getContent($wordCount=$count, $format='plain', $loremipsum=$lorem));
 	} else {
 		for ($i = 0; $i < $count; $i++) {
-			$result = $result.$generator->getContent($wordCount=$p_size, $format='html', $loremipsum=($i == 0 ? true : false));
+			$result = $result.'<p>'.ucfirst($generator->getContent($wordCount=$p_size, $format='plain', $loremipsum=($i == 0 ? true : false))).'</p>';
 		}	
 	}
 

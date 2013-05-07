@@ -1,12 +1,10 @@
 {extends "master.tpl"}
 
-{block name=page_header}
-<h1>Install BugsCMS</h1>
-{/block}
-
-{block name=sub_header}{/block}
-
 {block name=content}
+<div class="page-header">
+	<h1>Install BugsCMS</h1>
+</div>
+
 <div class="row">
 <div class="column span3"></div>
 <div class="column span4">

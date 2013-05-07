@@ -26,28 +26,34 @@
 
     <div class="container">
 
-			<div class="page-header">
-			{block name=page_header}
-				<h1>{lorem_ipsum style=single count=2}</h1>
-			{/block}
-			</div>
-
-			{block name=sub_header}
-			<p class="lead">{lorem_ipsum style=single lorem=false}</p>
-			{/block}
-
 			{block name=content}
-			{lorem_ipsum style=paragraph lorem=true}
+				<div class="page-header"><h1>{lorem_ipsum count=2 style=single}</h1></div>
+				<p class="lead">{lorem_ipsum count=10 style=single}</p>
+				{lorem_ipsum}
 			{/block}
 
 			{if $debug}
 			<hr>
+			<div class="row">
+			<div class="column span3">
+			<p class="lead">User debug</p>
+			<p class="muted">$uid = '{$page.user.uid}'</p>
+			{block name=user_debug}{/block}
+			</div>
+			<div class="column span3">
+			<p class="lead">General debug</p>
+			{block name=general_debug}{/block}
+			</div>
+			<div class="column span3">
+			<p class="lead">Page debug</p>
 			<p class="muted">$page_tag = '{$page.tag}'</p>
 			<p class="muted">$template = '{$page.template}'</p>
-			{if isset($page.user)}
-			<p class="muted">$uid = '{$page.user.uid}'</p>
-			{/if}
-			{block name=debug}{/block}
+			{block name=page_debug}{/block}
+			</div>
+			<div class="column span3">
+			<p class="lead">Content debug</p>
+			{block name=content_debug}{/block}
+			</div>
 			{/if}
 
     </div> <!-- /container -->
