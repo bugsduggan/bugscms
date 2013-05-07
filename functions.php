@@ -10,6 +10,7 @@ function generate_page($tag) {
 		case 'admin':
 			$page['tag'] = $tag;
 			$page['template'] = 'admin.tpl';
+			$page['sidebar'] = generate_sidebar();
 			if (!is_logged_in()) {
 				$page['template'] = 'error.tpl';
 				$page['error'] = generate_error(403, 'AUTH_REQUIRED');
@@ -47,6 +48,19 @@ function generate_page($tag) {
 	$page['navbar'] = generate_navbar();
 	if (is_logged_in()) $page['user'] = get_user();
 	return $page;
+}
+
+function generate_sidebar() {
+	$page_add = array(
+		'link' => 'index.php?page=page_edit',
+		'text' => 'Add page'
+	);
+
+	$sidebar = array(
+		$page_add
+	);
+
+	return $sidebar;
 }
 
 function generate_navbar() {
