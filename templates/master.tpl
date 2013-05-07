@@ -33,7 +33,7 @@
 				{lorem_ipsum}
 			{/block}
 
-			{if $debug}
+			{if $debug && $admin}
 			<hr>
 			<div class="row">
 

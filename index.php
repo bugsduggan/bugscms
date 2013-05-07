@@ -84,7 +84,7 @@ $smarty->registerPlugin("function", "lorem_ipsum", "lorem_ipsum");
  * display page
  */
 $page = generate_page($page_tag);
-$smarty->assign('show_admin_buttons', is_logged_in() && is_admin());
+$smarty->assign('admin', is_logged_in() && is_admin());
 $smarty->assign('page', $page);
 $smarty->display($page['template']);
 

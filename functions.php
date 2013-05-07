@@ -179,6 +179,9 @@ function get_article($aid) {
 		$aid = get_latest_aid();
 	$result = $db->querySingle("SELECT * FROM articles WHERE aid = ".$aid, true);
 
+	$result['permalink'] = 'index.php?page=article&aid='.$aid;
+	$result['edit_link'] = 'index.php?page=page_edit&aid='.$aid;
+
 	return $result;
 }
 

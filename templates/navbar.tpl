@@ -18,7 +18,7 @@
 					{/foreach}
         </ul>
 				<ul class="nav pull-right">
-				{if $show_admin_buttons}
+				{if $admin}
 					<li><a href="{$page.navbar.admin_link}">Admin</a></li>
 					<li><a href="{$page.navbar.logout_link}">Logout</a></li>
 				{else}

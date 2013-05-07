@@ -5,15 +5,26 @@
 	<h1>{$page.article.title}</h1>
 </div>
 
-{if $page.article.subtitle != 'NULL'}
-<p class="lead">{$page.article.subtitle}</p>
-{/if}
+<div class="row">
+	<div class="column span9">
+		{if $page.article.subtitle != 'NULL'}
+		<p class="lead">{$page.article.subtitle}</p>
+		{/if}
+	</div>
+	
+	<div class="column span1">
+	{if $admin}<p class="muted pull-right"><a href="{$page.article.edit_link}">Edit</a></p>{/if}
+	</div>
+
+	<div class="column span1">
+	<p class="muted pull-right"><a href="{$page.article.permalink}">Permalink</a></p>
+	</div>
+
+	<div class="column span1">
+	</div>
+</div>
 
 {$page.article.body}
-
-<hr>
-
-<p class="muted"><a href="index.php?page=article&aid={$page.article.aid}">Permalink</a></p>
 
 {/block}
 
