@@ -10,6 +10,7 @@
       <div class="nav-collapse collapse">
         <ul class="nav">
 					{if $page == 'home'}<li class="active">{else}<li>{/if}<a href="index.php">Home</a></li>
+					{if $page == 'gigs'}<li class="active">{else}<li>{/if}<a href="index.php?page=gigs">Gigs</a></li>
           {if $page == 'about'}<li class="active">{else}<li>{/if}<a href="index.php?page=about">About</a></li>
           {if $page == 'contact'}<li class="active">{else}<li>{/if}<a href="index.php?page=contact">Contact</a></li>
         </ul>

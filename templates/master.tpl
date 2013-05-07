@@ -11,6 +11,12 @@
 
     <link href="css/bootstrap.css" rel="stylesheet">
     <link href="css/bootstrap-responsive.css" rel="stylesheet">
+		<style type="text/css">
+  		body {
+    		padding-top: 60px;
+    		padding-bottom: 40px;
+  		}  	
+		</style>
 		{block name=css}
 		{/block}
 

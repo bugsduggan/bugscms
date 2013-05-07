@@ -1,12 +1,6 @@
 {extends "master.tpl"}
 
 {block name=css}
-<style type="text/css">
-  body {
-    padding-top: 60px;
-    padding-bottom: 40px;
-  }  	
-</style>
 {/block}
 
 {block name=body}

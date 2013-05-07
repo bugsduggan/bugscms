@@ -28,6 +28,7 @@ if ($config['debug'] == 'true') {
 $page = (isset($_GET['page']) ? $_GET['page'] : 'home');
 
 if ($page == 'home') {
+
 	$top_article = array(
 		'headline' => 'Top Headline',
 		'body' => 'Lorem ipsum dolor sit amet',
@@ -56,6 +57,26 @@ if ($page == 'home') {
 	$smarty->assign('story1', $story1);
 	$smarty->assign('story2', $story2);
 	$smarty->assign('story3', $story3);
+
+} else if ($page == 'gigs') {
+
+	$gig1 = array(
+		'location' => 'foobar',
+		'date' => 'foobar',
+		'buy_link' => 'index.php'
+	);
+	$gig2 = array(
+		'location' => 'foobar',
+		'date' => 'foobar'
+	);
+	$gig3 = array(
+		'location' => 'foobar',
+		'date' => 'foobar',
+		'map_link' => 'index.php'
+	);
+	$gig_data = array($gig1, $gig2, $gig3);
+	$smarty->assign('gig_data', $gig_data);
+
 }
 
 $smarty->assign('page', $page);
