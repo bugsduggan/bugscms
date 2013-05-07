@@ -26,6 +26,10 @@ if ($config['debug'] == 'true') {
 }
 
 $page = (isset($_GET['page']) ? $_GET['page'] : 'home');
+$action = (isset($_GET['action']) ? $_GET['action'] : '');
+
+if (!file_exists(DB_NAME))
+	$page = 'install';
 
 if ($page == 'home') {
 
@@ -60,22 +64,30 @@ if ($page == 'home') {
 
 } else if ($page == 'gigs') {
 
-	$gig1 = array(
-		'location' => 'foobar',
-		'date' => 'foobar',
-		'buy_link' => 'index.php'
-	);
-	$gig2 = array(
-		'location' => 'foobar',
-		'date' => 'foobar'
-	);
-	$gig3 = array(
-		'location' => 'foobar',
-		'date' => 'foobar',
-		'map_link' => 'index.php'
-	);
-	$gig_data = array($gig1, $gig2, $gig3);
-	$smarty->assign('gig_data', $gig_data);
+	$db = new SQLite3(DB_NAME);
+
+	$gig_data = array();
+
+	$query = "SELECT * FROM (SELECT * FROM gigs WHERE date > date('now') ORDER BY date DESC LIMIT 10) ORDER BY date ASC";
+	$result = $db->query($query);
+
+	$row = $result->fetchArray(SQLITE3_ASSOC);
+	while ($row) {
+	  $gig = array(
+	  	'id' => $row['id'],
+  		'location' => $row['location'],
+  		'date' => $row['date'],
+  		'map_link' => $row['map_link'],
+  		'buy_link' => $row['buy_link']
+  	);
+  	array_push($gig_data, $gig);
+		$row = $result->fetchArray(SQLITE3_ASSOC);
+	}
+
+	$db->close();
+
+	if (count($gig_data) > 0)
+		$smarty->assign('gig_data', $gig_data);
 
 } else if ($page == 'about') {
 	
@@ -95,7 +107,26 @@ if ($page == 'home') {
 
 }
 
-$smarty->assign('page', $page);
-$smarty->display($page.'.tpl');
+if ($page == 'install' && $action == 'doinstall') {
+
+	$db = new SQLite3(DB_NAME);
+
+	$statements = array(
+		"CREATE TABLE gigs (id INTEGER PRIMARY KEY, location TEXT NOT NULL, date TEXT NOT NULL, map_link TEXT, buy_link TEXT'')"
+	);
+
+	foreach ($statements as $stm) {
+		$db->exec($stm);
+	}
+
+	$db->close();
+
+	header('Location:index.php');
+} else {
+
+	$smarty->assign('page', $page);
+	$smarty->display($page.'.tpl');
+
+}
 
 ?>
