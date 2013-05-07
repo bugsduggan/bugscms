@@ -25,6 +25,9 @@ if ($config['debug'] == 'true') {
 	$smarty->assign('debug', true);
 }
 
-$smarty->display('master.tpl');
+$page = (isset($_GET['page']) ? $_GET['page'] : 'home');
+
+$smarty->assign('page', $page);
+$smarty->display($page.'.tpl');
 
 ?>
