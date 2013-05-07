@@ -49,8 +49,9 @@ $page_tag = (isset($_GET['page']) ? $_GET['page'] : 'home');
 /*
  * init db
  */
-if (!file_exists($config['db_name']))
+if (!file_exists($config['db_name'])) {
 	$page_tag = 'install';
+}
 
 /*
  * handle actions
@@ -62,6 +63,9 @@ switch($action_tag) {
 		break;
 	case 'login':
 		login();
+		break;
+	case 'logout':
+		logout();
 		break;
 }
 

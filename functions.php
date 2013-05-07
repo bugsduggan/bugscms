@@ -41,6 +41,7 @@ function generate_navbar() {
 	$navbar['default'] = array('link' => 'index.php', 'text' => $config['site_name']);
 	$navbar['item'] = array(array('active' => 'true', 'link' => 'index.php', 'text' => 'home'));
 	$navbar['login_action'] = 'login';
+	$navbar['logout_action'] = 'logout';
 
 	return $navbar;
 }
@@ -79,7 +80,8 @@ function login() {
 }
 
 function logout() {
-
+	session_destroy();
+	header('Location:index.php');
 }
 
 function is_logged_in() {
