@@ -36,7 +36,7 @@ $config = $smarty->getConfigVars();
 /*
  * check for debug
  */
-if ($config['debug']) {
+if ($config['debug'] == 'true') {
 	ini_set('display_errors', 'On');
 	$smarty->assign('debug', true);
 }
