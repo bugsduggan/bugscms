@@ -6,6 +6,8 @@
 require_once('includes/LoremIpsum.class.php');
 require_once('includes/Smarty.class.php');
 
+session_start();
+
 require_once('functions.php');
 
 date_default_timezone_set('UTC');
@@ -53,6 +55,7 @@ $smarty->registerPlugin("function", "lorem_ipsum", "lorem_ipsum");
 /* 
  * display template
  */
+$smarty->assign('show_admin_buttons', is_logged_in() && is_admin());
 $smarty->assign('page', $page);
 $smarty->display($page['template']);
 

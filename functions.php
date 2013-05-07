@@ -1,7 +1,7 @@
 <?php
 
 /*
- * page generator
+ * content generator
  */
 function generate_page($tag) {
 	$page = array();
@@ -25,7 +25,6 @@ function generate_page($tag) {
 	}
 
 	$page['navbar'] = generate_navbar();
-
 	return $page;
 }
 
@@ -48,6 +47,35 @@ function generate_error($errno=-1, $errmsg='UNKNOWN_ERROR', $errlink_text='Home'
 	$error['errlink_text'] = $errlink_text;
 
 	return $error;
+}
+
+/*
+ * user & admin functions
+ */
+function login($username, $password) {
+
+}
+
+function logout() {
+
+}
+
+function is_logged_in() {
+	return (isset($_SESSION['BUGS_UID']) ? true : false);
+}
+
+function is_admin() {
+	return true;
+}
+
+function get_user() {
+	$user = array();
+
+	if (is_logged_in()) {
+
+	}
+
+	return $user;
 }
 
 /*

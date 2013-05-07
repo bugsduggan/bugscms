@@ -17,6 +17,16 @@
 						<a href="{$nav.link}">{$nav.text|capitalize}</a></li>
 					{/foreach}
         </ul>
+				<ul class="nav pull-right">
+				{if $show_admin_buttons}
+				{else}
+				<form class="navbar-form">
+					<input type="text" class="span2 search-query" id="username" name="username" placeholder="Username">
+					<input type="password" class="span2 search-query" id="password" name="password" placeholder="Password">
+					<button type="submit" class="btn btn-primary">Login</button>
+				</form>
+				{/if}
+				</ul>
       </div><!--/.nav-collapse -->
     </div>
   </div>
