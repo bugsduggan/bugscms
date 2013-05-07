@@ -44,11 +44,11 @@
 
     <div class="container">
 
-			{block name=page_header}
 			<div class="page-header">
+			{block name=page_header}
 				<h1>{lorem_ipsum style=single count=2}</h1>
-			</div>
 			{/block}
+			</div>
 
 			{block name=sub_header}
 			<p class="lead">{lorem_ipsum style=single lorem=false}</p>
@@ -61,6 +61,7 @@
 			{if $debug}
 			<hr>
 			<p class="muted">$page_tag = '{$page.tag}'</p>
+			{block name=debug}{/block}
 			{/if}
 
     </div> <!-- /container -->

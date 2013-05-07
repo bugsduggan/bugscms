@@ -14,10 +14,20 @@ function generate_page($tag) {
 		default:
 			$page['tag'] = 'error';
 			$page['template'] = 'error.tpl';
+			$page['error'] = generate_error($errno=404, $msg='PAGE_NOT_FOUND');
 			break;
 	}
 
 	return $page;
+}
+
+function generate_error($errno=-1, $msg='UNKNOWN_ERROR') {
+	$error = array();
+
+	$error['errno'] = $errno;
+	$error['msg'] = $msg;
+
+	return $error;
 }
 
 /*
