@@ -1,4 +1,4 @@
-{config_load $smarty.const.CONFIG}
+{config_load $smarty.const.CONFIG scope=global}
 
 <!DOCTYPE html>
 <html lang="en">

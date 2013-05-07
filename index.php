@@ -45,7 +45,12 @@ if ($config['debug']) {
  * generate page_tag
  */
 $page_tag = (isset($_GET['page']) ? $_GET['page'] : 'home');
-$page = generate_page($page_tag);
+
+/*
+ * init db
+ */
+if (!file_exists($config['db_name']))
+	$page_tag = 'install';
 
 /*
  * plugins
@@ -53,8 +58,9 @@ $page = generate_page($page_tag);
 $smarty->registerPlugin("function", "lorem_ipsum", "lorem_ipsum");
 
 /* 
- * display template
+ * display page
  */
+$page = generate_page($page_tag);
 $smarty->assign('show_admin_buttons', is_logged_in() && is_admin());
 $smarty->assign('page', $page);
 $smarty->display($page['template']);

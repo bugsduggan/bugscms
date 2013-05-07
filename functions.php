@@ -11,6 +11,10 @@ function generate_page($tag) {
 			$page['tag'] = $tag;
 			$page['template'] = 'master.tpl';
 			break;
+		case 'install':
+			$page['tag'] = $tag;
+			$page['template'] = 'install.tpl';
+			break;
 		case 'error':
 			$page['tag'] = $tag;
 			$page['template'] = 'error.tpl';
