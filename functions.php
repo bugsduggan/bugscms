@@ -66,6 +66,16 @@ function login() {
 	$username = $_POST['username'];
 	$password = sha1($_POST['password']);
 
+	if (auth($username, $password))
+		header('Location:index.php?page=admin');
+	else
+		header('Location:index.php');
+}
+
+function auth($username, $password) {
+	global $config;
+	$success = false;
+
 	$db = new SQLite3($config['db_name']);
 	$result = $db->querySingle(
 		"SELECT * FROM users WHERE username = '".$username."' AND password = '".$password."'",
@@ -73,10 +83,11 @@ function login() {
 	if ($result['username'] == $username && $result['password'] == $password) {
 		session_regenerate_id();
 		$_SESSION['BUGS_UID'] = $result['uid'];
+		$success = true;
 	}
 
 	$db->close();
-	header('Location:index.php');
+	return $success;
 }
 
 function logout() {
@@ -119,7 +130,10 @@ function install_db() {
 	$db->exec("INSERT INTO users VALUES(1, '".$username."', '".$password."', '".$email."')");
 
 	$db->close();
-	header('Location:index.php');
+	if (auth($username, $password))
+		header('Location:index.php?page=admin');
+	else
+		header('Location:index.php');
 }
 
 /*
