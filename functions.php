@@ -32,9 +32,13 @@ function generate_page($tag) {
 			$page['template'] = 'install.tpl';
 			$page['form_action'] = 'index.php?action=install';
 			break;
+		case 'page_overview':
+			$page['tag'] = $tag;
+			$page['template'] = 'page_overview.tpl';
+			break;
 		case 'page_edit':
 			$page['tag'] = $tag;
-			$page['template'] = 'edit_page.tpl';
+			$page['template'] = 'page_edit.tpl';
 			if (isset($_GET['aid'])) {
 			 	if($_GET['aid'] <= get_latest_aid()) {
 					$page['article'] = get_article($_GET['aid']);
@@ -70,12 +74,18 @@ function generate_page($tag) {
 }
 
 function generate_sidebar() {
+	$page_overview = array(
+		'link' => 'index.php?page=page_overview',
+		'text' => 'Pages'
+	);
+
 	$page_add = array(
 		'link' => 'index.php?page=page_edit',
 		'text' => 'Add page'
 	);
 
 	$sidebar = array(
+		$page_overview,
 		$page_add
 	);
 

@@ -2,7 +2,7 @@
 
 {block name=content}
 <div class="page-header">
-	<h1>Install BugsCMS</h1>
+	<h1>Edit page<small> {$page.article.title|default :''}</small></h1>
 </div>
 
 <div class="row">
