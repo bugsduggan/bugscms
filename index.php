@@ -139,7 +139,7 @@ if ($page == 'home') {
 
 }
 
-if ($page == 'install' && $action == 'doinstall') {
+if ($page == 'install' && $action == 'doinstall' && !file_exists(DB_NAME)) {
 
 	$db = new SQLite3(DB_NAME);
 
