@@ -156,7 +156,13 @@ if ($page == 'install' && $action == 'doinstall' && !file_exists(DB_NAME)) {
 
 	header('Location:index.php');
 
+} else if ($action == 'login') {
+	
+} else if ($action == 'logout') {
+
 } else {
+
+	$smarty->assign('logged_in', isset($_SESSION['BUGS_UID']));
 
 	$smarty->assign('page', $page);
 	$smarty->display($page.'.tpl');

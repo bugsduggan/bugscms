@@ -16,6 +16,15 @@
     		padding-top: 60px;
     		padding-bottom: 40px;
   		}  	
+			.navbar-search {
+				margin-bottom: 4px;
+			}
+			.navbar-search button {
+				margin-bottom: 5px;
+			}
+			.navbar a {
+				margin-top: 4px;
+			}
 		</style>
 		{block name=css}
 		{/block}
