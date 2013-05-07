@@ -35,10 +35,21 @@ function generate_page($tag) {
 		case 'page_overview':
 			$page['tag'] = $tag;
 			$page['template'] = 'page_overview.tpl';
+			$page['sidebar'] = generate_sidebar();
+			if (!is_logged_in()) {
+				$page['template'] = 'error.tpl';
+				$page['error'] = generate_error(403, 'AUTH_REQUIRED');
+			}
+			$page['articles'] = get_articles();
 			break;
 		case 'page_edit':
 			$page['tag'] = $tag;
 			$page['template'] = 'page_edit.tpl';
+			$page['sidebar'] = generate_sidebar();
+			if (!is_logged_in()) {
+				$page['template'] = 'error.tpl';
+				$page['error'] = generate_error(403, 'AUTH_REQUIRED');
+			}
 			if (isset($_GET['aid'])) {
 			 	if($_GET['aid'] <= get_latest_aid()) {
 					$page['article'] = get_article($_GET['aid']);
@@ -189,10 +200,21 @@ function get_article($aid) {
 		$aid = get_latest_aid();
 	$result = $db->querySingle("SELECT * FROM articles WHERE aid = ".$aid, true);
 
-	$result['permalink'] = 'index.php?page=article&aid='.$aid;
 	$result['edit_link'] = 'index.php?page=page_edit&aid='.$aid;
+	$result['del_link'] = 'index.php?action=page_del&aid='.$aid;
+	$result['perm_link'] = 'index.php?page=article&aid='.$aid;
 
 	return $result;
+}
+
+function get_articles() {
+	$articles = array();
+
+	for ($i = 1; $i <= get_latest_aid(); $i++) {
+		array_push($articles, get_article($i));
+	}
+
+	return $articles;
 }
 
 function get_latest_aid() {

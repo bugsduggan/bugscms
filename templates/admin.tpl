@@ -20,6 +20,7 @@
 			<div class="page-header">
 				<h1>Admin dashboard</h1>
 			</div>
+			{block name=admin_content}{/block}
 		</div>
 
 	</div>
