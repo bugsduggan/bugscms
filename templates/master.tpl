@@ -36,28 +36,34 @@
 			{if $debug}
 			<hr>
 			<div class="row">
+
 			<div class="column span3">
-			<p class="lead">User debug</p>
-			{if isset($page.user)}
-			<p class="muted">$uid = '{$page.user.uid}'</p>
-			{else}
-			<p class="muted">not logged in</p>
-			{/if}
-			{block name=user_debug}{/block}
+				<p class="lead">Page debug</p>
+				<p class="muted">$page_tag = '{$page.tag}'</p>
+				<p class="muted">$template = '{$page.template}'</p>
+				{block name=page_debug}{/block}
 			</div>
+
 			<div class="column span3">
-			<p class="lead">General debug</p>
-			{block name=general_debug}{/block}
+				<p class="lead">User debug</p>
+				{if isset($page.user)}
+				<p class="muted">$uid = '{$page.user.uid}'</p>
+				{else}
+				<p class="muted">not logged in</p>
+				{/if}
+				{block name=user_debug}{/block}
 			</div>
+
 			<div class="column span3">
-			<p class="lead">Page debug</p>
-			<p class="muted">$page_tag = '{$page.tag}'</p>
-			<p class="muted">$template = '{$page.template}'</p>
-			{block name=page_debug}{/block}
+				<p class="lead">Content debug</p>
+				{block name=content_debug}{/block}
 			</div>
+
 			<div class="column span3">
-			<p class="lead">Content debug</p>
-			{block name=content_debug}{/block}
+				<p class="lead">General debug</p>
+				{block name=general_debug}{/block}
+			</div>
+
 			</div>
 			{/if}
 
