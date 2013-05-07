@@ -28,8 +28,11 @@ if ($config['debug'] == 'true') {
 $page = (isset($_GET['page']) ? $_GET['page'] : 'home');
 $action = (isset($_GET['action']) ? $_GET['action'] : '');
 
-if (!file_exists(DB_NAME))
+if (!file_exists(DB_NAME)) {
 	$page = 'install';
+}
+
+
 
 if ($page == 'home') {
 
@@ -123,8 +126,16 @@ if ($page == 'home') {
 	$query = "SELECT * FROM news WHERE status = ".$config['status_about'];
 	$result = $db->querySingle($query, true);
 
-	if ($result)
-		$smarty->assign('about', $result['body']);
+	if ($result) {
+		$about = array(
+			'id' => $result['id'],
+			'title' => $result['title'],
+			'body' => $result['body'],
+			'link' => $result['link'],
+			'link_text' => $result['link_text']
+		);
+		$smarty->assign('about', $about);
+	}
 
 }
 
@@ -144,6 +155,7 @@ if ($page == 'install' && $action == 'doinstall') {
 	$db->close();
 
 	header('Location:index.php');
+
 } else {
 
 	$smarty->assign('page', $page);

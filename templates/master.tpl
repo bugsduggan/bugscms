@@ -4,7 +4,7 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
-    <title>{#site_name#} :: {$page_title|default:'Blank page'}</title>
+    <title>{#site_name#} :: {$page|capitalize|default:'Blank page'}</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="">
     <meta name="author" content="">
