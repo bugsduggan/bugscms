@@ -17,7 +17,7 @@
 	</div>
 
 	<div class="column span1">
-	<p class="muted pull-right"><a href="{$page.article.permalink}">Permalink</a></p>
+	<p class="muted pull-right"><a href="{$page.article.perm_link}">Permalink</a></p>
 	</div>
 
 	<div class="column span1">
