@@ -33,34 +33,60 @@ if (!file_exists(DB_NAME))
 
 if ($page == 'home') {
 
-	$top_article = array(
-		'headline' => 'Top Headline',
-		'body' => 'Lorem ipsum dolor sit amet',
-		'link' => 'index.php',
-		'link_text' => 'Click me!'
-	);
-	$story1 = array(
-		'headline' => 'Headline 1',
-		'body' => 'Lorem ipsum dolor sit amet',
-		'link' => 'index.php',
-		'link_text' => 'Click me!'
-	);
-	$story2 = array(
-		'headline' => 'Headline 2',
-		'body' => 'Lorem ipsum dolor sit amet',
-		'link' => 'index.php',
-		'link_text' => 'Click me!'
-	);
-	$story3 = array(
-		'headline' => 'Headline 3',
-		'body' => 'Lorem ipsum dolor sit amet',
-		'link' => 'index.php',
-		'link_text' => 'Click me!'
-	);
-	$smarty->assign('top_article', $top_article);
-	$smarty->assign('story1', $story1);
-	$smarty->assign('story2', $story2);
-	$smarty->assign('story3', $story3);
+	$db = new SQLite3(DB_NAME);
+
+	$query = "SELECT * FROM news WHERE status = 1 ORDER BY id DESC LIMIT 4";
+	$result = $db->query($query);
+
+	$row = $result->fetchArray(SQLITE3_ASSOC);
+  $top = array(
+  	'id' => $row['id'],
+ 		'title' => $row['title'],
+ 		'body' => $row['body'],
+ 		'link' => $row['link'],
+ 		'link_text' => $row['link_text']
+ 	);
+
+	$row = $result->fetchArray(SQLITE3_ASSOC);
+  $left = array(
+  	'id' => $row['id'],
+ 		'title' => $row['title'],
+ 		'body' => $row['body'],
+ 		'link' => $row['link'],
+ 		'link_text' => $row['link_text']
+ 	);
+
+	$row = $result->fetchArray(SQLITE3_ASSOC);
+  $center = array(
+  	'id' => $row['id'],
+ 		'title' => $row['title'],
+ 		'body' => $row['body'],
+ 		'link' => $row['link'],
+ 		'link_text' => $row['link_text']
+ 	);
+
+	$row = $result->fetchArray(SQLITE3_ASSOC);
+  $right = array(
+  	'id' => $row['id'],
+ 		'title' => $row['title'],
+ 		'body' => $row['body'],
+ 		'link' => $row['link'],
+ 		'link_text' => $row['link_text']
+ 	);
+
+	if ($top['id'] && $left['id'] && $center['id'] && $right['id']) {
+		$news_data = array(
+			'top' => $top,
+			'left' => $left,
+			'center' => $center,
+			'right' => $right
+		);
+	}
+
+	$db->close();
+
+	if (count($news_data) == 4)
+		$smarty->assign('news_data', $news_data);
 
 } else if ($page == 'gigs') {
 
@@ -112,6 +138,7 @@ if ($page == 'install' && $action == 'doinstall') {
 	$db = new SQLite3(DB_NAME);
 
 	$statements = array(
+		"CREATE TABLE news (id INTEGER PRIMARY KEY, title TEXT NOT NULL, body TEXT NOT NULL, link TEXT NOT NULL, link_text TEXT NOT NULL, status INTEGER NOT NULL)",
 		"CREATE TABLE gigs (id INTEGER PRIMARY KEY, location TEXT NOT NULL, date TEXT NOT NULL, map_link TEXT, buy_link TEXT'')"
 	);
 
