@@ -6,31 +6,35 @@
 {block name=body}
 <div class="container">
 
+	{if isset($news_data)}
   <!-- Main hero unit for a primary marketing message or call to action -->
   <div class="hero-unit">
-    <h1>{$top_article.headline}</h1>
-		<p>{$top_article.body}</h1>
-    <p><a href="{$top_article.link}" class="btn btn-primary btn-large">{$top_article.link_text}</a></p>
+    <h1>{$news_data.top.title}</h1>
+		<p>{$news_data.top.body}</h1>
+    <p><a href="{$news_data.top.link}" class="btn btn-primary btn-large">{$news_data.top.link_text}</a></p>
   </div>
 
   <!-- Example row of columns -->
   <div class="row">
     <div class="span4">
-      <h2>{$story1.headline}</h2>
-      <p>{$story1.body}</p>
-      <p><a class="btn" href="{$story1.link}">{$story1.link_text}</a></p>
+      <h2>{$news_data.left.title}</h2>
+      <p>{$news_data.left.body}</p>
+      <p><a class="btn" href="{$news_data.left.link}">{$news_data.left.link_text}</a></p>
     </div>
     <div class="span4">
-      <h2>{$story2.headline}</h2>
-      <p>{$story2.body}</p>
-      <p><a class="btn" href="{$story2.link}">{$story2.link_text}</a></p>
+      <h2>{$news_data.center.title}</h2>
+      <p>{$news_data.center.body}</p>
+      <p><a class="btn" href="{$news_data.center.link}">{$news_data.center.link_text}</a></p>
     </div>
     <div class="span4">
-      <h2>{$story2.headline}</h2>
-      <p>{$story2.body}</p>
-      <p><a class="btn" href="{$story2.link}">{$story2.link_text}</a></p>
+      <h2>{$news_data.right.title}</h2>
+      <p>{$news_data.right.body}</p>
+      <p><a class="btn" href="{$news_data.right.link}">{$news_data.right.link_text}</a></p>
     </div>
   </div>
+	{else}
+	<p class="lead">No news to display</p>	
+	{/if}
 
   <hr>
 
