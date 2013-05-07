@@ -11,21 +11,29 @@ function generate_page($tag) {
 			$page['tag'] = $tag;
 			$page['template'] = 'master.tpl';
 			break;
+		case 'error':
+			$page['tag'] = $tag;
+			$page['template'] = 'error.tpl';
+			$page['error'] = generate_error((isset($_GET['errno']) ? $_GET['errno'] : -1),
+																			(isset($_GET['errmsg']) ? $_GET['errmsg'] : 'UNKNOWN_ERROR'));
+			break;
 		default:
 			$page['tag'] = 'error';
 			$page['template'] = 'error.tpl';
-			$page['error'] = generate_error($errno=404, $msg='PAGE_NOT_FOUND');
+			$page['error'] = generate_error(404, 'PAGE_NOT_FOUND');
 			break;
 	}
 
 	return $page;
 }
 
-function generate_error($errno=-1, $msg='UNKNOWN_ERROR') {
+function generate_error($errno=-1, $errmsg='UNKNOWN_ERROR', $errlink_text='Home', $errlink='index.php') {
 	$error = array();
 
 	$error['errno'] = $errno;
-	$error['msg'] = $msg;
+	$error['errmsg'] = $errmsg;
+	$error['errlink'] = $errlink;
+	$error['errlink_text'] = $errlink_text;
 
 	return $error;
 }
