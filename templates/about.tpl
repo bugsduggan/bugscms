@@ -10,7 +10,11 @@
 		<h1>About</h1>
 	</div>
 
+	{if isset($about)}
 	{$about}
+	{else}
+	<p class="lead">No data to display</p>
+	{/if}
 
 </div>
 {/block}
