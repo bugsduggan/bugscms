@@ -20,7 +20,7 @@
 				<ul class="nav pull-right">
 				{if $show_admin_buttons}
 				{else}
-				<form class="navbar-form">
+				<form class="navbar-form" method="post" action="index.php?action={$page.navbar.login_action}">
 					<input type="text" class="span2 search-query" id="username" name="username" placeholder="Username">
 					<input type="password" class="span2 search-query" id="password" name="password" placeholder="Password">
 					<button type="submit" class="btn btn-primary">Login</button>

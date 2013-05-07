@@ -14,6 +14,7 @@ function generate_page($tag) {
 		case 'install':
 			$page['tag'] = $tag;
 			$page['template'] = 'install.tpl';
+			$page['form_action'] = 'install';
 			break;
 		case 'error':
 			$page['tag'] = $tag;
@@ -29,6 +30,7 @@ function generate_page($tag) {
 	}
 
 	$page['navbar'] = generate_navbar();
+	if (is_logged_in()) $page['user'] = get_user();
 	return $page;
 }
 
@@ -38,6 +40,7 @@ function generate_navbar() {
 
 	$navbar['default'] = array('link' => 'index.php', 'text' => $config['site_name']);
 	$navbar['item'] = array(array('active' => 'true', 'link' => 'index.php', 'text' => 'home'));
+	$navbar['login_action'] = 'login';
 
 	return $navbar;
 }
@@ -56,8 +59,23 @@ function generate_error($errno=-1, $errmsg='UNKNOWN_ERROR', $errlink_text='Home'
 /*
  * user & admin functions
  */
-function login($username, $password) {
+function login() {
+	global $config;
 
+	$username = $_POST['username'];
+	$password = sha1($_POST['password']);
+
+	$db = new SQLite3($config['db_name']);
+	$result = $db->querySingle(
+		"SELECT * FROM users WHERE username = '".$username."' AND password = '".$password."'",
+		true);
+	if ($result['username'] == $username && $result['password'] == $password) {
+		session_regenerate_id();
+		$_SESSION['BUGS_UID'] = $result['uid'];
+	}
+
+	$db->close();
+	header('Location:index.php');
 }
 
 function logout() {
@@ -76,10 +94,30 @@ function get_user() {
 	$user = array();
 
 	if (is_logged_in()) {
+		$uid = $_SESSION['BUGS_UID'];
 
+		$user['uid'] = $uid;
 	}
 
 	return $user;
+}
+
+/*
+ * install functions
+ */
+function install_db() {
+	global $config;
+
+	$username = $_POST['username'];
+	$password = sha1($_POST['password']);
+	$email = $_POST['email'];
+
+	$db = new SQLite3($config['db_name']);
+	$db->exec("CREATE TABLE users (uid INTEGER PRIMARY KEY, username TEXT NOT NULL, password TEXT NOT NULL, email TEXT NOT NULL)");
+	$db->exec("INSERT INTO users VALUES(1, '".$username."', '".$password."', '".$email."')");
+
+	$db->close();
+	header('Location:index.php');
 }
 
 /*

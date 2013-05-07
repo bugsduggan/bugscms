@@ -53,6 +53,19 @@ if (!file_exists($config['db_name']))
 	$page_tag = 'install';
 
 /*
+ * handle actions
+ */
+$action_tag = (isset($_GET['action']) ? $_GET['action'] : 'null');
+switch($action_tag) {
+	case 'install':
+		install_db();
+		break;
+	case 'login':
+		login();
+		break;
+}
+
+/*
  * plugins
  */
 $smarty->registerPlugin("function", "lorem_ipsum", "lorem_ipsum");

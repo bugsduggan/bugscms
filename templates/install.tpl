@@ -10,9 +10,7 @@
 <div class="row">
 <div class="column span3"></div>
 <div class="column span4">
-<form class="form-horizontal">
-
-	<input type="hidden" type="text" name="db_name" value="{#db_name#}">
+<form class="form-horizontal" method="post" action="index.php?action={$page.form_action}">
 
 	<div class="control-group">
 		<label class="control-label" for="username">Admin user</label>

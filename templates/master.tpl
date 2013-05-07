@@ -44,6 +44,9 @@
 			<hr>
 			<p class="muted">$page_tag = '{$page.tag}'</p>
 			<p class="muted">$template = '{$page.template}'</p>
+			{if isset($page.user)}
+			<p class="muted">$uid = '{$page.user.uid}'</p>
+			{/if}
 			{block name=debug}{/block}
 			{/if}
 
