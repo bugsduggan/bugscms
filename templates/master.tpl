@@ -58,6 +58,11 @@
 			{lorem_ipsum style=paragraph lorem=true}
 			{/block}
 
+			{if $debug}
+			<hr>
+			<p class="muted">$page_tag = '{$page.tag}'</p>
+			{/if}
+
     </div> <!-- /container -->
 
     <script src="js/jquery-1.9.1.js"></script>
