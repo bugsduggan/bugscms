@@ -5,9 +5,13 @@
 
 {block name=body}
 <div class="container">
+
 	<div class="page-header">
 		<h1>About</h1>
 	</div>
+
+	{$about}
+
 </div>
 {/block}
 
