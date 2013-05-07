@@ -24,7 +24,19 @@ function generate_page($tag) {
 			break;
 	}
 
+	$page['navbar'] = generate_navbar();
+
 	return $page;
+}
+
+function generate_navbar() {
+	global $config;
+	$navbar = array();
+
+	$navbar['default'] = array('link' => 'index.php', 'text' => $config['site_name']);
+	$navbar['item'] = array(array('active' => 'true', 'link' => 'index.php', 'text' => 'home'));
+
+	return $navbar;
 }
 
 function generate_error($errno=-1, $errmsg='UNKNOWN_ERROR', $errlink_text='Home', $errlink='index.php') {
