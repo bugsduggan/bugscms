@@ -45,7 +45,7 @@
 			<td>{$page.title|truncate:50}</td>
 			<td><a href="index.php?page=edit&id={$page.id}">Edit</a></td>
 			<td><a href="../index.php?page=article&id={$page.id}">View</a></td>
-			<td><a href="#">Set about</a></td>
+			<td><a href="index.php?action=set_about&id={$page.id}">Set about</a></td>
 		</tr>
 		{/foreach}
 	</table>

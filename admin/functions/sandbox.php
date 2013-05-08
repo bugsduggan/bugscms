@@ -30,4 +30,28 @@ function save_page() {
 		header('Location:index.php');	
 }
 
+function set_about() {
+	$success = true;
+
+	if (!isset($_GET['id']))
+		$success = false;
+
+	$id = $_GET['id'];
+	$db = new SQLite3(DB_NAME);
+	$about_id = $db->querySingle("SELECT id FROM about");
+
+	// change the old about page to a regular article
+	$db->exec("UPDATE news SET status=1 WHERE id=".$about_id);
+	// update the about_id
+	$about_id = $id;
+	$db->exec("UPDATE about SET id=".$about_id);
+	// set new about's status
+	$db->exec("UPDATE news SET status=0 WHERE id=".$about_id);
+
+	if ($success)
+		header('Location:../index.php?page=about');
+	else
+		header('Location:index.php');
+}
+
 ?>
