@@ -1,0 +1,140 @@
+<?php
+
+function prepare_page($smarty, $page) {
+	if ($page == 'home')
+		prepare_home($smarty);
+	else if ($page == 'gigs')
+		prepare_gigs($smarty);
+	else if ($page == 'about')
+		prepare_about($smarty);
+	else if ($page == 'article')
+		prepare_article($smarty);
+}
+
+function prepare_home($smarty) {
+	global $config;
+	$db = new SQLite3(DB_NAME);
+
+	$query = "SELECT * FROM about";
+	$result = $db->querySingle($query);
+	$about_id = $result;
+
+	$query = "SELECT * FROM news WHERE id = ".$about_id;
+	$result = $db->querySingle($query, true);
+
+	if ($result) {
+		$about = array(
+ 		 	'id' => $result['id'],
+ 			'title' => $result['title'],
+ 			'body' => $result['body'],
+ 		);
+
+		$smarty->assign('about', $about);
+	}
+
+	$query = "SELECT * FROM news WHERE status = ".$config['status_active']." ORDER BY id DESC LIMIT 3";
+	$result = $db->query($query);
+
+	$row = $result->fetchArray(SQLITE3_ASSOC);
+  $left = array(
+  	'id' => $row['id'],
+ 		'title' => $row['title'],
+ 		'body' => $row['body'],
+ 	);
+
+	$row = $result->fetchArray(SQLITE3_ASSOC);
+  $center = array(
+  	'id' => $row['id'],
+ 		'title' => $row['title'],
+ 		'body' => $row['body'],
+ 	);
+
+	$row = $result->fetchArray(SQLITE3_ASSOC);
+  $right = array(
+  	'id' => $row['id'],
+ 		'title' => $row['title'],
+ 		'body' => $row['body'],
+ 	);
+
+	$news_data = array();
+	if ($left['id'] && $center['id'] && $right['id']) {
+		$news_data = array(
+			'left' => $left,
+			'center' => $center,
+			'right' => $right
+		);
+	}
+
+	$db->close();
+
+	if (count($news_data) == 3)
+		$smarty->assign('news_data', $news_data);
+}
+
+function prepare_gigs($smarty) {
+	$db = new SQLite3(DB_NAME);
+
+	$gig_data = array();
+
+	$query = "SELECT * FROM (SELECT * FROM gigs WHERE date > date('now') ORDER BY date DESC LIMIT 10) ORDER BY date ASC";
+	$result = $db->query($query);
+
+	$row = $result->fetchArray(SQLITE3_ASSOC);
+	while ($row) {
+	  $gig = array(
+	  	'id' => $row['id'],
+  		'location' => $row['location'],
+  		'date' => $row['date'],
+  		'map_link' => $row['map_link'],
+  		'buy_link' => $row['buy_link']
+  	);
+  	array_push($gig_data, $gig);
+		$row = $result->fetchArray(SQLITE3_ASSOC);
+	}
+
+	$db->close();
+
+	if (count($gig_data) > 0)
+		$smarty->assign('gig_data', $gig_data);
+}
+
+function prepare_about($smarty) {
+	$db = new SQLite3(DB_NAME);
+
+	$query = "SELECT * FROM about";
+	$result = $db->querySingle($query);
+	$about_id = $result;
+
+	$query = "SELECT * FROM news WHERE id = ".$about_id;
+	$result = $db->querySingle($query, true);
+
+	if ($result) {
+		$article = array(
+			'id' => $result['id'],
+			'title' => $result['title'],
+			'body' => $result['body'],
+		);
+		$smarty->assign('article', $article);
+	}
+}
+
+function prepare_article($smarty) {
+	$id = (isset($_GET['id']) ? $_GET['id'] : 0);
+	
+	if ($id > 0) {
+		$db = new SQLite3(DB_NAME);
+		$query = "SELECT * FROM news WHERE id = ".$id;
+		$result = $db->querySingle($query, true);
+
+		if ($result) {
+			$article = array(
+				'id' => $result['id'],
+				'title' => $result['title'],
+				'body' => $result['body'],
+			);
+			$smarty->assign('article', $article);
+		}
+	}
+}
+
+?>

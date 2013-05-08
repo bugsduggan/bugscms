@@ -40,7 +40,7 @@
 
 		{include "footer.tpl"}
 
-    <script src="js/jquery.js"></script>
+    <script src="js/jquery-1.9.1.js"></script>
     <script src="js/bootstrap.js"></script>
 		{block name=javascript}{/block}
 

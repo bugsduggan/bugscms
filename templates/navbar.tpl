@@ -16,7 +16,7 @@
         </ul>
 				<ul class="nav pull-right">
 				{if $logged_in}
-					{if $page == 'admin'}<li class="active">{else}<li>{/if}<a href="index.php?page=admin">Admin</a></li>
+					{if $page == 'admin'}<li class="active">{else}<li>{/if}<a href="admin/index.php">Admin</a></li>
 					<li><a href="index.php?action=logout">Logout</a></li>
 				{else}
 					<form class="navbar-search" method="post" action="index.php?action=login">
