@@ -9,15 +9,20 @@
 	{if isset($article)}
 
 	<div class="page-header">
-		<h1>{$article.title}</h1>
+				<h1>{$article.title}</h1>
 	</div>
 
-		<div class="row">
-		<div class="column span3"></div>
+	<div class="row">
+		<div class="column span3">
+		</div>
 		<div class="column span6">
 			{$article.body}
 		</div>
-		<div class="column span3"></div>
+		<div class="column span3">
+		{if $logged_in}
+			<p><a class="btn btn-primary" href="admin/index.php?page=edit&id={$article.id}">Edit</a></p>
+		{/if}
+		</div>
 
 	</div>
 
