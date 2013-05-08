@@ -39,27 +39,26 @@ function create_db($populate_db) {
 		$db->exec("INSERT INTO users (username, password, email) VALUES ('".$username."', '".$password."', '".$email."')");
 
 		// populate the db
-		if ($populate_db) {
-			$generator = new LoremIpsumGenerator();
+		$generator = new LoremIpsumGenerator();
 
-			for ($i = 1; $i <= 4; $i++) {
-				$title = $generator->getContent(5, 'plain', true).' '.$i;
-				$body = $generator->getContent(50, 'html', false);
-				$body = $body.$generator->getContent(50, 'html', false);
-				$body = $body.$generator->getContent(50, 'html', false);
-				$db->exec("INSERT INTO news (title, body, status) VALUES ('".$title."', '".$body."', 1)");
-			}
-
-			// ensure about page's status is disabled
-			$db->exec("UPDATE news SET status=0 WHERE id=".$about_id);
+		for ($i = 1; $i <= 4; $i++) {
+			$title = $generator->getContent(5, 'plain', true).' '.$i;
+			$body = $generator->getContent(50, 'html', false);
+			$body = $body.$generator->getContent(50, 'html', false);
+			$body = $body.$generator->getContent(50, 'html', false);
+			$db->exec("INSERT INTO news (title, body, status) VALUES ('".$title."', '".$body."', 1)");
 		}
+
+		// ensure about page's status is disabled
+		$db->exec("UPDATE news SET status=0 WHERE id=".$about_id);
 
 		$db->close();
 	}
 
-	if ($success)
-		header('Location:index.php');
-	else
+	if ($success) {
+		auth_user(1);
+		header('Location:admin/');
+	} else
 		header('Location:index.php?page=install');
 
 }
@@ -84,8 +83,7 @@ function login() {
 
 	if ($username == $result['username'] && $password == $result['password']) {
 		$success = true;
-		session_regenerate_id();
-		$_SESSION['BUGS_UID'] = $result['id'];
+		auth_user($result['id']);
 	}
 
 	$db->close();
@@ -95,6 +93,11 @@ function login() {
 	else
 		header('Location:index.php?page=login');
 
+}
+
+function auth_user($id) {
+	session_regenerate_id();
+	$_SESSION['BUGS_UID'] = $id;
 }
 
 function logout() {
