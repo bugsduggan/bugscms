@@ -9,11 +9,11 @@
       <a class="brand" href="index.php">{#site_name#}&nbsp;Admin</a>
       <div class="nav-collapse collapse">
         <ul class="nav pull-left">
-					{if $page == 'home'}<li class="active">{else}<li>{/if}<a href="../index.php">Home</a></li>
+					{if $page == 'home'}<li class="active">{else}<li>{/if}<a href="index.php">Admin</a></li>
 					{if $page == 'pages'}<li class="active">{else}<li>{/if}<a href="index.php?page=pages">Pages</a></li>
         </ul>
 				<ul class="nav pull-right">
-					{if $page == 'admin'}<li class="active">{else}<li>{/if}<a href="index.php">Admin</a></li>
+					<li><a href="../index.php">Home</a></li>
 					<li><a href="index.php?action=logout">Logout</a></li>
 				</ul>
       </div><!--/.nav-collapse -->

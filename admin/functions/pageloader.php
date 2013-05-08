@@ -2,7 +2,7 @@
 
 function show_page($smarty, $page) {
 	$smarty->assign('page', $page);
-	if ($page != 'admin')
+	if ($page != 'home')
 		$smarty->display('admin-'.$page.'.tpl');
 	else
 		$smarty->display('admin-master.tpl');

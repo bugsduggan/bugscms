@@ -27,14 +27,14 @@ if ($config['debug'] == 'true') {
 	$smarty->assign('debug', true);
 }
 
-$page = (isset($_GET['page']) ? $_GET['page'] : 'admin');
+$page = (isset($_GET['page']) ? $_GET['page'] : 'home');
 $action = (isset($_GET['action']) ? $_GET['action'] : '');
 
 if (!file_exists(DB_NAME))
 	header('Location:../index.php');
 if (!isset($_SESSION['BUGS_UID']))
 	header('Location:../index.php?page=login');
-if ($page == 'home')
+if ($page == 'public')
 	header('Location:../index.php');
 
 prepare_page($smarty, $page);
