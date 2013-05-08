@@ -4,6 +4,7 @@
 <script type="text/javascript" src="../js/tinymce/tinymce.min.js"></script>
 <script type="text/javascript">
 tinymce.init({
+		plugins: 'link',
 		content_css: "../css/tinymce.css",
 		width: 768,
     selector: "textarea"
