@@ -40,11 +40,12 @@
 		<div class="control-group">
 			<label class="control-label" for="body">Body</label>
 			<div class="controls">
-				<textarea class="span8" id="body" name="body" rows="18">
+				{* The textarea needs to be inside the if so we don't get extra spaces *}
 				{if isset($article)}
-				{$article.body}
+				<textarea class="span8" id="body" name="body" rows="18">{$article.body}</textarea>
+				{else}
+				<textarea class="span8" id="body" name="body" rows="18"></textarea>
 				{/if}
-				</textarea>
 			</div>
 		</div>
 
