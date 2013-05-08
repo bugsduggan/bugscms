@@ -10,16 +10,10 @@
 	{if isset($about)}
   <div class="hero-unit">
 
-		<div class="row">
-    	<h1>{$about.title}</h1>
-		</div>
-		<div class="row">
-			{$about.body|truncate:200}
-		</div>
-		<div class="row">
-			<p><a href="index.php?page=about" class="btn btn-primary btn-large">Learn more</a></p>
-		</div>
-		
+    <h1>{$about.title}</h1>
+		{$about.body|truncate:100}
+		<p><a href="index.php?page=about" class="btn btn-primary btn-large">Learn more</a></p>
+
   </div>
 	{else}
 	<p class="lead">No about data</p>
