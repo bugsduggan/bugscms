@@ -11,7 +11,7 @@
   <div class="hero-unit">
     <h1>{$about.title}</h1>
 		{$about.body|truncate:200}
-    <p><a href="index.php?page=about" class="btn btn-primary btn-large">Learn more</a></p>
+    <p class="pull-left"><a href="index.php?page=about" class="btn btn-primary btn-large">Learn more</a></p>
   </div>
 	{else}
 	<p class="lead">No about data</p>
