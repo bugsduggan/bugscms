@@ -15,6 +15,8 @@ function prepare_page($smarty, $page) {
 		prepare_edit($smarty);
 	if ($page == 'gigs')
 		prepare_gigs($smarty);
+	if ($page == 'gig')
+		prepare_gig($smarty);
 }
 
 function prepare_pages($smarty) {
@@ -88,7 +90,7 @@ function prepare_gigs($smarty) {
 			'location' => $row['location'],
 			'date' => $row['date'],
 			'map_link' => $row['map_link'],
-			'buy_link' => $row['buy_link']
+			'info_link' => $row['info_link']
 		);
 		array_push($gigs, $gig);
 	}
@@ -96,6 +98,27 @@ function prepare_gigs($smarty) {
 	$db->close();
 	if (count($gigs) > 0)
 		$smarty->assign('gigs', $gigs);
+}
+
+function prepare_gig($smarty) {
+	if (isset($_GET['id'])) {
+		$db = new SQLite3(DB_NAME);
+
+		$gig_id = $_GET['id'];
+		$query = "SELECT * FROM gigs WHERE id=".$gig_id;
+		$result = $db->querySingle($query, true);
+
+		$gig = array(
+			'id' => $result['id'],
+			'location' => $result['location'],
+			'date' => $result['date'],
+			'map_link' => $result['map_link'],
+			'info_link' => $result['info_link']
+		);
+
+		$smarty->assign('gig', $gig);
+		$db->close();
+	}
 }
 
 ?>

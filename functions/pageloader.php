@@ -95,7 +95,7 @@ function prepare_gigs($smarty) {
   		'location' => $row['location'],
   		'date' => $row['date'],
   		'map_link' => $row['map_link'],
-  		'buy_link' => $row['buy_link']
+  		'info_link' => $row['info_link']
   	);
   	array_push($gig_data, $gig);
 		$row = $result->fetchArray(SQLITE3_ASSOC);

@@ -12,7 +12,7 @@
 
 	<div class="row">
 		<div class="column span4">
-			<p><a class="btn btn-primary" href="#">New gig</a></p>
+			<p><a class="btn btn-primary" href="index.php?page=gig">New gig</a></p>
 		</div>
 		<div class="column span4">
 		</div>
@@ -37,9 +37,9 @@
 			<td>
 			{if isset($gig.map_link)}<a href="{$gig.map_link}">Map</a>{/if}
 			</td><td>
-			{if isset($gig.buy_link)}<a href="{$gig.buy_link}">Buy</a>{/if}
+			{if isset($gig.info_link)}<a href="{$gig.info_link}">Info</a>{/if}
 			</td>
-			<td><a href="#">Edit</a></td>
+			<td><a href="index.php?page=gig&id={$gig.id}">Edit</a></td>
 		</tr>
 		{/foreach}
 	</table>

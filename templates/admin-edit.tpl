@@ -18,11 +18,7 @@ tinymce.init({
 		<h1>Edit page</h1>
 	</div>
 
-	{if isset($article)}
 	<form class="form-horizontal" method="post" action="index.php?action=save_page">
-	{else}
-	<form class="form-horizontal" method="post" action="index.php?action=save_page">
-	{/if}
 
 		{if isset($article)}
 		<input type="hidden" id="id" name="id" value="{$article.id}">

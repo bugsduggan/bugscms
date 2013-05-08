@@ -23,11 +23,46 @@ function save_page() {
 
 	$stm = "INSERT OR REPLACE INTO news (id, title, body, status) VALUES (".$id.", '".$title."', '".$body."', ".$status.")";
 	$db->exec($stm);
+	$db->close();
 
 	if ($success)
 		header('Location:../index.php?page=article&id='.$id);
 	else
 		header('Location:index.php');	
+}
+
+function save_gig() {
+  $success = true;
+
+	$db = new SQLite3(DB_NAME);
+
+	if (!isset($_POST['id']))
+		$id = 1 + $db->querySingle("SELECT id FROM gigs ORDER BY id DESC LIMIT 1");
+	else
+		$id = $_POST['id'];
+
+	if (!isset($_POST['location']))
+		$success = false;	
+	if (!isset($_POST['date']))
+		$success = false;
+	if (!isset($_POST['map_link']))
+		$success = false;
+	if (!isset($_POST['info_link']))
+		$success = false;
+
+	$location = SQLite3::escapeString($_POST['location']);
+	$date = SQLite3::escapeString($_POST['date']);
+	$map_link = SQLite3::escapeString($_POST['map_link']);
+	$info_link = SQLite3::escapeString($_POST['info_link']);
+
+	$stm = "INSERT OR REPLACE INTO gigs (id, location, date, map_link, info_link) VALUES (".$id.", '".$location."', '".$date."', '".$map_link."', '".$info_link."')";
+	$db->exec($stm);
+	$db->close();
+
+	if ($success)
+		header('Location:../index.php?page=gigs');
+	else
+		header('Location:index.php');
 }
 
 function set_about() {

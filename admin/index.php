@@ -44,6 +44,8 @@ if ($config['footer'] != '')
 
 if ($action == 'save_page') {
 	save_page();
+} else if ($action == 'save_gig') {
+	save_gig();
 } else if ($action == 'set_about') {
 	set_about();	
 } else if ($action == 'logout') {
