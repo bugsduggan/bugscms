@@ -39,15 +39,25 @@ if ($page == 'home') {
 
 	$db = new SQLite3(DB_NAME);
 
-	$query = "SELECT * FROM news WHERE status = ".$config['status_active']." ORDER BY id DESC LIMIT 4";
-	$result = $db->query($query);
+	$query = "SELECT * FROM about";
+	$result = $db->querySingle($query);
+	$about_id = $result;
 
-	$row = $result->fetchArray(SQLITE3_ASSOC);
-  $top = array(
-  	'id' => $row['id'],
- 		'title' => $row['title'],
- 		'body' => $row['body'],
- 	);
+	$query = "SELECT * FROM news WHERE id = ".$about_id;
+	$result = $db->querySingle($query, true);
+
+	if ($result) {
+		$about = array(
+ 		 	'id' => $result['id'],
+ 			'title' => $result['title'],
+ 			'body' => $result['body'],
+ 		);
+
+		$smarty->assign('about', $about);
+	}
+
+	$query = "SELECT * FROM news WHERE status = ".$config['status_active']." ORDER BY id DESC LIMIT 3";
+	$result = $db->query($query);
 
 	$row = $result->fetchArray(SQLITE3_ASSOC);
   $left = array(
@@ -71,9 +81,8 @@ if ($page == 'home') {
  	);
 
 	$news_data = array();
-	if ($top['id'] && $left['id'] && $center['id'] && $right['id']) {
+	if ($left['id'] && $center['id'] && $right['id']) {
 		$news_data = array(
-			'top' => $top,
 			'left' => $left,
 			'center' => $center,
 			'right' => $right
@@ -82,7 +91,7 @@ if ($page == 'home') {
 
 	$db->close();
 
-	if (count($news_data) == 4)
+	if (count($news_data) == 3)
 		$smarty->assign('news_data', $news_data);
 
 } else if ($page == 'gigs') {
@@ -116,7 +125,11 @@ if ($page == 'home') {
 
 	$db = new SQLite3(DB_NAME);
 
-	$query = "SELECT * FROM news WHERE id = ".$config['about_id'];
+	$query = "SELECT * FROM about";
+	$result = $db->querySingle($query);
+	$about_id = $result;
+
+	$query = "SELECT * FROM news WHERE id = ".$about_id;
 	$result = $db->querySingle($query, true);
 
 	if ($result) {
@@ -154,27 +167,31 @@ if ($page == 'home') {
 if ($page == 'install' && $action == 'doinstall' && !file_exists(DB_NAME)) {
 
 	$db = new SQLite3(DB_NAME);
+	$about_id = 1; // the first page defined as about
 
 	$statements = array(
 		"CREATE TABLE news (id INTEGER PRIMARY KEY, title TEXT NOT NULL, body TEXT NOT NULL, status INTEGER NOT NULL)",
-		"CREATE TABLE gigs (id INTEGER PRIMARY KEY, location TEXT NOT NULL, date TEXT NOT NULL, map_link TEXT, buy_link TEXT)"
+		"CREATE TABLE gigs (id INTEGER PRIMARY KEY, location TEXT NOT NULL, date TEXT NOT NULL, map_link TEXT, buy_link TEXT)",
+		"CREATE TABLE about (id INTEGER, FOREIGN KEY (id) REFERENCES news (id))"
 	);
 
 	foreach ($statements as $stm) {
 		$db->exec($stm);
+		$db->exec("INSERT INTO about VALUES (".$about_id.")");
 	}
 
 	if ($config['populate_db'] == 'true') {
 		$generator = new LoremIpsumGenerator();
 
-		for ($i = 1; $i <= 5; $i++) {
+		for ($i = 1; $i <= 4; $i++) {
 			$title = $generator->getContent(5, 'plain', true).' '.$i;
 			$body = $generator->getContent(50, 'html', false);
 			$body = $body.$generator->getContent(50, 'html', false);
 			$body = $body.$generator->getContent(50, 'html', false);
 			$db->exec("INSERT INTO news (title, body, status) VALUES ('".$title."', '".$body."', 1)");
 		}
-		$db->exec("UPDATE news SET status=0 WHERE id=".$config['about_id']);
+
+		$db->exec("UPDATE news SET status=0 WHERE id=".$about_id);
 	}
 
 	$db->close();

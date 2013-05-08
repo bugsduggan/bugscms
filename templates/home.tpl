@@ -6,14 +6,18 @@
 {block name=body}
 <div class="container">
 
-	{if isset($news_data)}
   <!-- Main hero unit for a primary marketing message or call to action -->
+	{if isset($about)}
   <div class="hero-unit">
-    <h1>{$news_data.top.title}</h1>
-		{$news_data.top.body|truncate:200}
-    <p><a href="index.php?page=article&id={$news_data.top.id}" class="btn btn-primary btn-large">More</a></p>
+    <h1>{$about.title}</h1>
+		{$about.body|truncate:200}
+    <p><a href="index.php?page=about" class="btn btn-primary btn-large">Learn more</a></p>
   </div>
+	{else}
+	<p class="lead">No about data</p>
+	{/if}
 
+	{if isset($news_data)}
   <!-- Example row of columns -->
   <div class="row">
     <div class="span4">
