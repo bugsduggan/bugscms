@@ -13,6 +13,8 @@ function prepare_page($smarty, $page) {
 		prepare_pages($smarty);
 	if ($page == 'edit')
 		prepare_edit($smarty);
+	if ($page == 'gigs')
+		prepare_gigs($smarty);
 }
 
 function prepare_pages($smarty) {
@@ -69,7 +71,31 @@ function prepare_edit($smarty) {
 		);
 
 		$smarty->assign('article', $article);
+		$db->close();
 	}
+}
+
+function prepare_gigs($smarty) {
+	$db = new SQLite3(DB_NAME);
+
+	$query = "SELECT * FROM gigs WHERE date > date('now') ORDER BY date ASC";
+	$result = $db->query($query);
+
+	$gigs = array();
+	while (($row = $result->fetchArray(SQLITE3_ASSOC)) != null) {
+		$gig = array(
+			'id' => $row['id'],
+			'location' => $row['location'],
+			'date' => $row['date'],
+			'map_link' => $row['map_link'],
+			'buy_link' => $row['buy_link']
+		);
+		array_push($gigs, $gig);
+	}
+
+	$db->close();
+	if (count($gigs) > 0)
+		$smarty->assign('gigs', $gigs);
 }
 
 ?>
