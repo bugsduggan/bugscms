@@ -14,7 +14,7 @@
 					{if $page == 'events'}<li class="active">{else}<li>{/if}<a href="index.php?page=events">Events</a></li>
         </ul>
 				<ul class="nav pull-right">
-					<li><a href="../index.php">Home</a></li>
+					<li><a href="../index.php"><i class="icon-home icon-white"></i></a></li>
 					<li><a href="index.php?action=logout">Logout</a></li>
 				</ul>
       </div><!--/.nav-collapse -->
