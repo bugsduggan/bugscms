@@ -12,8 +12,8 @@ function show_page($smarty, $page) {
 function prepare_page($smarty, $page) {
 	if ($page == 'home')
 		prepare_home($smarty);
-	else if ($page == 'gigs')
-		prepare_gigs($smarty);
+	else if ($page == 'events')
+		prepare_events($smarty);
 	else if ($page == 'about')
 		prepare_about($smarty);
 	else if ($page == 'article')
@@ -80,7 +80,7 @@ function prepare_home($smarty) {
 		$smarty->assign('news_data', $news_data);
 }
 
-function prepare_gigs($smarty) {
+function prepare_events($smarty) {
 	$db = new SQLite3(DB_NAME);
 
 	$gig_data = array();

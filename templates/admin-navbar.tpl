@@ -11,7 +11,7 @@
         <ul class="nav pull-left">
 					{if $page == 'home'}<li class="active">{else}<li>{/if}<a href="index.php">Admin</a></li>
 					{if $page == 'pages'}<li class="active">{else}<li>{/if}<a href="index.php?page=pages">Pages</a></li>
-					{if $page == 'gigs'}<li class="active">{else}<li>{/if}<a href="index.php?page=gigs">Gigs</a></li>
+					{if $page == 'events'}<li class="active">{else}<li>{/if}<a href="index.php?page=events">Events</a></li>
         </ul>
 				<ul class="nav pull-right">
 					<li><a href="../index.php">Home</a></li>

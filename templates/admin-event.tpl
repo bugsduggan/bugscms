@@ -7,7 +7,7 @@
 <div class="container">
 
 	<div class="page-header">
-		<h1>Edit gig</h1>
+		<h1>Edit event</h1>
 	</div>
 
 	<form class="form-horizontal" method="post" action="index.php?action=save_gig">

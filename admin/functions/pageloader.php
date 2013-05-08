@@ -13,10 +13,10 @@ function prepare_page($smarty, $page) {
 		prepare_pages($smarty);
 	if ($page == 'edit')
 		prepare_edit($smarty);
-	if ($page == 'gigs')
-		prepare_gigs($smarty);
-	if ($page == 'gig')
-		prepare_gig($smarty);
+	if ($page == 'events')
+		prepare_events($smarty);
+	if ($page == 'event')
+		prepare_event($smarty);
 }
 
 function prepare_pages($smarty) {
@@ -77,7 +77,7 @@ function prepare_edit($smarty) {
 	}
 }
 
-function prepare_gigs($smarty) {
+function prepare_events($smarty) {
 	$db = new SQLite3(DB_NAME);
 
 	$query = "SELECT * FROM gigs WHERE date > date('now') ORDER BY date ASC";
@@ -100,7 +100,7 @@ function prepare_gigs($smarty) {
 		$smarty->assign('gigs', $gigs);
 }
 
-function prepare_gig($smarty) {
+function prepare_event($smarty) {
 	if (isset($_GET['id'])) {
 		$db = new SQLite3(DB_NAME);
 

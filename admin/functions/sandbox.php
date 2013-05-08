@@ -31,7 +31,7 @@ function save_page() {
 		header('Location:index.php');	
 }
 
-function save_gig() {
+function save_event() {
   $success = true;
 
 	$db = new SQLite3(DB_NAME);
@@ -60,7 +60,7 @@ function save_gig() {
 	$db->close();
 
 	if ($success)
-		header('Location:../index.php?page=gigs');
+		header('Location:../index.php?page=events');
 	else
 		header('Location:index.php');
 }
