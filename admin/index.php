@@ -2,6 +2,8 @@
 
 require_once('../includes/Smarty.class.php');
 
+include('functions/pageloader.php');
+
 session_start();
 
 date_default_timezone_set('UTC');
@@ -18,7 +20,7 @@ $smarty->setConfigDir('../configs');
 $smarty->configLoad(CONFIG);
 $config = $smarty->getConfigVars();
 
-define('DB_NAME', $config['db_name']);
+define('DB_NAME', '../'.$config['db_name']);
 
 if ($config['debug'] == 'true') {
 	ini_set('display_errors', 'On');
@@ -33,11 +35,14 @@ if (!isset($_SESSION['BUGS_UID']))
 if ($page == 'home')
 	header('Location:../index.php');
 
+prepare_page($smarty, $page);
+if ($config['footer'] != '')
+	$smarty->assign('footer', $config['footer']);
+
 if ($action == 'logout') {
 	logout();
 } else {
-	$smarty->assign('page', $page);
-	$smarty->display('admin-master.tpl');
+	show_page($smarty, $page);
 }
 
 function logout() {
