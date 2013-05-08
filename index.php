@@ -32,9 +32,10 @@ if ($config['debug'] == 'true') {
 $page = (isset($_GET['page']) ? $_GET['page'] : 'home');
 $action = (isset($_GET['action']) ? $_GET['action'] : '');
 
-if (!file_exists(DB_NAME)) {
+if (!file_exists(DB_NAME))
 	$page = 'install';
-}
+if ($page == 'admin')
+	header('Location:admin');
 
 prepare_page($smarty, $page);
 
