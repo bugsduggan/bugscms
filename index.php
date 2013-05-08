@@ -47,8 +47,6 @@ if ($page == 'home') {
   	'id' => $row['id'],
  		'title' => $row['title'],
  		'body' => $row['body'],
- 		'link' => $row['link'],
- 		'link_text' => $row['link_text']
  	);
 
 	$row = $result->fetchArray(SQLITE3_ASSOC);
@@ -56,8 +54,6 @@ if ($page == 'home') {
   	'id' => $row['id'],
  		'title' => $row['title'],
  		'body' => $row['body'],
- 		'link' => $row['link'],
- 		'link_text' => $row['link_text']
  	);
 
 	$row = $result->fetchArray(SQLITE3_ASSOC);
@@ -65,8 +61,6 @@ if ($page == 'home') {
   	'id' => $row['id'],
  		'title' => $row['title'],
  		'body' => $row['body'],
- 		'link' => $row['link'],
- 		'link_text' => $row['link_text']
  	);
 
 	$row = $result->fetchArray(SQLITE3_ASSOC);
@@ -74,8 +68,6 @@ if ($page == 'home') {
   	'id' => $row['id'],
  		'title' => $row['title'],
  		'body' => $row['body'],
- 		'link' => $row['link'],
- 		'link_text' => $row['link_text']
  	);
 
 	$news_data = array();
@@ -124,18 +116,37 @@ if ($page == 'home') {
 
 	$db = new SQLite3(DB_NAME);
 
-	$query = "SELECT * FROM news WHERE status = ".$config['status_about'];
+	$query = "SELECT * FROM news WHERE id = ".$config['about_id'];
 	$result = $db->querySingle($query, true);
 
 	if ($result) {
-		$about = array(
+		$article = array(
 			'id' => $result['id'],
 			'title' => $result['title'],
 			'body' => $result['body'],
-			'link' => $result['link'],
-			'link_text' => $result['link_text']
 		);
-		$smarty->assign('about', $about);
+		$smarty->assign('article', $article);
+	}
+
+	$page = 'article';
+
+} else if ($page == 'article') {
+
+	$id = (isset($_GET['id']) ? $_GET['id'] : 0);
+	
+	if ($id > 0) {
+		$db = new SQLite3(DB_NAME);
+		$query = "SELECT * FROM news WHERE id = ".$id;
+		$result = $db->querySingle($query, true);
+
+		if ($result) {
+			$article = array(
+				'id' => $result['id'],
+				'title' => $result['title'],
+				'body' => $result['body'],
+			);
+			$smarty->assign('article', $article);
+		}
 	}
 
 }
@@ -145,7 +156,7 @@ if ($page == 'install' && $action == 'doinstall' && !file_exists(DB_NAME)) {
 	$db = new SQLite3(DB_NAME);
 
 	$statements = array(
-		"CREATE TABLE news (id INTEGER PRIMARY KEY, title TEXT NOT NULL, body TEXT NOT NULL, link TEXT, link_text TEXT, status INTEGER NOT NULL)",
+		"CREATE TABLE news (id INTEGER PRIMARY KEY, title TEXT NOT NULL, body TEXT NOT NULL, status INTEGER NOT NULL)",
 		"CREATE TABLE gigs (id INTEGER PRIMARY KEY, location TEXT NOT NULL, date TEXT NOT NULL, map_link TEXT, buy_link TEXT)"
 	);
 
@@ -161,9 +172,9 @@ if ($page == 'install' && $action == 'doinstall' && !file_exists(DB_NAME)) {
 			$body = $generator->getContent(50, 'html', false);
 			$body = $body.$generator->getContent(50, 'html', false);
 			$body = $body.$generator->getContent(50, 'html', false);
-			$db->exec("INSERT INTO news (title, body, link, link_text, status) VALUES ('".$title."', '".$body."', 'index.php', 'more', 1)");
+			$db->exec("INSERT INTO news (title, body, status) VALUES ('".$title."', '".$body."', 1)");
 		}
-		$db->exec("UPDATE news SET status=2 WHERE id=5");
+		$db->exec("UPDATE news SET status=0 WHERE id=".$config['about_id']);
 	}
 
 	$db->close();
