@@ -25,6 +25,17 @@
 			.navbar a {
 				margin-top: 4px;
 			}
+			@media (max-width: 767px) {
+				body {
+					margin-top: -60px;
+				}
+        #footer {
+          margin-left: -20px;
+          margin-right: -20px;
+          padding-left: 20px;
+          padding-right: 20px;
+        }
+      }
 		</style>
 
 		{block name=head}
