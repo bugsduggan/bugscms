@@ -23,8 +23,11 @@
 			<p><a class="btn btn-primary" href="admin/index.php?page=edit&id={$article.id}">Edit</a></p>
 		{/if}
 		</div>
-
 	</div>
+
+	<hr>
+	<p><a href="index.php?page=article&id={$article.id}">Permalink</a></p>
+	<hr>
 
 	{else}
 
