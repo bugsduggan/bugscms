@@ -65,28 +65,32 @@ function create_db() {
 
 function login() {
 
-	$success = false;
+	$success = true;
 	
 	if (!isset($_POST['username'])) {
-		// fail
+		$success = false;
 	}
 	if (!isset($_POST['password'])) {
-		// fail
+		$success = false;
 	}
 
-	$username = SQLite3::escapeString($_POST['username']);
-	$password = SQLite3::escapeString(sha1($_POST['password']));
+	if ($success) { // ok so far
+		$success = false;
 
-	$db = new SQLite3(DB_NAME);
-	$query = "SELECT * FROM users WHERE username = '".$username."'";
-	$result = $db->querySingle($query, true);
+		$username = SQLite3::escapeString($_POST['username']);
+		$password = SQLite3::escapeString(sha1($_POST['password']));
 
-	if ($username == $result['username'] && $password == $result['password']) {
-		$success = true;
-		auth_user($result['id']);
+		$db = new SQLite3(DB_NAME);
+		$query = "SELECT * FROM users WHERE username = '".$username."'";
+		$result = $db->querySingle($query, true);
+
+		if ($username == $result['username'] && $password == $result['password']) {
+			$success = true;
+			auth_user($result['id']);
+		}
+
+		$db->close();
 	}
-
-	$db->close();
 
 	if ($success)
 		header('Location:admin/index.php');
