@@ -20,6 +20,11 @@ tinymce.init({
 
 	<form class="form-horizontal" method="post" action="index.php?action=save_page">
 
+		<div class="form-controls">
+			<button type="submit" class="btn btn-primary">Save</button>
+			<a class="btn" href="index.php?page=pages">Back</a>
+		</div>
+
 		{if isset($article)}
 		<input type="hidden" id="id" name="id" value="{$article.id}">
 		{/if}
