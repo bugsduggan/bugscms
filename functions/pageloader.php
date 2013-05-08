@@ -3,10 +3,15 @@
 function show_page($smarty, $page) {
 	$smarty->assign('logged_in', isset($_SESSION['BUGS_UID']));
 	$smarty->assign('page', $page);
-	if ($page == 'about')
-		$smarty->display('article.tpl');
-	else
-		$smarty->display($page.'.tpl');
+
+	try {
+		if ($page == 'about')
+			$smarty->display('article.tpl');
+		else
+			$smarty->display($page.'.tpl');
+	} catch (Exception $e) {
+			$smarty->display('error.tpl');
+	}
 }
 
 function prepare_page($smarty, $page) {

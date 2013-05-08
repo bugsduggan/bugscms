@@ -2,10 +2,15 @@
 
 function show_page($smarty, $page) {
 	$smarty->assign('page', $page);
-	if ($page != 'home')
-		$smarty->display('admin-'.$page.'.tpl');
-	else
-		$smarty->display('admin-master.tpl');
+
+	try {
+		if ($page != 'home')
+			$smarty->display('admin-'.$page.'.tpl');
+		else
+			$smarty->display('admin-master.tpl');
+	} catch (Exception $e) {
+			$smarty->display('error.tpl');
+	}
 }
 
 function prepare_page($smarty, $page) {
