@@ -1,5 +1,6 @@
 <?php
 
+require_once('includes/LoremIpsum.class.php');
 require_once('includes/Smarty.class.php');
 
 session_start();
@@ -144,12 +145,25 @@ if ($page == 'install' && $action == 'doinstall' && !file_exists(DB_NAME)) {
 	$db = new SQLite3(DB_NAME);
 
 	$statements = array(
-		"CREATE TABLE news (id INTEGER PRIMARY KEY, title TEXT NOT NULL, body TEXT NOT NULL, link TEXT NOT NULL, link_text TEXT NOT NULL, status INTEGER NOT NULL)",
-		"CREATE TABLE gigs (id INTEGER PRIMARY KEY, location TEXT NOT NULL, date TEXT NOT NULL, map_link TEXT, buy_link TEXT'')"
+		"CREATE TABLE news (id INTEGER PRIMARY KEY, title TEXT NOT NULL, body TEXT NOT NULL, link TEXT, link_text TEXT, status INTEGER NOT NULL)",
+		"CREATE TABLE gigs (id INTEGER PRIMARY KEY, location TEXT NOT NULL, date TEXT NOT NULL, map_link TEXT, buy_link TEXT)"
 	);
 
 	foreach ($statements as $stm) {
 		$db->exec($stm);
+	}
+
+	if ($config['populate_db'] == 'true') {
+		$generator = new LoremIpsumGenerator();
+
+		for ($i = 1; $i <= 5; $i++) {
+			$title = $generator->getContent(5, 'plain', true).' '.$i;
+			$body = $generator->getContent(50, 'html', false);
+			$body = $body.$generator->getContent(50, 'html', false);
+			$body = $body.$generator->getContent(50, 'html', false);
+			$db->exec("INSERT INTO news (title, body, link, link_text, status) VALUES ('".$title."', '".$body."', 'index.php', 'more', 1)");
+		}
+		$db->exec("UPDATE news SET status=2 WHERE id=5");
 	}
 
 	$db->close();
