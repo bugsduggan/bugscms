@@ -1,5 +1,14 @@
 <?php
 
+function show_page($smarty, $page) {
+	$smarty->assign('logged_in', isset($_SESSION['BUGS_UID']));
+	$smarty->assign('page', $page);
+	if ($page == 'about')
+		$smarty->display('article.tpl');
+	else
+		$smarty->display($page.'.tpl');
+}
+
 function prepare_page($smarty, $page) {
 	if ($page == 'home')
 		prepare_home($smarty);

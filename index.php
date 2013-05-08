@@ -38,6 +38,8 @@ if ($page == 'admin')
 	header('Location:admin');
 
 prepare_page($smarty, $page);
+if ($config['footer'] != '')
+	$smarty->assign('footer', $config['footer']);
 
 if ($page == 'install' && $action == 'doinstall' && !file_exists(DB_NAME)) {
 	create_db($config['populate_db'] == 'true');

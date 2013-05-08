@@ -1,14 +1,5 @@
 <?php
 
-function show_page($smarty, $page) {
-	$smarty->assign('logged_in', isset($_SESSION['BUGS_UID']));
-	$smarty->assign('page', $page);
-	if ($page == 'about')
-		$smarty->display('article.tpl');
-	else
-		$smarty->display($page.'.tpl');
-}
-
 function create_db($populate_db) {
 
 	$success = true;
