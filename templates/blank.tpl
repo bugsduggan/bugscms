@@ -1,6 +1,6 @@
 {extends "master.tpl"}
 
-{block name=style}
+{block name=head}
 {/block}
 
 {block name=body}

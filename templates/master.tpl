@@ -26,7 +26,8 @@
 				margin-top: 4px;
 			}
 		</style>
-		{block name=css}
+
+		{block name=head}
 		{/block}
 
   </head>

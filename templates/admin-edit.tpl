@@ -1,6 +1,14 @@
 {extends "admin-master.tpl"}
 
-{block name=style}
+{block name=head}
+<script type="text/javascript" src="../js/tinymce/tinymce.min.js"></script>
+<script type="text/javascript">
+tinymce.init({
+		content_css: "../css/tinymce.css",
+		width: 768,
+    selector: "textarea"
+});
+</script>
 {/block}
 
 {block name=body}
