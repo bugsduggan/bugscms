@@ -13,7 +13,7 @@
 	<div class="row">
 
 		<div class="column span4">
-			<p><a class="btn btn-primary" href="#">New page</a></p>
+			<p><a class="btn btn-primary" href="index.php?page=edit">New page</a></p>
 		</div>
 		<div class="column span4"></div>
 		<div class="column span4">
@@ -34,7 +34,7 @@
 		<tr class="success">
 			<td>{$about.id}</td>
 			<td>{$about.title|truncate:50}</td>
-			<td><a href="#">Edit</a></td>
+			<td><a href="index.php?page=edit&id={$about.id}">Edit</a></td>
 			<td><a href="../index.php?page=about">View</a></td>
 			<td></td>
 		</tr>
@@ -43,7 +43,7 @@
 		<tr>
 			<td>{$page.id}</td>
 			<td>{$page.title|truncate:50}</td>
-			<td><a href="#">Edit</a></td>
+			<td><a href="index.php?page=edit&id={$page.id}">Edit</a></td>
 			<td><a href="../index.php?page=article&id={$page.id}">View</a></td>
 			<td><a href="#">Set about</a></td>
 		</tr>

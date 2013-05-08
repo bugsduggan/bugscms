@@ -3,6 +3,7 @@
 require_once('../includes/Smarty.class.php');
 
 include('functions/pageloader.php');
+include('functions/sandbox.php');
 
 session_start();
 
@@ -41,7 +42,9 @@ prepare_page($smarty, $page);
 if ($config['footer'] != '')
 	$smarty->assign('footer', $config['footer']);
 
-if ($action == 'logout') {
+if ($action == 'save_page') {
+	save_page();
+} else if ($action == 'logout') {
 	logout();
 } else {
 	show_page($smarty, $page);

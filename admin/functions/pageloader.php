@@ -11,6 +11,8 @@ function show_page($smarty, $page) {
 function prepare_page($smarty, $page) {
 	if ($page == 'pages')
 		prepare_pages($smarty);
+	if ($page == 'edit')
+		prepare_edit($smarty);
 }
 
 function prepare_pages($smarty) {
@@ -48,6 +50,26 @@ function prepare_pages($smarty) {
 		$smarty->assign('about', $about);
 	if (count($pages) > 0)
 		$smarty->assign('pages', $pages);
+}
+
+function prepare_edit($smarty) {
+	if (isset($_GET['id'])) {
+		// id is set, we're editing
+		$db = new SQLite3(DB_NAME);
+
+		$page_id = $_GET['id'];
+		$query = "SELECT * FROM news WHERE id=".$page_id;
+		$result = $db->querySingle($query, true);
+		
+		$article = array(
+			'id' => $result['id'],
+			'title' => $result['title'],
+			'body' => $result['body'],
+			'status' => $result['status']
+		);
+
+		$smarty->assign('article', $article);
+	}
 }
 
 ?>
