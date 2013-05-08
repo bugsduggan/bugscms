@@ -110,11 +110,7 @@ function prepare_gigs($smarty) {
 function prepare_about($smarty) {
 	$db = new SQLite3(DB_NAME);
 
-	$query = "SELECT * FROM about";
-	$result = $db->querySingle($query);
-	$about_id = $result;
-
-	$query = "SELECT * FROM news WHERE id = ".$about_id;
+	$query = "SELECT * FROM news WHERE id = (SELECT * FROM about)";
 	$result = $db->querySingle($query, true);
 
 	if ($result) {
