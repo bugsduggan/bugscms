@@ -17,29 +17,30 @@
 		<div class="column span4">
 		</div>
 		<div class="column span4">
-			{if isset($gigs)}
-			<p><strong>Events:</strong> {count($gigs)}</p>
+			{if isset($events)}
+			<p><strong>Events:</strong> {count($events)}</p>
 			{/if}
 		</div>
 	</div>
 
 	<hr>
 
-	{if isset($gigs)}
+	{if isset($events)}
 	<table class="table table-striped table-bordered">
-		<tr><th>ID</th><th>Location</th><th>Date</th><th>Time</th><th>Map</th><th>Buy</th><th>Edit</td></tr>
-		{foreach $gigs as $gig}
+		<tr><th>ID</th><th>Name</th><th>Location</th><th>Date</th><th>Time</th><th>Map</th><th>Buy</th><th>Edit</td></tr>
+		{foreach $events as $event}
 		<tr>
-			<td>{$gig.id}</td>
-			<td>{$gig.location}</td>
-			<td>{$gig.date|date_format:#date_format#}</td>
-			<td>{$gig.date|date_format:#time_format#}</td>
+			<td>{$event.id}</td>
+			<td>{$event.name}</td>
+			<td>{$event.location}</td>
+			<td>{$event.date|date_format:#date_format#}</td>
+			<td>{$event.date|date_format:#time_format#}</td>
 			<td>
-			{if $gig.map_link != ''}<a href="{$gig.map_link}">Map</a>{/if}
+			{if $event.map_link != ''}<a href="{$event.map_link}">Map</a>{/if}
 			</td><td>
-			{if $gig.info_link != ''}<a href="{$gig.info_link}">Info</a>{/if}
+			{if $event.info_link != ''}<a href="{$event.info_link}">Info</a>{/if}
 			</td>
-			<td><a href="index.php?page=event&id={$gig.id}">Edit</a></td>
+			<td><a href="index.php?page=event&id={$event.id}">Edit</a></td>
 		</tr>
 		{/foreach}
 	</table>

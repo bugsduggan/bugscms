@@ -10,11 +10,22 @@
 		<h1>Edit event</h1>
 	</div>
 
-	<form class="form-horizontal" method="post" action="index.php?action=save_gig">
+	<form class="form-horizontal" method="post" action="index.php?action=save_event">
 
 		{if isset($gig)}
 		<input type="hidden" id="id" name="id" value="{$gig.id}">
 		{/if}
+
+		<div class="control-group">
+			<label class="control-label" for="name">Name</label>
+			<div class="controls">
+				{if isset($gig)}
+				<input type="text" id="name" name="name" value="{$gig.name}">
+				{else}
+				<input type="text" id="name" name="name" placeholder="Name">
+				{/if}
+			</div>
+		</div>
 
 		<div class="control-group">
 			<label class="control-label" for="location">Location</label>

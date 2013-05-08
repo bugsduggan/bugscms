@@ -80,43 +80,45 @@ function prepare_edit($smarty) {
 function prepare_events($smarty) {
 	$db = new SQLite3(DB_NAME);
 
-	$query = "SELECT * FROM gigs WHERE date > date('now') ORDER BY date ASC";
+	$query = "SELECT * FROM events WHERE date > date('now') ORDER BY date ASC";
 	$result = $db->query($query);
 
-	$gigs = array();
+	$events = array();
 	while (($row = $result->fetchArray(SQLITE3_ASSOC)) != null) {
-		$gig = array(
+		$event = array(
 			'id' => $row['id'],
+			'name' => $row['name'],
 			'location' => $row['location'],
 			'date' => $row['date'],
 			'map_link' => $row['map_link'],
 			'info_link' => $row['info_link']
 		);
-		array_push($gigs, $gig);
+		array_push($events, $event);
 	}
 
 	$db->close();
-	if (count($gigs) > 0)
-		$smarty->assign('gigs', $gigs);
+	if (count($events) > 0)
+		$smarty->assign('events', $events);
 }
 
 function prepare_event($smarty) {
 	if (isset($_GET['id'])) {
 		$db = new SQLite3(DB_NAME);
 
-		$gig_id = $_GET['id'];
-		$query = "SELECT * FROM gigs WHERE id=".$gig_id;
+		$id = $_GET['id'];
+		$query = "SELECT * FROM events WHERE id=".$id;
 		$result = $db->querySingle($query, true);
 
-		$gig = array(
+		$event = array(
 			'id' => $result['id'],
+			'name' => $result['name'],
 			'location' => $result['location'],
 			'date' => $result['date'],
 			'map_link' => $result['map_link'],
 			'info_link' => $result['info_link']
 		);
 
-		$smarty->assign('gig', $gig);
+		$smarty->assign('event', $event);
 		$db->close();
 	}
 }

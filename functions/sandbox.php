@@ -25,7 +25,7 @@ function create_db($populate_db) {
 		$statements = array(
 			"CREATE TABLE users (id INTEGER PRIMARY KEY, username TEXT NOT NULL, password TEXT NOT NULL, email TEXT NOT NULL)",
 			"CREATE TABLE news (id INTEGER PRIMARY KEY, title TEXT NOT NULL, body TEXT NOT NULL, status INTEGER NOT NULL)",
-			"CREATE TABLE gigs (id INTEGER PRIMARY KEY, location TEXT NOT NULL, date TEXT NOT NULL, map_link TEXT, info_link TEXT)",
+			"CREATE TABLE events (id INTEGER PRIMARY KEY, name TEXT NOT NULL, location TEXT NOT NULL, date TEXT NOT NULL, map_link TEXT, info_link TEXT)",
 			"CREATE TABLE about (id INTEGER, FOREIGN KEY (id) REFERENCES news (id))"
 		);
 

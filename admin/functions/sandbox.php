@@ -37,10 +37,12 @@ function save_event() {
 	$db = new SQLite3(DB_NAME);
 
 	if (!isset($_POST['id']))
-		$id = 1 + $db->querySingle("SELECT id FROM gigs ORDER BY id DESC LIMIT 1");
+		$id = 1 + $db->querySingle("SELECT id FROM events ORDER BY id DESC LIMIT 1");
 	else
 		$id = $_POST['id'];
 
+	if (!isset($_POST['name']))
+		$success = false;
 	if (!isset($_POST['location']))
 		$success = false;	
 	if (!isset($_POST['date']))
@@ -50,12 +52,13 @@ function save_event() {
 	if (!isset($_POST['info_link']))
 		$success = false;
 
+	$name = SQLite3::escapeString($_POST['name']);
 	$location = SQLite3::escapeString($_POST['location']);
 	$date = SQLite3::escapeString($_POST['date']);
 	$map_link = SQLite3::escapeString($_POST['map_link']);
 	$info_link = SQLite3::escapeString($_POST['info_link']);
 
-	$stm = "INSERT OR REPLACE INTO gigs (id, location, date, map_link, info_link) VALUES (".$id.", '".$location."', '".$date."', '".$map_link."', '".$info_link."')";
+	$stm = "INSERT OR REPLACE INTO events (id, name, location, date, map_link, info_link) VALUES (".$id.", '".$name."', '".$location."', '".$date."', '".$map_link."', '".$info_link."')";
 	$db->exec($stm);
 	$db->close();
 

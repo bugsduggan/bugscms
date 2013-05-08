@@ -83,28 +83,29 @@ function prepare_home($smarty) {
 function prepare_events($smarty) {
 	$db = new SQLite3(DB_NAME);
 
-	$gig_data = array();
+	$events = array();
 
-	$query = "SELECT * FROM (SELECT * FROM gigs WHERE date > date('now') ORDER BY date DESC LIMIT 10) ORDER BY date ASC";
+	$query = "SELECT * FROM (SELECT * FROM events WHERE date > date('now') ORDER BY date DESC LIMIT 10) ORDER BY date ASC";
 	$result = $db->query($query);
 
 	$row = $result->fetchArray(SQLITE3_ASSOC);
 	while ($row) {
-	  $gig = array(
+	  $event = array(
 	  	'id' => $row['id'],
+			'name' => $row['name'],
   		'location' => $row['location'],
   		'date' => $row['date'],
   		'map_link' => $row['map_link'],
   		'info_link' => $row['info_link']
   	);
-  	array_push($gig_data, $gig);
+  	array_push($events, $event);
 		$row = $result->fetchArray(SQLITE3_ASSOC);
 	}
 
 	$db->close();
 
-	if (count($gig_data) > 0)
-		$smarty->assign('gig_data', $gig_data);
+	if (count($events) > 0)
+		$smarty->assign('events', $events);
 }
 
 function prepare_about($smarty) {
