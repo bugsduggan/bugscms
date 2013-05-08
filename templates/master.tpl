@@ -25,6 +25,11 @@
 			.navbar a {
 				margin-top: 4px;
 			}
+			@media (max-width: 979px) {
+				body {
+					margin-top: -60px;
+				}
+			}
 			@media (max-width: 767px) {
 				body {
 					margin-top: -60px;
