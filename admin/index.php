@@ -30,6 +30,8 @@ if ($config['debug'] == 'true') {
 $page = (isset($_GET['page']) ? $_GET['page'] : 'admin');
 $action = (isset($_GET['action']) ? $_GET['action'] : '');
 
+if (!file_exists(DB_NAME))
+	header('Location:../index.php');
 if (!isset($_SESSION['BUGS_UID']))
 	header('Location:../index.php?page=login');
 if ($page == 'home')

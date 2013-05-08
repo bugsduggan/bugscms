@@ -10,23 +10,42 @@
 		<h1>Pages</h1>
 	</div>
 
+	<div class="row">
+
+		<div class="column span4">
+			<p><a class="btn btn-primary" href="#">New page</a></p>
+		</div>
+		<div class="column span4"></div>
+		<div class="column span4">
+			<p class="lead">Info</p>
+			{if isset($pages)}
+			<p><strong>Pages:</strong> {count($pages)}</p>
+			{/if}
+		</div>
+
+	</div>
+
+	<hr>
+
 	{if isset($pages)}
 	<table class="table table-striped table-bordered">
-		<tr><th>ID</th><th>Title</th><th>Edit</th><th>Link</th></tr>
+		<tr><th>ID</th><th>Title</th><th>Edit</th><th>Link</th><th>About</th></tr>
 		{if isset($about)}
 		<tr class="success">
 			<td>{$about.id}</td>
-			<td>{$about.title}</td>
+			<td>{$about.title|truncate:50}</td>
 			<td><a href="#">Edit</a></td>
 			<td><a href="../index.php?page=about">View</a></td>
+			<td></td>
 		</tr>
 		{/if}
 		{foreach $pages as $page}
 		<tr>
 			<td>{$page.id}</td>
-			<td>{$page.title}</td>
+			<td>{$page.title|truncate:50}</td>
 			<td><a href="#">Edit</a></td>
 			<td><a href="../index.php?page=article&id={$page.id}">View</a></td>
+			<td><a href="#">Set about</a></td>
 		</tr>
 		{/foreach}
 	</table>
