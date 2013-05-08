@@ -42,7 +42,7 @@ if ($config['footer'] != '')
 	$smarty->assign('footer', $config['footer']);
 
 if ($page == 'install' && $action == 'doinstall' && !file_exists(DB_NAME)) {
-	create_db($config['populate_db'] == 'true');
+	create_db();
 } else if ($action == 'login') {
 	login();	
 } else if ($action == 'logout') {

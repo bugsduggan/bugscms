@@ -1,6 +1,6 @@
 <?php
 
-function create_db($populate_db) {
+function create_db() {
 
 	$success = true;
 
