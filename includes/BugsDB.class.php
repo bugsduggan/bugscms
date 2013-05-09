@@ -1,101 +1,132 @@
 <?php
 
-require_once('includes/Article.class.php');
 require_once('includes/User.class.php');
 
 class BugsDBException extends Exception { }
 
 class BugsDB {
 
-	private $db_name = null;
+	/* private variables */
+	private $db_name = null; // the database file
 
+	/* constructor */
 	public function __construct($db_name) {
 		$this->db_name = $db_name;
 	}
 
+	/*
+	 * public functions
+	 */
+
+	/* returns true if the db file exists */
 	public function exists() {
 		return file_exists($this->db_name);
 	}
 
+	/* creates the database and adds the admin user */
 	public function create_db($username, $password, $email, $overwrite=false) {
+		// check if exists
 		if ($this->exists()) {
-			if (!$overwrite)
-				throw new BugsDBException($this->db_name.' already exists');
-			else
+			if ($overwrite) // it exists, kill it
 				unlink($this->db_name);
+			else
+				throw new BugsDBException('Cannot write to file: '.$this->db_name);
 		}
 
-		$statements = array(
-			"CREATE TABLE users (id INTEGER PRIMARY KEY, username TEXT NOT NULL, password TEXT NOT NULL, email TEXT NOT NULL)",
-			"CREATE TABLE articles (id INTEGER PRIMARY KEY, title TEXT NOT NULL, subtitle TEXT, body TEXT NOT NULL, author_id INTEGER NOT NULL, date_created TEXT NOT NULL, status INTEGER, FOREIGN KEY (author_id) REFERENCES users (id))"
+		// create table statements
+		$statement = array(
+			"CREATE TABLE users (id INTEGER PRIMARY KEY, username TEXT NOT NULL, password TEXT NOT NULL, email TEXT NOT NULL, status INTEGER NOT NULL)"
 		);
 
-		foreach ($statements as $stm)
+		// loop through and exec
+		foreach ($statement as $stm)
 			$this->exec($stm);
 
-		$this->add_user($username, $password, $email);
-		return $this->get_user(1);
-	}
+		// create admin user
+		$user = $this->add_user($username, $password, $email, true);
 
-	public function add_user($username, $password, $email) {
-		$id = 1 + $this->query_single("SELECT id FROM users ORDER BY id DESC LIMIT 1", false);
-		$user = new User($id, $username, sha1($password), $email);
-		$this->update_user($user);
+		// return the admin user
 		return $user;
 	}
 
-	public function get_user($id) {
-		$query = "SELECT * FROM users WHERE id=$id";
-		$result = $this->query_single($query);	
-		return new User($result['id'], $result['username'], $result['password'], $result['email']);
+	/* adds a user the the database and returns the user object */
+	public function add_user($username, $password, $email, $admin=false) {
+		// find the next id
+		$id = $this->next_id('users');
+
+		// encrypt the password
+		$password = sha1($password);
+
+		// create a user object
+		$user = new User($id, $username, $password, $email, $admin);
+		
+		// update the database and return
+		return $this->update_user($user);
 	}
 
+	/* updates or creates an entry in the users table */
 	public function update_user($user) {
-		$stm = "INSERT OR REPLACE INTO users VALUES ($user->id, '$user->username', '$user->password', '$user->email')";
+		// prepare variables
+		$id = $user->get_id();
+		$username = $user->get_username();
+		$password = $user->get_password();
+		$email = $user->get_email();
+		if ($user->is_admin())
+			$status = 1;
+		else
+			$status = 0;
+
+		// prepare statement
+		$stm = "INSERT OR REPLACE INTO users VALUES ($id, '$username', '$password', '$email', $status)";	
+
+		// exec and return
 		$this->exec($stm);
-		return $this->get_user($user->id);
+		return $this->get_user($user->get_id());
 	}
 
-	public function add_article($title, $subtitle, $body, $author_id, $date_created, $status) {
-		$id = 1 + $this->query_single("SELECT id FROM articles ORDER BY id DESC LIMIT 1", false);
-		$author = $this->get_user($author_id);
-		$article = new Article($id, $title, $subtitle, $body, $author, $date_created, $status);
-		$this->update_article($article);
-		return $article;
-	}
-
-	public function get_article($id) {
-		$query = "SELECT * FROM articles WHERE id=$id";
+	/* gets a user from the database */
+	public function get_user($id) {
+		// execute the query
+		$query = "SELECT * FROM users WHERE id=$id";
 		$result = $this->query_single($query);
-		$author = $this->get_user($result['author_id']);
-		return new Article($result['id'], $result['title'], $result['subtitle'], $result['body'], $author, $result['date_created'], $result['status']);
+
+		// prepare variables
+		$id = $result['id'];
+		$username = $result['username'];
+		$password = $result['password'];
+		$email = $result['email'];
+		if ($result['status'] == 1)
+			$admin = true;
+		else
+			$admin = false;
+
+		// create and return object
+		return new User($id, $username, $password, $email, $admin);
 	}
 
-	public function update_article($article) {
-		$stm = "INSERT OR REPLACE INTO articles (id, title, subtitle, body, author_id, date_created, status) VALUES ($article->id, '$article->title', '$article->subtitle', '$article->body', ".$article->author->id.", '$article->date_created', $article->status)";
-		$this->exec($stm);
-		return $this->get_article($article->id);
+	/*
+	 * private functions
+	 */
+
+	/* gets the next available id from a given table */
+	private function next_id($table) {
+		$query = "SELECT id FROM $table ORDER BY id DESC LIMIT 1";
+		return 1 + $this->query_single($query, false);
 	}
 
+	/* execs a resultless statement */
 	private function exec($stm) {
 		$db = new SQLite3($this->db_name);
-
-		if(!$db->exec($stm))
-			throw new BugsDBException('SQLite error on statement: "'.$stm.'"');
-
-		$db->close();
+		if (!$db->exec($stm))
+			throw new BugsDBException('Failed to exec statement: \''.$stm.'\'');
 	}
 
+	/* returns a single result query */
 	private function query_single($query, $entire_row=true) {
 		$db = new SQLite3($this->db_name);
-
 		$result = $db->querySingle($query, $entire_row);
-
 		$db->close();
-
 		return $result;
 	}
 
 }
-
-?>
