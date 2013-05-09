@@ -9,6 +9,10 @@
 	<div class="page-header">
 		<h1>Home</h1>
 	</div>
+
+	{if isset($user)}
+	<p>{$user->get_username()}</p>
+	{/if}
 </div>
 {/block}
 

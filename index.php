@@ -3,6 +3,8 @@
 require_once('includes/BugsDB.class.php');
 require_once('includes/Smarty.class.php');
 
+class BugsCmsException extends Exception { }
+
 date_default_timezone_set('UTC');
 
 define('CONFIG', 'bugscms.conf');
@@ -32,28 +34,53 @@ if (!$db->exists())
 /*
  * load page
  */
-$page_loaded = false;
-$error = array();
-
+$action = (isset($_GET['action']) ? $_GET['action'] : '');
 $page = (isset($_GET['page']) ? $_GET['page'] : 'home');
 
-if (!$page != 'error') {
-	try {
-		$smarty->assign('page', $page);
-		$smarty->display($page.'.tpl');
-		$page_loaded = true;
-	} catch (Exception $e) {
-		$error['page-requested'] = $page;
-		$error['msg'] = $e->getMessage();
+try {
+	
+	if ($action != '')
+		process_action($action);
+
+	$smarty->assign('page', $page);
+	prepare_page($smarty, $page);
+
+	$smarty->display($page.'.tpl');
+
+} catch (Exception $e) {
+	switch(get_class($e)) {
+		case 'BugsCmsException':
+		case 'BugsDBException':
+		case 'SmartyException':
+			$error = array(
+				'id' => (isset($_GET['id']) ? $_GET['id'] : 0),
+				'message' => $e->getMessage(),
+				'page_requested' => $page
+			);
+			$page = 'error';
+			$smarty->assign('error', $error);
+			$smarty->assign('page', $page);
+			$smarty->display('error.tpl');
+			break;
+		default:
+			throw($e);
 	}
 }
 
-// catch-all error
-if (!$page_loaded) {
-	$page = 'error';
-	$smarty->assign('error', $error);
-	$smarty->assign('page', $page);
-	$smarty->display('error.tpl');
+function process_action($action) {
+
+}
+
+function prepare_page($smarty, $page) {
+	if ($page == 'master' || $page == 'blank')
+		throw new BugsCmsException('Invalid page request');
+	if ($page == 'home')
+		prepare_home($smarty);
+}
+
+function prepare_home($smarty) {
+	global $db;
+	$smarty->assign('user', $db->get_user(isset($_GET['id']) ? $_GET['id'] : 1));
 }
 
 ?>

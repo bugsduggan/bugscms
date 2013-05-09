@@ -16,11 +16,16 @@
 	{if #debug#}
 		<p class="lead">
 			{if isset($error)}
-			{$error.msg}
+			{$error.message}
 			{else}
 			Unknown error
 			{/if}
 		</p>
+
+		<table class="table table-bordered">
+		{if $error.id > 0}<tr><td>ID requested:</td><td>{$error.id}</td></tr>{/if}
+		<tr><td>Page requested:</td><td>{$error.page_requested}</td></tr>
+		</table>
 	{/if}
 
 </div>
