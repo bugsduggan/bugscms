@@ -32,23 +32,13 @@ if (!$db->exists())
 /*
  * load page
  */
+$page_loaded = false;
+
 $page = (isset($_GET['page']) ? $_GET['page'] : 'home');
 
-if ($page == 'home') {
-	try {
-		$id = (isset($_GET['id']) ? $_GET['id'] : 1);
-		$user = $db->get_user($id);
-		$smarty->assign('user', $user);
-	} catch (Exception $e) {
-		$page = 'error';
-	}
-}
-
-try {
-	$smarty->assign('page', $page);
-	$smarty->display($page.'.tpl');
-} catch (Exception $e) {
-	$smarty->assign('page', 'error');
+// catch-all error
+if (!$page_loaded) {
+	$page = 'error';
 	$smarty->display('error.tpl');
 }
 
