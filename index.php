@@ -1,54 +1,27 @@
 <?php
 
-require_once('includes/LoremIpsum.class.php');
-require_once('includes/Smarty.class.php');
-
-include('functions/sandbox.php');
-include('functions/pageloader.php');
-
-session_start();
+require_once('includes/BugsDB.class.php');
 
 date_default_timezone_set('UTC');
 
-define('CONFIG', 'setup.conf');
+$db = new BugsDB('data.db');
 
-$smarty = new Smarty();
+if (!$db->exists())
+	$db->create_db('admin', 'password', 'tom@tomleaman.co.uk');
 
-$smarty->setTemplateDir('templates');
-$smarty->setCompileDir('templates_c');
-$smarty->setCacheDir('cache');
-$smarty->setConfigDir('configs');
-
-$smarty->configLoad(CONFIG);
-$config = $smarty->getConfigVars();
-
-define('DB_NAME', $config['db_name']);
-
-if ($config['debug'] == 'true') {
-	ini_set('display_errors', 'On');
-	$smarty->assign('debug', true);
-}
-
-$page = (isset($_GET['page']) ? $_GET['page'] : 'home');
-$action = (isset($_GET['action']) ? $_GET['action'] : '');
-
-if (!file_exists(DB_NAME))
-	$page = 'install';
-if ($page == 'admin')
-	header('Location:admin');
-
-prepare_page($smarty, $page);
-if ($config['footer'] != '')
-	$smarty->assign('footer', $config['footer']);
-
-if ($page == 'install' && $action == 'doinstall' && !file_exists(DB_NAME)) {
-	create_db();
-} else if ($action == 'login') {
-	login();	
-} else if ($action == 'logout') {
-	logout();
-} else {
-	show_page($smarty, $page);
-}
+$user = $db->get_user(1);
+$article = $db->add_article('title', 'subtitle', 'body', 1, '2013-11-11', 1);
 
 ?>
+
+<!DOCYTYPE html>
+<html lang="en">
+	<head>
+		<title>Debug</title>
+	</head>
+	<body>
+		<p><?php echo $user->username; ?></p>
+		<p><?php echo $article->title; ?></p>
+		<p><?php echo $article->author->username; ?></p>
+	</body>
+</html>
