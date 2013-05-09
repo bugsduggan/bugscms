@@ -43,6 +43,7 @@ if (!$page != 'error') {
 		$smarty->display($page.'.tpl');
 		$page_loaded = true;
 	} catch (Exception $e) {
+		$error['page-requested'] = $page;
 		$error['msg'] = $e->getMessage();
 	}
 }

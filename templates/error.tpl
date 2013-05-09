@@ -11,17 +11,17 @@
 		<h1>Error</h1>
 	</div>
 
-	{if #debug#}
-	<p class="lead">
-		{if isset($error)}
-		{$error.msg}
-		{else}
-		Unknown error
-		{/if}
-	</p>
-	{/if}
-
 	<p><a class="btn-large btn-primary" href="index.php">Home</a></p>
+
+	{if #debug#}
+		<p class="lead">
+			{if isset($error)}
+			{$error.msg}
+			{else}
+			Unknown error
+			{/if}
+		</p>
+	{/if}
 
 </div>
 {/block}
@@ -36,6 +36,9 @@
 {/block}
 
 {block name=style}
+	.lead {
+		margin-top: 20px;
+	}
 {/block}
 
 {block name=headscript}
