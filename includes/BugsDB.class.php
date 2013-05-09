@@ -90,6 +90,10 @@ class BugsDB {
 		$query = "SELECT * FROM users WHERE id=$id";
 		$result = $this->query_single($query);
 
+		// error handling
+		if (count($result) == 0)
+			throw new BugsDBException('User not found');
+
 		// prepare variables
 		$id = $result['id'];
 		$username = $result['username'];
