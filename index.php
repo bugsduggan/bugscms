@@ -51,12 +51,17 @@ try {
 	switch(get_class($e)) {
 		case 'BugsCmsException':
 		case 'BugsDBException':
+		case 'SmartyCompilerException':
 		case 'SmartyException':
 			$error = array(
-				'id' => (isset($_GET['id']) ? $_GET['id'] : 0),
 				'message' => $e->getMessage(),
 				'page_requested' => $page
 			);
+			if (isset($_GET['action']))
+				$error['action'] = $_GET['action'];
+			if (isset($_GET['id']))
+				$error['id'] = $_GET['id'];
+
 			$page = 'error';
 			$smarty->assign('error', $error);
 			$smarty->assign('page', $page);
@@ -68,7 +73,7 @@ try {
 }
 
 function process_action($action) {
-
+	throw new BugsCmsException('Invalid action request');
 }
 
 function prepare_page($smarty, $page) {

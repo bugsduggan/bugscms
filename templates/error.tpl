@@ -23,7 +23,8 @@
 		</p>
 
 		<table class="table table-bordered">
-		{if $error.id > 0}<tr><td>ID requested:</td><td>{$error.id}</td></tr>{/if}
+		{if isset($error.action)}<tr><td>Action requested:</td><td>{$error.action}</td></tr>{/if}	
+		{if isset($error.id)}<tr><td>ID requested:</td><td>{$error.id}</td></tr>{/if}
 		<tr><td>Page requested:</td><td>{$error.page_requested}</td></tr>
 		</table>
 	{/if}

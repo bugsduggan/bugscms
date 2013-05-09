@@ -5,14 +5,19 @@
 *}
 
 {block name=body}
-<div class="container">
-	<div class="page-header">
-		<h1>Home</h1>
-	</div>
+<div class="container-fluid">
+	<div class="row-fluid">
+		<div class="span9">
+		{* main page content *}
 
-	{if isset($user)}
-	<p>{$user->get_username()}</p>
-	{/if}
+		</div>
+		<div class="span3">
+		{* sidebar *}
+			<div class="well sidebar-nav">
+
+			</div>
+		</div>
+	</div>
 </div>
 {/block}
 
