@@ -8,7 +8,13 @@
 <body>
 
 	<div class="container">
-	{block name=body}{/block}
+
+		<div class="page-header">
+			<h1>{$page|capitalize}</h1>
+		</div>
+
+		{block name=body}{/block}
+
 	</div>
 
 </body>

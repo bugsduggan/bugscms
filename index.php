@@ -5,6 +5,8 @@ require_once('includes/Smarty.class.php');
 
 date_default_timezone_set('UTC');
 
+define('CONFIG', 'bugscms.conf');
+
 /*
  * setup smarty
  */
@@ -17,10 +19,12 @@ $smarty->setConfigDir('configs');
 
 $smarty->error_reporting = E_ALL & ~E_NOTICE;
 
+$smarty->configLoad(CONFIG, 'globals');
+
 /*
  * setup db
  */
-$db = new BugsDB('data.db');
+$db = new BugsDB($smarty->getConfigVars('db_name'));
 
 if (!$db->exists())
 	$db->create_db('admin', 'password', 'email');
@@ -32,16 +36,19 @@ $page = (isset($_GET['page']) ? $_GET['page'] : 'home');
 
 if ($page == 'home') {
 	try {
-		$user = $db->get_user(1);
+		$id = (isset($_GET['id']) ? $_GET['id'] : 1);
+		$user = $db->get_user($id);
 		$smarty->assign('user', $user);
 	} catch (Exception $e) {
-		$page = 'error.tpl';
+		$page = 'error';
 	}
 }
 
 try {
+	$smarty->assign('page', $page);
 	$smarty->display($page.'.tpl');
 } catch (Exception $e) {
+	$smarty->assign('page', 'error');
 	$smarty->display('error.tpl');
 }
 
