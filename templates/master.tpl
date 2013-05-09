@@ -24,7 +24,7 @@
 	<link href="css/bootstrap-responsive.css" rel="stylesheet">
 
 	<script>
-	{block name=script-head}{/block}
+	{block name=headscript}{/block}
 	</script>
 </head>
 
@@ -41,7 +41,7 @@
 	<script src="js/jquery.js"></script>
 	<script src="js/bootstrap.js"></script>
 	<script>
-	{block name=script-footer}{/block}
+	{block name=footerscript}{/block}
 	</script>
 
 </body>

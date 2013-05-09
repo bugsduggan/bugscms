@@ -33,12 +33,25 @@ if (!$db->exists())
  * load page
  */
 $page_loaded = false;
+$error = array();
 
 $page = (isset($_GET['page']) ? $_GET['page'] : 'home');
+
+if (!$page != 'error') {
+	try {
+		$smarty->assign('page', $page);
+		$smarty->display($page.'.tpl');
+		$page_loaded = true;
+	} catch (Exception $e) {
+		$error['msg'] = $e->getMessage();
+	}
+}
 
 // catch-all error
 if (!$page_loaded) {
 	$page = 'error';
+	$smarty->assign('error', $error);
+	$smarty->assign('page', $page);
 	$smarty->display('error.tpl');
 }
 

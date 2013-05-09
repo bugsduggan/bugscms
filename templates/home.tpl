@@ -6,6 +6,9 @@
 
 {block name=body}
 <div class="container">
+	<div class="page-header">
+		<h1>Home</h1>
+	</div>
 </div>
 {/block}
 
