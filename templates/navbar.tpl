@@ -10,9 +10,13 @@
       <div class="nav-collapse collapse">
         <ul class="nav pull-left">
 					{if $page == 'home'}<li class="active">{else}<li>{/if}<a href="index.php">Home</a></li>
-					{if $page == 'events'}<li class="active">{else}<li>{/if}<a href="index.php?page=events">Events</a></li>
+					{if #show_events# == 'true'}
+						{if $page == 'events'}<li class="active">{else}<li>{/if}<a href="index.php?page=events">Events</a></li>
+					{/if}
           {if $page == 'about'}<li class="active">{else}<li>{/if}<a href="index.php?page=about">About</a></li>
-          {if $page == 'contact'}<li class="active">{else}<li>{/if}<a href="index.php?page=contact">Contact</a></li>
+					{if #show_contact# == 'true'}
+          	{if $page == 'contact'}<li class="active">{else}<li>{/if}<a href="index.php?page=contact">Contact</a></li>
+					{/if}
         </ul>
 				<ul class="nav pull-right">
 				{if $logged_in}
