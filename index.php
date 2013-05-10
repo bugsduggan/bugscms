@@ -45,6 +45,8 @@ try {
 	if ($action != '')
 		process_action($action);
 
+	if ($page == 'error')
+		throw new BugsCmsException('Error page requested');
 	$smarty->assign('page', $page);
 	prepare_page($smarty, $page);
 
