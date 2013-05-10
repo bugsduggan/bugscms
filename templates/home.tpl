@@ -9,13 +9,18 @@
 	<div class="row-fluid">
 		<div class="span9">
 		{* main page content *}
+			<div class="page-header">
+				<h1>Home</h1>
+			</div>
+
+			<p class="lead">{lorem_ipsum count=50 style=single}</p>
+
+			{lorem_ipsum}
 
 		</div>
 		<div class="span3">
 		{* sidebar *}
-			<div class="well sidebar-nav">
 
-			</div>
 		</div>
 	</div>
 </div>

@@ -1,6 +1,7 @@
 <?php
 
 require_once('includes/BugsDB.class.php');
+require_once('includes/LoremIpsum.class.php');
 require_once('includes/Smarty.class.php');
 
 class BugsCmsException extends Exception { }
@@ -22,6 +23,8 @@ $smarty->setConfigDir('configs');
 $smarty->error_reporting = E_ALL & ~E_NOTICE;
 
 $smarty->configLoad(CONFIG, 'globals');
+
+$smarty->registerPlugin("function", "lorem_ipsum", "lorem_ipsum");
 
 /*
  * setup db
@@ -86,6 +89,26 @@ function prepare_page($smarty, $page) {
 function prepare_home($smarty) {
 	global $db;
 	$smarty->assign('user', $db->get_user(isset($_GET['id']) ? $_GET['id'] : 1));
+}
+
+function lorem_ipsum($params, $smarty) {
+	$generator = new LoremIpsumGenerator();
+	$result = '';
+
+	$style=(isset($params['style']) ? $params['style'] : 'paragraph');
+	$count=(isset($params['count']) ? $params['count'] : 5);
+	$lorem=(isset($params['lorem']) ? $params['lorem'] : true);
+	$p_size=(isset($params['p_size']) ? $params['p_size'] : 50);
+
+	if ($style == 'single') {
+		$result = ucfirst($generator->getContent($wordCount=$count, $format='plain', $loremipsum=$lorem));
+	} else {
+		for ($i = 0; $i < $count; $i++) {
+			$result = $result.'<p>'.ucfirst($generator->getContent($wordCount=$p_size, $format='plain', $loremipsum=($i == 0 ? true : false))).'</p>';
+		}	
+	}
+
+	return $result;
 }
 
 ?>
