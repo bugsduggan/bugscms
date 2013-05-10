@@ -32,9 +32,24 @@
 
 	{block name=navbar}{/block}
 
-	{block name=sidebar}{/block}
-
-	{block name=body}{/block}
+	{block name=body}
+	<div class="container">
+	{block name=title}
+	<div class="page-header">
+		<h1>{$page|capitalize|default:'Blank page'}</h1>
+	</div>
+	{/block}
+	<div class="row">
+		<div class="span2">
+		{block name=leftpanel}{/block}
+		</div><div class="span8">
+		{block name=centerpanel}<p>{lorem_ipsum}</p>{/block}
+		</div><div class="span2">
+		{block name=rightpanel}{/block}
+		</div>
+	</div>
+	</div>
+	{/block}
 
 	{block name=footer}{/block}
 

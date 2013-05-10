@@ -2,53 +2,40 @@
 
 {*
 	error.tpl
+
+	Expects to be passed an error array with the following required fields:
+
+		page_requested - The $page attribute from index.php indicating the
+		                 template requested. Probably from $_GET['page'].
+
+	It can also display the following optional fields:
+		
+		action         - $_GET['id'] if it was set.
+		id             - $_GET['id'] if it was set.
+
 *}
 
-{block name=body}
-<div class="container">
+{block name=centerpanel}
+<p class="lead">Oops! Looks like we've encountered an error!</p>
+<p>Sorry about that!</p>
+{if #debug#}<hr>
 
-	<div class="page-header">
-		<h1>Error</h1>
-	</div>
+<table class="table table-bordered span4">
 
-	<p><a class="btn-large btn-primary" href="index.php">Home</a></p>
+	<tr><th colspan="2">{$error.message}</th></tr>
+	<tr><th class="span3">Variable</th><th class="span3">Value</th></tr>
 
-	{if #debug#}
-		<p class="lead">
-			{if isset($error)}
-			{$error.message}
-			{else}
-			Unknown error
-			{/if}
-		</p>
-
-		<table class="table table-bordered">
-		{if isset($error.action)}<tr><td>Action requested:</td><td>{$error.action}</td></tr>{/if}	
-		{if isset($error.id)}<tr><td>ID requested:</td><td>{$error.id}</td></tr>{/if}
-		<tr><td>Page requested:</td><td>{$error.page_requested}</td></tr>
-		</table>
+	{if isset($error.action)}
+	<tr><td>Action requested:</td><td>{$error.action}</td></tr>
 	{/if}
 
-</div>
-{/block}
+	{if isset($error.id)}
+	<tr><td>Id requested:</td><td>{$error.id}</td><tr>
+	{/if}
 
-{block name=navbar}
-{/block}
+	<tr><td>Page requested:</td><td>{$error.page_requested}</td></tr>
 
-{block name=sidebar}
-{/block}
+</table>
 
-{block name=footer}
-{/block}
-
-{block name=style}
-	.lead {
-		margin-top: 20px;
-	}
-{/block}
-
-{block name=headscript}
-{/block}
-
-{block name=footerscript}
+{/if}
 {/block}
