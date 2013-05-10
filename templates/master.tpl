@@ -19,6 +19,11 @@
 
 	<link href="css/bootstrap.css" rel="stylesheet">
 	<style>
+		@media (min-width: 1200px) {
+			body {
+				padding-top: 60px;
+			}
+		}
 	{block name=style}{/block}
 	</style>
 	<link href="css/bootstrap-responsive.css" rel="stylesheet">
@@ -30,7 +35,7 @@
 
 <body>
 
-	{block name=navbar}{/block}
+	{block name=navbar}{include "navbar.tpl"}{/block}
 
 	{block name=body}
 	<div class="container">
