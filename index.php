@@ -39,6 +39,8 @@ if (!$db->exists())
  */
 $action = (isset($_GET['action']) ? $_GET['action'] : '');
 $page = (isset($_GET['page']) ? $_GET['page'] : 'home');
+$action = htmlspecialchars($action);
+$page = htmlspecialchars($page);
 
 try {
 	
