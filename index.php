@@ -55,6 +55,7 @@ try {
 	if ($page == 'error')
 		throw new BugsCmsException('Error page requested');
 
+	$smarty->assign('logged_in', isset($_SESSION['BUGS_UID']));
 	$smarty->assign('page', $page);
 	prepare_page($smarty, $page);
 
