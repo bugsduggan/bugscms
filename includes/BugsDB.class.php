@@ -108,6 +108,11 @@ class BugsDB {
 		return new User($id, $username, $password, $email, $admin);
 	}
 
+	public function get_user_by_username($username) {
+		$id = $this->query_single("SELECT id FROM users WHERE username='$username'", false);
+		return $this->get_user($id);
+	}
+
 	/*
 	 * private functions
 	 */

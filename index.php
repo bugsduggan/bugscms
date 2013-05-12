@@ -8,6 +8,8 @@ class BugsCmsException extends Exception { }
 
 date_default_timezone_set('UTC');
 
+session_start();
+
 define('CONFIG', 'bugscms.conf');
 
 /*
@@ -47,8 +49,12 @@ try {
 	if ($action != '')
 		process_action($action);
 
+	// special cases
+	if ($page == 'admin')
+		header('Location:admin');
 	if ($page == 'error')
 		throw new BugsCmsException('Error page requested');
+
 	$smarty->assign('page', $page);
 	prepare_page($smarty, $page);
 
@@ -80,7 +86,17 @@ try {
 }
 
 function process_action($action) {
-	throw new BugsCmsException('Invalid action request');
+	switch ($action) {
+		case 'login':
+			login();
+			break;
+		case 'logout':
+			logout();
+			break;
+		default:
+			throw new BugsCmsException('Invalid action request');
+			break;
+	}
 }
 
 function prepare_page($smarty, $page) {
@@ -93,6 +109,43 @@ function prepare_page($smarty, $page) {
 function prepare_home($smarty) {
 	global $db;
 	$smarty->assign('user', $db->get_user(isset($_GET['id']) ? $_GET['id'] : 1));
+}
+
+function login() {
+	global $db;
+	$success = true;
+
+	if (!isset($_POST['username']))
+		$success = false;
+	if (!isset($_POST['password']))
+		$success = false;
+
+	$username = $_POST['username'];
+	$password = sha1($_POST['password']);
+
+	if ($success) {
+		$success = false;
+		$user = $db->get_user_by_username($username);
+		if ($password == $user->get_password()) {
+			$success = true;
+			auth($user);
+		}
+	}
+
+	if ($success)
+		header('Location:admin');
+	else
+		header('Location:index.php?page=login');
+}
+
+function auth($user) {
+	session_regenerate_id();
+	$_SESSION['BUGS_UID'] = $user->get_id();
+}
+
+function logout() {
+	session_destroy();
+	header('Location:index.php');
 }
 
 function lorem_ipsum($params, $smarty) {
