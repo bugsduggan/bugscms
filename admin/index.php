@@ -8,14 +8,19 @@ if (!isset($_SESSION['BUGS_UID']))
 	header('Location:../index.php?page=login');
 
 function display_admin($smarty) {
-	global $cms;
 	$smarty->assign('page', 'admin');
+	$smarty->display('admin.tpl');
+}
+
+function display_articles($smarty) {
+	global $cms;
+	$smarty->assign('page', 'pages');
 	if (isset($_GET['id']))
 		$article = $cms->get_article($_GET['id']);
 	else
 		$article = $cms->get_new_article();
 	$smarty->assign('article', $article);
-	$smarty->display('admin.tpl');
+	$smarty->display('articles.tpl');
 }
 
 function display_home($smarty) {
@@ -23,6 +28,7 @@ function display_home($smarty) {
 }
 
 $cms->register_page('admin', 'display_admin');
+$cms->register_page('articles', 'display_articles');
 $cms->register_page('home', 'display_home');
 
 $cms->display();

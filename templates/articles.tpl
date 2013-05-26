@@ -1,7 +1,7 @@
 {extends "master.tpl"}
 
 {*
-	admin.tpl
+	articles.tpl
 *}
 
 {block name=centerpanel}

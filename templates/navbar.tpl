@@ -23,7 +23,12 @@
         </ul>
 				<ul class="nav pull-right">
 					{if $logged_in}
-					<li><a href="index.php?page=admin"><i class="icon-wrench icon-white"></i></a></li>
+					<li class="dropdown">
+						<a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon-wrench icon-white"></i></a>
+						<ul class="dropdown-menu">
+							<li><a href="index.php?page=articles">Pages</a></li>
+						</ul>
+					</li>
 					<li><a href="index.php?action=logout">Logout</a></li>
 					{else}
 					<form class="navbar-search" method="post" action="index.php?action=login">

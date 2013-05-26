@@ -8,6 +8,10 @@ function display_admin($smarty) {
 	header('Location:admin');
 }
 
+function display_articles($smarty) {
+	header('Location:admin/index.php?page=articles');
+}
+
 function display_home($smarty) {
 	global $cms;
 	$smarty->assign('page', 'home');
@@ -25,6 +29,7 @@ function display_login($smarty) {
 }
 
 $cms->register_page('admin', 'display_admin');
+$cms->register_page('articles', 'display_articles');
 $cms->register_page('home', 'display_home');
 $cms->register_page('login', 'display_login');
 
