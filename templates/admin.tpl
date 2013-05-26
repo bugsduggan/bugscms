@@ -3,3 +3,6 @@
 {*
 	admin.tpl
 *}
+
+{block name=centerpanel}
+{/block}
