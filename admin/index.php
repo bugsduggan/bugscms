@@ -7,6 +7,10 @@ $cms = new BugsCMS('admin');
 if (!isset($_SESSION['BUGS_UID']))
 	header('Location:../index.php?page=login');
 
+function display_about($smarty) {
+	header('Location:../index.php?page=about');
+}
+
 function display_admin($smarty) {
 	$smarty->assign('page', 'admin');
 	$smarty->display('admin.tpl');
@@ -32,14 +36,15 @@ function display_articles($smarty) {
 	$smarty->display('articles.tpl');
 }
 
-function display_home($smarty) {
+function display_article($smarty) {
 	header('Location:../index.php');
 }
 
+$cms->register_page('about', 'display_about');
 $cms->register_page('admin', 'display_admin');
 $cms->register_page('articles', 'display_articles');
 $cms->register_page('edit_article', 'display_edit_article');
-$cms->register_page('home', 'display_home');
+$cms->register_page('home', 'display_article');
 
 $cms->display();
 

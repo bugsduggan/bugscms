@@ -20,6 +20,8 @@
         <ul class="nav pull-left">
           {if $page == 'home'}<li class="active">{else}<li>{/if}
 						<a href="index.php?page=home">Home</a></li>
+					{if $page == 'about'}<li class="active">{else}<li>{/if}
+						<a href="index.php?page=about">About</a></li>
         </ul>
 				<ul class="nav pull-right">
 					{if $logged_in}

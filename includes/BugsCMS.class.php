@@ -88,6 +88,10 @@ class BugsCMS {
 		return $this->db->get_article($id);
 	}
 
+	public function get_about_article() {
+		return $this->db->get_about_article();
+	}
+
 	public function get_new_article() {
 		$id = $this->db->get_top_article()->get_id() + 1;
 		$user = $this->db->get_user($_SESSION['BUGS_UID']);

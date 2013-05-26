@@ -165,6 +165,11 @@ class BugsDB {
 		return $this->get_article($this->next_id('articles')-1);
 	}
 
+	public function get_about_article() {
+		$about_id = $this->query_single("SELECT id FROM articles WHERE status = 2", false);
+		return $this->get_article($about_id);
+	}
+
 	public function get_articles() {
 		$articles = array();
 		for ($i = 1; $i < $this->next_id('articles'); $i++) {

@@ -4,6 +4,14 @@ require_once('includes/BugsCMS.class.php');
 
 $cms = new BugsCms();
 
+function display_about($smarty) {
+	global $cms;
+	$smarty->assign('page', 'about');
+	$article = $cms->get_about_article();
+	$smarty->assign('article', $article);
+	$smarty->display('article.tpl');
+}
+
 function display_admin($smarty) {
 	header('Location:admin');
 }
@@ -35,6 +43,7 @@ function display_login($smarty) {
 	$smarty->display('login.tpl');
 }
 
+$cms->register_page('about', 'display_about');
 $cms->register_page('admin', 'display_admin');
 $cms->register_page('article', 'display_article');
 $cms->register_page('articles', 'display_articles');
