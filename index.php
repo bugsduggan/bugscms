@@ -11,9 +11,12 @@ function display_admin($smarty) {
 function display_home($smarty) {
 	global $cms;
 	$smarty->assign('page', 'home');
-	$article = $cms->get_top_article();
+	if (isset($_GET['id']))
+		$article = $cms->get_article($_GET['id']);
+	else
+		$article = $cms->get_top_article();
 	$smarty->assign('article', $article);
-	$smarty->display('home.tpl');
+	$smarty->display('article.tpl');
 }
 
 function display_login($smarty) {

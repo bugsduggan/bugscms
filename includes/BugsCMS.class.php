@@ -96,6 +96,10 @@ class BugsCMS {
 		}
 	}
 
+	public function get_article($id) {
+		return $this->db->get_article($id);
+	}
+
 	public function get_top_article() {
 		return $this->db->get_top_article();
 	}
