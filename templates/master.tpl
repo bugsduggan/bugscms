@@ -40,20 +40,12 @@
 		#footer .pull-right {
 			padding-right: -70px;
 		}
-    .container {
-      width: auto;
-      max-width: 680px;
-    }
     .container .credit {
       margin: 20px 0;
     }
 		@media (min-width: 1200px) {
 			body {
 				padding-top: 60px;
-			}
-			#footer .pull-right {
-				position: relative;
-				left: 80px;
 			}
 		}
 		@media (max-width: 767px) {
