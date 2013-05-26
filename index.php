@@ -12,6 +12,13 @@ function display_articles($smarty) {
 	header('Location:admin/index.php?page=articles');
 }
 
+function display_edit_article($smarty) {
+	if (isset($_GET['id']))
+		header('Location:admin/index.php?page=edit_article&id='.$_GET['id']);
+	else
+		header('Location:admin/index.php?page=edit_article');
+}
+
 function display_home($smarty) {
 	global $cms;
 	$smarty->assign('page', 'home');
@@ -30,6 +37,7 @@ function display_login($smarty) {
 
 $cms->register_page('admin', 'display_admin');
 $cms->register_page('articles', 'display_articles');
+$cms->register_page('edit_article', 'display_edit_article');
 $cms->register_page('home', 'display_home');
 $cms->register_page('login', 'display_login');
 
