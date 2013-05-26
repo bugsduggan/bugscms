@@ -179,8 +179,8 @@ class BugsCMS {
 
 	private function update_page() {
 		$id = $_POST['id'];
-		$title = $_POST['title'];
-		$body = $_POST['body'];
+		$title = SQLite3::escapeString($_POST['title']);
+		$body = SQLite3::escapeString($_POST['body']);
 		$author = $this->db->get_user($_SESSION['BUGS_UID']);
 		$article = new Article($id, $title, $body, $author, true);
 		$this->db->update_article($article);
