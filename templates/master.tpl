@@ -62,9 +62,7 @@
 
 	<link href="css/style.css" rel="stylesheet">
 
-	<script>
 	{block name=headscript}{/block}
-	</script>
 </head>
 
 <body>

@@ -29,3 +29,16 @@
 
 </form>
 {/block}
+
+{block name=headscript}
+<script type="text/javascript" src="js/tinymce/tinymce.min.js"></script>
+<script type="text/javascript">
+tinymce.init({
+    selector: "textarea",
+		theme: "modern",
+		width: 468,
+		plugins: 'link',
+		content_css: "css/tinymce.css"
+});
+</script>
+{/block}
