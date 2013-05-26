@@ -52,6 +52,9 @@ class BugsCMS {
 			case 'logout':
 				$this->logout();
 				break;
+			case 'update_page':
+				$this->update_page();
+				break;
 			default:
 				// do nothing
 				break;
@@ -162,6 +165,16 @@ class BugsCMS {
 	private function logout() {
 		session_destroy();
 		header('Location:index.php');
+	}
+
+	private function update_page() {
+		$id = $_POST['id'];
+		$title = $_POST['title'];
+		$body = $_POST['body'];
+		$author = $this->db->get_user($_SESSION['BUGS_UID']);
+		$article = new Article($id, $title, $body, $author, true);
+		$this->db->update_article($article);
+		header('Location:index.php?page=home');
 	}
 
 }
