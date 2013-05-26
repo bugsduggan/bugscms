@@ -172,7 +172,7 @@ class BugsCMS {
 
 	private function logout() {
 		session_destroy();
-		header('Location:index.php');
+		header('Location:index.php?page=home');
 	}
 
 	private function update_page() {
