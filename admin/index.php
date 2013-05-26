@@ -37,11 +37,15 @@ function display_articles($smarty) {
 }
 
 function display_article($smarty) {
-	header('Location:../index.php');
+	if (isset($_GET['id']))
+		header('Location:../index.php?id='.$_GET['id']);
+	else
+		header('Location:../index.php');
 }
 
 $cms->register_page('about', 'display_about');
 $cms->register_page('admin', 'display_admin');
+$cms->register_page('article', 'display_article');
 $cms->register_page('articles', 'display_articles');
 $cms->register_page('edit_article', 'display_edit_article');
 $cms->register_page('home', 'display_article');

@@ -6,14 +6,14 @@ class Article {
 	private $title = null;
 	private $body = null;
 	private $author = null;
-	private $active = null;
+	private $status = null;
 
-	public function __construct($id, $title, $body, $author, $active) {
+	public function __construct($id, $title, $body, $author, $status) {
 		$this->id = $id;
 		$this->title = $title;
 		$this->body = $body;
 		$this->author = $author;
-		$this->active = $active;
+		$this->status = $status;
 	}
 
 	public function get_id() {
@@ -32,8 +32,8 @@ class Article {
 		return $this->author;
 	}
 
-	public function is_active() {
-		return $this->active;
+	public function get_status() {
+		return $this->status;
 	}
 
 }

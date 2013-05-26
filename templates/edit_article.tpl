@@ -8,6 +8,7 @@
 <form class="form-horizontal" method="post" action="index.php?action=update_page">
 	
 	<input type="hidden" name="id" value="{$article->get_id()}">
+	<input type="hidden" name="status" value="{$article->get_status()}">
 
 	<div class="control-group">
 		<label class="control-label" for="title">Title</label>

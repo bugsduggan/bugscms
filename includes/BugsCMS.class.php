@@ -186,9 +186,10 @@ class BugsCMS {
 		$title = SQLite3::escapeString($_POST['title']);
 		$body = SQLite3::escapeString($_POST['body']);
 		$author = $this->db->get_user($_SESSION['BUGS_UID']);
-		$article = new Article($id, $title, $body, $author, true);
+		$status = $_POST['status'];
+		$article = new Article($id, $title, $body, $author, $status);
 		$this->db->update_article($article);
-		header('Location:index.php?page=home');
+		header('Location:index.php?page=article&id='.$id);
 	}
 
 }

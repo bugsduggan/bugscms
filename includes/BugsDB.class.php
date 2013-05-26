@@ -55,6 +55,11 @@ class BugsDB {
 		for ($i = 0; $i < 5; $i++) {
 			$body = $body.$lorem->getContent(50, 'html', false);
 		}
+		$this->add_article('About us', $body, $user, 2);
+		$body = '';
+		for ($i = 0; $i < 5; $i++) {
+			$body = $body.$lorem->getContent(50, 'html', false);
+		}
 		$this->add_article('Lorem ipsum dolor sit amet', $body, $user);
 
 		// return the admin user
@@ -120,9 +125,9 @@ class BugsDB {
 		return new User($id, $username, $password, $email, $admin);
 	}
 
-	public function add_article($title, $body, $author, $active=true) {
+	public function add_article($title, $body, $author, $status=1) {
 		$id = $this->next_id('articles');
-		$article = new Article($id, $title, $body, $author, $active);
+		$article = new Article($id, $title, $body, $author, $status);
 		return $this->update_article($article);
 	}
 
@@ -131,10 +136,7 @@ class BugsDB {
 		$title = $article->get_title();
 		$body = htmlspecialchars($article->get_body());
 		$author = $article->get_author()->get_id();
-		if ($article->is_active())
-			$status = 1;
-		else
-			$status = 0;
+		$status = $article->get_status();
 
 		$stm = "INSERT OR REPLACE INTO articles VALUES ($id, '$title', '$body', $author, $status)";
 
@@ -153,12 +155,9 @@ class BugsDB {
 		$title = $result['title'];
 		$body = htmlspecialchars_decode($result['body']);
 		$author = $this->get_user($result['author']);
-		if ($result['status'] == 1)
-			$active = true;
-		else
-			$active = false;
+		$status = $result['status'];
 
-		return new Article($id, $title, $body, $author, $active);
+		return new Article($id, $title, $body, $author, $status);
 	}
 
 	public function get_top_article() {
