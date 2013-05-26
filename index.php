@@ -4,6 +4,8 @@ require_once('includes/BugsDB.class.php');
 require_once('includes/LoremIpsum.class.php');
 require_once('includes/Smarty.class.php');
 
+include('functions/plugins.php');
+
 class BugsCmsException extends Exception { }
 
 date_default_timezone_set('UTC');
@@ -147,26 +149,6 @@ function auth($user) {
 function logout() {
 	session_destroy();
 	header('Location:index.php');
-}
-
-function lorem_ipsum($params, $smarty) {
-	$generator = new LoremIpsumGenerator();
-	$result = '';
-
-	$style=(isset($params['style']) ? $params['style'] : 'paragraph');
-	$count=(isset($params['count']) ? $params['count'] : 5);
-	$lorem=(isset($params['lorem']) ? $params['lorem'] : true);
-	$p_size=(isset($params['p_size']) ? $params['p_size'] : 50);
-
-	if ($style == 'single') {
-		$result = ucfirst($generator->getContent($wordCount=$count, $format='plain', $loremipsum=$lorem));
-	} else {
-		for ($i = 0; $i < $count; $i++) {
-			$result = $result.'<p>'.ucfirst($generator->getContent($wordCount=$p_size, $format='plain', $loremipsum=($i == 0 ? true : false))).'</p>';
-		}	
-	}
-
-	return $result;
 }
 
 ?>
