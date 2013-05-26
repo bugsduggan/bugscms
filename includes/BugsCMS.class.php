@@ -83,6 +83,14 @@ class BugsCMS {
 		}
 	}
 
+	public function get_top_article() {
+		// TODO
+		$article = array();
+		$article['title'] = 'foo';
+		$article['body'] = '<p>foo</p>';
+		return $article;
+	}
+
 	/* creates the smarty instance */
 	private function init_smarty() {
 		$s = new Smarty();

@@ -35,7 +35,8 @@ class BugsDB {
 
 		// create table statements
 		$statement = array(
-			"CREATE TABLE users (id INTEGER PRIMARY KEY, username TEXT NOT NULL, password TEXT NOT NULL, email TEXT NOT NULL, status INTEGER NOT NULL)"
+			"CREATE TABLE users (id INTEGER PRIMARY KEY, username TEXT NOT NULL, password TEXT NOT NULL, email TEXT NOT NULL, status INTEGER NOT NULL)",
+			"CREATE TABLE articles (id INTEGER PRIMARY KEY, title TEXT NOT NULL, body TEXT NOT NULL, author INTEGER NOT NULL, status INTEGER NOT NULL, FOREIGN KEY (author) REFERENCES users (id))"
 		);
 
 		// loop through and exec
