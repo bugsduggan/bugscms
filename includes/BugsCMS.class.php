@@ -57,6 +57,7 @@ class BugsCMS {
 				break;
 		}
 
+		/* setup navbar */
 		$this->smarty->assign('logged_in', isset($_SESSION['BUGS_UID']));
 
 		/* process page */
