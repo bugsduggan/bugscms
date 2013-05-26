@@ -23,6 +23,7 @@
         </ul>
 				<ul class="nav pull-right">
 					{if $logged_in}
+					<!--<li><a>Logged in as {$user->get_username()}</a></li>-->
 					<li class="dropdown">
 						<a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon-wrench icon-white"></i></a>
 						<ul class="dropdown-menu">
