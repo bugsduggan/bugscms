@@ -12,14 +12,23 @@ function display_admin($smarty) {
 	$smarty->display('admin.tpl');
 }
 
-function display_articles($smarty) {
+/* single edit */
+function display_edit_article($smarty) {
 	global $cms;
-	$smarty->assign('page', 'pages');
+	$smarty->assign('page', 'edit');
 	if (isset($_GET['id']))
 		$article = $cms->get_article($_GET['id']);
 	else
 		$article = $cms->get_new_article();
 	$smarty->assign('article', $article);
+	$smarty->display('edit_article.tpl');
+}
+
+/* full list */
+function display_articles($smarty) {
+	global $cms;
+	$smarty->assign('page', 'pages');
+	$smarty->assign('articles', $cms->get_articles());
 	$smarty->display('articles.tpl');
 }
 
@@ -29,6 +38,7 @@ function display_home($smarty) {
 
 $cms->register_page('admin', 'display_admin');
 $cms->register_page('articles', 'display_articles');
+$cms->register_page('edit_article', 'display_edit_article');
 $cms->register_page('home', 'display_home');
 
 $cms->display();

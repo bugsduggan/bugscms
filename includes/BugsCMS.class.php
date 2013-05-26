@@ -96,6 +96,10 @@ class BugsCMS {
 		return $this->db->get_top_article();
 	}
 
+	public function get_articles() {
+		return $this->db->get_articles();
+	}
+
 	/* creates the smarty instance */
 	private function init_smarty() {
 		$s = new Smarty();

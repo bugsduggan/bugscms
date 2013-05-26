@@ -165,6 +165,14 @@ class BugsDB {
 		return $this->get_article($this->next_id('articles')-1);
 	}
 
+	public function get_articles() {
+		$articles = array();
+		for ($i = 1; $i < $this->next_id('articles'); $i++) {
+			array_push($articles, $this->get_article($i));
+		}
+		return $articles;
+	}
+
 	public function get_user_by_username($username) {
 		$id = $this->query_single("SELECT id FROM users WHERE username='$username'", false);
 		return $this->get_user($id);
