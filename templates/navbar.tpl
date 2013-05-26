@@ -15,11 +15,11 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="brand" href="index.php">{#site_name#}</a>
+      <a class="brand" href="index.php?page=home">{#site_name#}</a>
       <div class="nav-collapse collapse">
         <ul class="nav pull-left">
           {if $page == 'home'}<li class="active">{else}<li>{/if}
-						<a href="index.php">Home</a></li>
+						<a href="index.php?page=home">Home</a></li>
         </ul>
 				<ul class="nav pull-right">
 					{if $logged_in}

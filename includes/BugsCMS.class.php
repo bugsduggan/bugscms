@@ -19,60 +19,66 @@ class BugsCMSException extends Exception { }
  */
 
 class BugsCMS {
+		
+	private $pages = array();
+	private $default = null;
 
 	private $smarty = null;
 	private $db = null;
 
-	public function __construct() {
+	public function __construct($default='home') {
+		$this->default = $default;
 		$this->smarty = $this->init_smarty();
 		$this->db = $this->init_db();
+	}
+
+	public function register_page($page_tag, $page_function) {
+		$this->pages[$page_tag] = $page_function;
 	}
 
 	/* this right here is the main fella */
 	public function display() {
 		/* grab GET data */
 		$action = (isset($_GET['action']) ? $_GET['action'] : '');
-		$page = (isset($_GET['page']) ? $_GET['page'] : 'home');
+		$page = (isset($_GET['page']) ? $_GET['page'] : $this->default);
 		$action = htmlspecialchars($action);
 		$page = htmlspecialchars($page);
 
+		/* process action */
+		switch ($action) {
+			case 'login':
+				$this->login();
+				break;
+			case 'logout':
+				$this->logout();
+				break;
+			default:
+				// do nothing
+				break;
+		}
+
+		$this->smarty->assign('logged_in', isset($_SESSION['BUGS_UID']));
+
+		/* process page */
 		try {
-			if ($action != '')
-				$this->process_action($action);
-
-			// special cases
-			if ($page == 'admin')
-				header('Location:admin');
-			if ($page == 'error')
-				throw new BugsCmsException('Error page requested');
-
-			$this->smarty->assign('logged_in', isset($_SESSION['BUGS_UID']));
-			$this->smarty->assign('page', $page);
-			$this->prepare_page($page);
-
-			$this->smarty->display($page.'.tpl');
+			if (array_key_exists($page, $this->pages)) {
+				$this->pages[$page]($this->smarty);
+			} else {
+				$error = array();
+				$error['message'] = 'Invalid page requested';
+				$error['page'] = $page;
+				$this->display_error($error);
+			}
 		} catch (Exception $e) {
-			switch(get_class($e)) {
-				case 'BugsCMSException':
-				case 'BugsDBException':
-				case 'SmartyCompilerException':
+			switch (get_class($e)) {
 				case 'SmartyException':
-					$error = array(
-						'message' => $e->getMessage(),
-						'page_requested' => $page
-					);
-					if (isset($_GET['action']))
-						$error['action'] = $_GET['action'];
-					if (isset($_GET['id']))
-						$error['id'] = $_GET['id'];
-
-					$page = 'error';
-					$this->smarty->assign('error', $error);
-					$this->smarty->assign('page', $page);
-					$this->smarty->display('error.tpl');
+					$error = array();
+					$error['message'] = $e->getMessage();
+					$error['page'] = $page;
+					$this->display_error($error);
 					break;
 				default:
-					throw($e);
+					break;
 			}
 		}
 	}
@@ -102,28 +108,10 @@ class BugsCMS {
 		return $db;
 	}
 
-	private function process_action($action) {
-		switch ($action) {
-			case 'login':
-				$this->login();
-				break;
-			case 'logout':
-				$this->logout();
-				break;
-			default:
-				throw new BugsCMSException('Invalid action request');
-				break;
-		}
-	}
-
-	private function prepare_page($page) {
-		if ($page == 'master' || $page == 'blank')
-			throw new BugsCmsException('Invalid page request');
-		if ($page == 'home')
-			$this->prepare_home();
-	}
-
-	private function prepare_home() {
+	private function display_error($error) {
+		$this->smarty->assign('page', 'error');
+		$this->smarty->assign('error', $error);
+		$this->smarty->display('error.tpl');	
 	}
 
 	private function login() {
