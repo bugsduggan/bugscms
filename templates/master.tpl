@@ -28,6 +28,8 @@
 	</style>
 	<link href="css/bootstrap-responsive.css" rel="stylesheet">
 
+	<link href="css/style.css" rel="stylesheet">
+
 	<script>
 	{block name=headscript}{/block}
 	</script>
