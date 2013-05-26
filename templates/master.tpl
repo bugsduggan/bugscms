@@ -36,8 +36,10 @@
     }
     #footer {
       background-color: #f5f5f5;
-			margin-top: 60px;
     }
+		#footer .pull-right {
+			padding-right: -70px;
+		}
     .container {
       width: auto;
       max-width: 680px;
@@ -48,6 +50,10 @@
 		@media (min-width: 1200px) {
 			body {
 				padding-top: 60px;
+			}
+			#footer .pull-right {
+				position: relative;
+				left: 80px;
 			}
 		}
 		@media (max-width: 767px) {
@@ -90,6 +96,7 @@
 		{block name=rightpanel}{/block}
 		</div>
 	</div>
+	<div id="push"></div>
 	</div><!-- end of container -->
 	{/block}
 	</div><!-- end of wrap -->
@@ -97,7 +104,8 @@
 	{block name=footer}
 	<div id="footer">
 		<div class="container">
-			<p class="muted credit">Built using BugsCMS &copy; <a href="tomleaman.co.uk">Tom Leaman</a> 2013.</p>
+			<p class="muted credit pull-right">Built using BugsCMS &copy; <a href="http://tomleaman.co.uk">Tom Leaman</a> 2013.</p>
+			<p class="muted credit">{#footer#}</p>
 		</div>
 	</div>
 	{/block}
