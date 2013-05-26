@@ -77,9 +77,9 @@
 
 <body>
 
+	<div id="wrap">
 	{block name=navbar}{include "navbar.tpl"}{/block}
 
-	<div id="wrap">
 	{block name=body}
 	<div class="container">
 	{block name=title}
@@ -96,8 +96,8 @@
 		{block name=rightpanel}{/block}
 		</div>
 	</div>
-	<div id="push"></div>
 	</div><!-- end of container -->
+	<div id="push"></div>
 	{/block}
 	</div><!-- end of wrap -->
 
