@@ -19,11 +19,45 @@
 
 	<link href="css/bootstrap.css" rel="stylesheet">
 	<style>
+		html,
+    body {
+      height: 100%;
+    }
+    #wrap {
+      min-height: 100%;
+      height: auto !important;
+      height: 100%;
+      margin: 0 auto -60px;
+			padding-bottom: 20px;
+    }
+    #push,
+    #footer {
+      height: 60px;
+    }
+    #footer {
+      background-color: #f5f5f5;
+			margin-top: 60px;
+    }
+    .container {
+      width: auto;
+      max-width: 680px;
+    }
+    .container .credit {
+      margin: 20px 0;
+    }
 		@media (min-width: 1200px) {
 			body {
 				padding-top: 60px;
 			}
 		}
+		@media (max-width: 767px) {
+      #footer {
+        margin-left: -20px;
+        margin-right: -20px;
+        padding-left: 20px;
+        padding-right: 20px;
+      }
+    }
 	{block name=style}{/block}
 	</style>
 	<link href="css/bootstrap-responsive.css" rel="stylesheet">
@@ -39,6 +73,7 @@
 
 	{block name=navbar}{include "navbar.tpl"}{/block}
 
+	<div id="wrap">
 	{block name=body}
 	<div class="container">
 	{block name=title}
@@ -55,10 +90,17 @@
 		{block name=rightpanel}{/block}
 		</div>
 	</div>
+	</div><!-- end of container -->
+	{/block}
+	</div><!-- end of wrap -->
+
+	{block name=footer}
+	<div id="footer">
+		<div class="container">
+			<p class="muted credit">Built using BugsCMS &copy; <a href="tomleaman.co.uk">Tom Leaman</a> 2013.</p>
+		</div>
 	</div>
 	{/block}
-
-	{block name=footer}{/block}
 
 	<script src="js/jquery.js"></script>
 	<script src="js/bootstrap.js"></script>
