@@ -3,6 +3,8 @@
 require_once(__DIR__.'/Article.class.php');
 require_once(__DIR__.'/User.class.php');
 
+require_once(__DIR__.'/LoremIpsum.class.php');
+
 class BugsDBException extends Exception { }
 
 class BugsDB {
@@ -46,6 +48,14 @@ class BugsDB {
 
 		// create admin user
 		$user = $this->add_user($username, $password, $email, true);
+
+		// create lorem article
+		$lorem = new LoremIpsumGenerator();
+		$body = '';
+		for ($i = 0; $i < 5; $i++) {
+			$body = $body.$lorem->getContent(50, 'html', false);
+		}
+		$this->add_article('Lorem ipsum dolor sit amet', $body, $user);
 
 		// return the admin user
 		return $user;
