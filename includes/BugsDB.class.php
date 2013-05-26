@@ -1,6 +1,6 @@
 <?php
 
-require_once('includes/User.class.php');
+require_once(__DIR__.'/User.class.php');
 
 class BugsDBException extends Exception { }
 
