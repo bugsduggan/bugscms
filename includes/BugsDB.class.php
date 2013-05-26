@@ -1,5 +1,6 @@
 <?php
 
+require_once(__DIR__.'/Article.class.php');
 require_once(__DIR__.'/User.class.php');
 
 class BugsDBException extends Exception { }
@@ -107,6 +108,51 @@ class BugsDB {
 
 		// create and return object
 		return new User($id, $username, $password, $email, $admin);
+	}
+
+	public function add_article($title, $body, $author, $active=true) {
+		$id = $this->next_id('articles');
+		$article = new Article($id, $title, $body, $author, $active);
+		return $this->update_article($article);
+	}
+
+	public function update_article($article) {
+		$id = $article->get_id();
+		$title = $article->get_title();
+		$body = htmlspecialchars($article->get_body());
+		$author = $article->get_author()->get_id();
+		if ($article->is_active())
+			$status = 1;
+		else
+			$status = 0;
+
+		$stm = "INSERT OR REPLACE INTO articles VALUES ($id, '$title', '$body', $author, $status)";
+
+		$this->exec($stm);
+		return $this->get_article($article->get_id());
+	}
+
+	public function get_article($id) {
+		$query = "SELECT * FROM articles WHERE id=$id";
+		$result = $this->query_single($query);
+
+		if (count($result) == 0)
+			throw new BugsDBException('Article not found');
+
+		$id = $result['id'];
+		$title = $result['title'];
+		$body = htmlspecialchars_decode($result['body']);
+		$author = $this->get_user($result['author']);
+		if ($result['status'] == 1)
+			$active = true;
+		else
+			$active = false;
+
+		return new Article($id, $title, $body, $author, $active);
+	}
+
+	public function get_top_article() {
+		return $this->get_article($this->next_id('articles')-1);
 	}
 
 	public function get_user_by_username($username) {

@@ -77,18 +77,23 @@ class BugsCMS {
 					$error['page'] = $page;
 					$this->display_error($error);
 					break;
+				case 'BugsDBException':
+					$error = array();
+					$error['message'] = $e->getMessage();
+					$error['page'] = $page;
+					if (isset($_GET['id']))
+						$error['id'] = $_GET['id'];
+					$this->display_error($error);
+					break;
 				default:
+					throw($e);
 					break;
 			}
 		}
 	}
 
 	public function get_top_article() {
-		// TODO
-		$article = array();
-		$article['title'] = 'foo';
-		$article['body'] = '<p>foo</p>';
-		return $article;
+		return $this->db->get_top_article();
 	}
 
 	/* creates the smarty instance */

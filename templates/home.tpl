@@ -6,10 +6,10 @@
 
 {block name=title}
 <div class="page-header">
-	<h1>{$article.title|capitalize}</h1>
+	<h1>{$article->get_title()|capitalize}</h1>
 </div>
 {/block}
 
 {block name=centerpanel}
-{$article.body}
+{$article->get_body()}
 {/block}
