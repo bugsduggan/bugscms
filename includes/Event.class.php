@@ -36,6 +36,10 @@ class Event {
 		return $this->status();
 	}
 
+	public function get_map_link() {
+		return "http://maps.googleapis.com/maps/api/staticmap?size=512x512&maptype=roadmap\&markers=size:mid%7Ccolor:red%7C".$this->get_location()."&zoom=13&sensor=false";
+	}
+
 }
 
 ?>

@@ -150,7 +150,7 @@ class BugsCMS {
 	}
 
 	public function get_event_map() {
-		$size = "256x256";
+		$size = "640x512";
 		$location = "";
 		$events = $this->db->get_events();
 		foreach ($events as $event) {
