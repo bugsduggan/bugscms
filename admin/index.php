@@ -43,12 +43,21 @@ function display_article($smarty) {
 		header('Location:../index.php');
 }
 
+function display_preview($smarty) {
+	global $cms;
+	$smarty->assign('page', 'preview');
+	$article = $cms->get_article($_GET['id']);
+	$smarty->assign('article', $article);
+	$smarty->display('article.tpl');
+}
+
 $cms->register_page('about', 'display_about');
 $cms->register_page('admin', 'display_admin');
 $cms->register_page('article', 'display_article');
 $cms->register_page('articles', 'display_articles');
 $cms->register_page('edit_article', 'display_edit_article');
 $cms->register_page('home', 'display_article');
+$cms->register_page('preview', 'display_preview');
 
 $cms->display();
 

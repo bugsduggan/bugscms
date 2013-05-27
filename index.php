@@ -40,6 +40,8 @@ function display_article($smarty) {
 	}
 	if ($article->get_status() == 2) {
 		header('Location:index.php?page=about');
+	} else if ($article->get_status() == 0) {
+		header('Location:admin/index.php?page=preview&id='.$article->get_id());
 	}
 	$smarty->assign('article', $article);
 	$smarty->display('article.tpl');

@@ -161,7 +161,11 @@ class BugsDB {
 	}
 
 	public function get_top_article() {
-		return $this->get_article($this->next_id('articles')-1);
+		$id = $this->next_id('articles') -1;
+		$article = $this->get_article($id);
+		while ($article->get_status() != 1)
+			$article = $this->get_article(--$id);
+		return $article;
 	}
 
 	public function get_about_article() {
