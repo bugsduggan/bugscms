@@ -29,11 +29,16 @@ function display_edit_article($smarty) {
 
 function display_article($smarty) {
 	global $cms;
-	$smarty->assign('page', 'home');
-	if (isset($_GET['id']))
+	if (isset($_GET['id'])) {
+		$smarty->assign('page', 'article');
 		$article = $cms->get_article($_GET['id']);
-	else
+	} else {
+		$smarty->assign('page', 'home');
 		$article = $cms->get_top_article();
+	}
+	if ($article->get_status() == 2) {
+		header('Location:index.php?page=about');
+	}
 	$smarty->assign('article', $article);
 	$smarty->display('article.tpl');
 }
