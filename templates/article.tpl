@@ -12,8 +12,10 @@
 
 {block name=centerpanel}
 {$article->get_body()}
-{if $logged_in}
+
 <hr>
-<a href="index.php?page=edit_article&id={$article->get_id()}">Edit</a>
+{if $logged_in}
+<p class="pull-right"><a href="index.php?page=edit_article&id={$article->get_id()}">Edit</a></p>
 {/if}
+<p><a href="index.php?page=article&id={$article->get_id()}">Permalink</a></p>
 {/block}
