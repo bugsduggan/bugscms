@@ -12,7 +12,20 @@ function display_about($smarty) {
 }
 
 function display_admin($smarty) {
+	global $cms;
 	$smarty->assign('page', 'admin');
+	$articles = $cms->get_articles();
+	$published = 0;
+	$unpublished = 0;
+	foreach ($articles as $a) {
+		if ($a->get_status() == ARTICLE_ACTIVE)
+			$published++;
+		if ($a->get_status() == ARTICLE_INACTIVE)
+			$unpublished++;
+	}
+	$smarty->assign('published', $published);
+	$smarty->assign('unpublished', $unpublished);
+	$smarty->assign('total', $published + $unpublished);
 	$smarty->display('admin.tpl');
 }
 
