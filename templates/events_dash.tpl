@@ -21,5 +21,5 @@
 {else}
 <p class="lead">No events</p>
 {/if}
-
+<a class="btn btn-primary" href="index.php?page=edit_event">New event</a>
 {/block}

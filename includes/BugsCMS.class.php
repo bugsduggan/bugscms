@@ -169,7 +169,7 @@ class BugsCMS {
 	public function get_new_event() {
 		$id = $this->db->get_next_event_id();
 		$date = "2013-31-08 05:00";
-		return new Event($id, htmlspecialchars('Stourbridge, UK'), $date, '', 1);
+		return new Event($id, htmlspecialchars('Location'), $date, '', 1);
 	}
 
 	public function get_event_map() {
