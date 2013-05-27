@@ -73,8 +73,11 @@ class BugsCMS {
 			case 'set_about':
 				$this->set_about();
 				break;
-			case 'delete':
+			case 'delete_article':
 				$this->delete_article();
+				break;
+			case 'delete_event':
+				$this->delete_event();
 				break;
 			default:
 				if ($action != '') {
@@ -146,13 +149,18 @@ class BugsCMS {
 	}
 
 	public function get_events() {
-		return $this->db->get_events();
+		$events = array();
+		foreach($this->db->get_events() as $event) {
+			if ($event->get_status() > 0)
+				array_push($events, $event);
+		}
+		return $events;
 	}
 
 	public function get_event_map() {
 		$size = "640x512";
 		$location = "";
-		$events = $this->db->get_events();
+		$events = $this->get_events();
 		foreach ($events as $event) {
 			$location = $location."%7C".htmlspecialchars($event->get_location());
 		}
@@ -312,6 +320,15 @@ class BugsCMS {
 		$article->set_status(ARTICLE_DELETED);
 		$this->db->update_article($article);
 		header('Location:index.php?page=articles');
+	}
+
+	private function delete_event() {
+		if (!isset($_GET['id']))
+			$this->display_error('No id specified', 'delete');
+		$event = $this->db->get_event($_GET['id']);
+		$event->set_status(0);
+		$this->db->update_event($event);
+		header('Location:index.php?page=events_dash');
 	}
 
 }

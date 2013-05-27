@@ -150,7 +150,7 @@ class BugsDB {
 		$stm = "INSERT OR REPLACE INTO articles VALUES ($id, '$title', '$body', $author, $status)";
 
 		$this->exec($stm);
-		return $this->get_article($article->get_id());
+		return $article;
 	}
 
 	public function get_next_article_id() {
@@ -222,6 +222,19 @@ class BugsDB {
 			} catch (BugsDBException $e) { }
 		}
 		return $articles;
+	}
+
+	public function update_event($event) {
+		$id = $event->get_id();
+		$location = SQLite3::escapeString($event->get_location());
+		$date = $event->get_date();
+		$comment = SQLite3::escapeString($event->get_comment());
+		$status = $event->get_status();
+
+		$stm = "INSERT OR REPLACE INTO events VALUES ($id, '$location', '$date', '$comment', $status)";
+
+		$this->exec($stm);
+		return $event;
 	}
 
 	public function get_event($id) {

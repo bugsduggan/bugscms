@@ -33,7 +33,11 @@ class Event {
 	}
 
 	public function get_status() {
-		return $this->status();
+		return $this->status;
+	}
+
+	public function set_status($status) {
+		$this->status = $status;
 	}
 
 	public function get_map_link() {
