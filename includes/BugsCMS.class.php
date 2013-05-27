@@ -100,10 +100,10 @@ class BugsCMS {
 	public function get_article($id) {
 		$article = $this->db->get_article($id);
 		if ($article->get_status() == ARTICLE_DELETED)
-			$this->display_error('404 Page not found', '404');
+			throw new BugsCMSException('404 Page not found');
 		if ($article->get_status() == ARTICLE_INACTIVE &&
 			!isset($_SESSION['BUGS_UID']))
-			$this->display_error('404 Page not found', '404');
+			throw new BugsCMSException('404 Page not found');
 		return $article;
 	}
 
