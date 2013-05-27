@@ -19,21 +19,21 @@
       <div class="nav-collapse collapse">
         <ul class="nav pull-left">
           {if $page == 'home'}<li class="active">{else}<li>{/if}
-						<a href="index.php?page=home">Home</a></li>
+						<a href="index.php?page=home"><i class="icon-home icon-white"></i> Home</a></li>
 					{if $page == 'about'}<li class="active">{else}<li>{/if}
 						<a href="index.php?page=about">About</a></li>
         </ul>
 				<ul class="nav pull-right">
 					{if $logged_in}
 					<!--<li><a>Logged in as {$user->get_username()}</a></li>-->
+					<li><a href="index.php?action=logout">Logout</a></li>
 					<li class="dropdown">
-						<a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon-wrench icon-white"></i></a>
+						<a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon-cog icon-white"></i></a>
 						<ul class="dropdown-menu">
-							<li><a href="index.php?page=admin">Profile</a></li>
-							<li><a href="index.php?page=articles">Pages</a></li>
+							<li><a href="index.php?page=admin"><i class="icon-user"></i> Profile</a></li>
+							<li><a href="index.php?page=articles"><i class="icon-book"></i> Pages</a></li>
 						</ul>
 					</li>
-					<li><a href="index.php?action=logout">Logout</a></li>
 					{/if}
 					{if !$logged_in && #show_login#}
 					<form class="navbar-search" method="post" action="index.php?action=login">
