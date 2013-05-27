@@ -4,6 +4,12 @@
 	events.tpl
 *}
 
+{block name=rightpanel}
+{if $logged_in}
+<p><a href="index.php?page=events_dash">Add/edit events</a></p>
+{/if}
+{/block}
+
 {block name=centerpanel}
 {if count($events) > 0}
 <table class="table table-striped table-bordered">
