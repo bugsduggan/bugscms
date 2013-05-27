@@ -61,6 +61,15 @@ class BugsCMS {
 			case 'update_page':
 				$this->update_page();
 				break;
+			case 'publish':
+				$this->publish();
+				break;
+			case 'unpublish':
+				$this->unpublish();
+				break;
+			case 'set_about':
+				$this->set_about();
+				break;
 			default:
 				if ($action != '') {
 					$this->display_error('Invalid action request', $page);
@@ -184,13 +193,45 @@ class BugsCMS {
 
 	private function update_page() {
 		$id = $_POST['id'];
-		$title = SQLite3::escapeString($_POST['title']);
-		$body = SQLite3::escapeString($_POST['body']);
+		$title = htmlspecialchars($_POST['title']);
+		$body = htmlspecialchars($_POST['body']);
 		$author = $this->db->get_user($_SESSION['BUGS_UID']);
 		$status = $_POST['status'];
 		$article = new Article($id, $title, $body, $author, $status);
 		$this->db->update_article($article);
 		header('Location:index.php?page=article&id='.$id);
+	}
+
+	private function publish() {
+		if (!isset($_GET['id']))
+			$this->display_error('No id specified', 'publish');
+		$article = $this->db->get_article($_GET['id']);
+		$article->set_status(1);
+		$this->db->update_article($article);
+		header('Location:../index.php?page=article&id='.$article->get_id());
+	}
+
+	private function unpublish() {
+		if (!isset($_GET['id']))
+			$this->display_error('No id specified', 'unpublish');
+		$article = $this->db->get_article($_GET['id']);
+		$article->set_status(0);
+		$this->db->update_article($article);
+		header('Location:index.php?page=articles');
+	}
+
+	private function set_about() {
+		if (!isset($_GET['id']))
+			$this->display_error('No id specified', 'set_about');
+		// unset the old about
+		$article = $this->db->get_about_article();
+		$article->set_status(0);
+		$this->db->update_article($article);
+
+		$article = $this->db->get_article($_GET['id']);
+		$article->set_status(2);
+		$this->db->update_article($article);
+		header('Location:index.php?page=about');
 	}
 
 }

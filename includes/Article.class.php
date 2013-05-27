@@ -36,6 +36,10 @@ class Article {
 		return $this->status;
 	}
 
+	public function set_status($status) {
+		$this->status = $status;
+	}
+
 }
 
 ?>

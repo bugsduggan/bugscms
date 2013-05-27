@@ -133,8 +133,8 @@ class BugsDB {
 
 	public function update_article($article) {
 		$id = $article->get_id();
-		$title = $article->get_title();
-		$body = htmlspecialchars($article->get_body());
+		$title = SQLite3::escapeString($article->get_title());
+		$body = SQLite3::escapeString($article->get_body());
 		$author = $article->get_author()->get_id();
 		$status = $article->get_status();
 
