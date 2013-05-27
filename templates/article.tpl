@@ -10,16 +10,17 @@
 </div>
 {/block}
 
-{block name=centerpanel}
-{$article->get_body()}
-
-<hr>
-{if $logged_in}
-<p class="pull-right"><a href="index.php?page=edit_article&id={$article->get_id()}">Edit</a></p>
-{/if}
+{block name=rightpanel}
 {if $show_permalink}
 <p><a href="index.php?page=article&id={$article->get_id()}">Permalink</a></p>
 {/if}
+{if $logged_in}
+<p><a href="index.php?page=edit_article&id={$article->get_id()}">Edit</a></p>
+{/if}
+{/block}
+
+{block name=centerpanel}
+{$article->get_body()}
 
 {if isset($prev) || isset($next)}
 <hr>
