@@ -9,21 +9,21 @@
 	<div class="control-group">
 		<label class="control-label" for="location">Location</label>
 		<div class="controls">
-			<input type="text" id="location" name="location" value="{$event->get_location()}">
+			<input class="span4" type="text" id="location" name="location" value="{$event->get_location()}">
 		</div>
 	</div>
 
 	<div class="control-group">
 		<label class="control-label" for="date">Date</label>
 		<div class="controls">
-			<input type="text" id="date" name="date" value="{$event->get_date()}">
+			<input class="span4" type="text" id="date" name="date" value="{$event->get_date()}">
 		</div>
 	</div>
 
 	<div class="control-group">
 		<label class="control-label" for="comment">Comment</label>
 		<div class="controls">
-			<input type="text" id="comment" name="comment" value="{$event->get_comment()}">
+			<input class="span4" type="text" id="comment" name="comment" value="{$event->get_comment()}">
 		</div>
 	</div>
 
