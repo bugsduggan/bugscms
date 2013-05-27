@@ -1,0 +1,38 @@
+{extends "master.tpl"}
+
+{*
+	edit_profile.tpl
+*}
+
+{block name=centerpanel}
+<form class="form-horizontal" method="post" action="index.php?action=update_profile">
+	
+	<input type="text" id="id" name="id" value="{$user->get_id()}">
+
+	<div class="control-group">
+		<label class="control-label" for="current">Current password</label>
+		<div class="controls">
+			<input type="password" id="current" name="current" placeholder="Password">
+		</div>
+	</div>
+
+	<div class="control-group">
+		<label class="control-label" for="new">New password</label>
+		<div class="controls">
+			<input type="password" id="new" name="new" placeholder="Password">
+		</div>
+	</div>
+
+	<div class="control-group">
+		<label class="control-label" for="check">Confirm password</label>
+		<div class="controls">
+			<input type="password" id="check" name="check" placeholder="Password">
+		</div>
+	</div>
+
+	<div class="form-controls">
+		<button type="submit" class="btn btn-primary">Login</button>
+		<a href="index.php?page=admin" class="btn">Cancel</a>
+	</div>
+</form>
+{/block}

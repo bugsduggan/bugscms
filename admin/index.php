@@ -28,6 +28,11 @@ function display_edit_article($smarty) {
 	$smarty->display('edit_article.tpl');
 }
 
+function display_edit_profile($smarty) {
+	$smarty->assign('page', 'edit');
+	$smarty->display('edit_profile.tpl');
+}
+
 /* full list */
 function display_articles($smarty) {
 	global $cms;
@@ -56,6 +61,7 @@ $cms->register_page('admin', 'display_admin');
 $cms->register_page('article', 'display_article');
 $cms->register_page('articles', 'display_articles');
 $cms->register_page('edit_article', 'display_edit_article');
+$cms->register_page('edit_profile', 'display_edit_profile');
 $cms->register_page('home', 'display_article');
 $cms->register_page('preview', 'display_preview');
 

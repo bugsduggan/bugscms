@@ -28,6 +28,10 @@ class User {
 		return $this->password;
 	}
 
+	public function set_password($password) {
+		$this->password = $password;
+	}
+
 	public function get_email() {
 		return $this->email;
 	}

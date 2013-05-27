@@ -61,6 +61,9 @@ class BugsCMS {
 			case 'update_page':
 				$this->update_page();
 				break;
+			case 'update_profile':
+				$this->update_profile();
+				break;
 			case 'publish':
 				$this->publish();
 				break;
@@ -209,6 +212,30 @@ class BugsCMS {
 		$article = new Article($id, $title, $body, $author, $status);
 		$this->db->update_article($article);
 		header('Location:index.php?page=article&id='.$id);
+	}
+
+	private function update_profile() {
+		$id = $_POST['id'];
+
+		$current = sha1($_POST['current']);
+		$new = sha1($_POST['new']);
+		$check = sha1($_POST['check']);
+
+		$user = $this->db->get_user($id);
+		$success = true;
+		
+		if ($user->get_password() != $current)
+			$success = false;
+		if ($new != $check)
+			$success = false;
+
+		$user->set_password($new);
+		$this->db->update_user($user);
+
+		if ($success)
+			header('index.php?page=admin');
+		else
+			header('index.php?page=edit_profile');
 	}
 
 	private function publish() {

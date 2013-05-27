@@ -29,6 +29,7 @@
 					<li class="dropdown">
 						<a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon-wrench icon-white"></i></a>
 						<ul class="dropdown-menu">
+							<li><a href="index.php?page=admin">Profile</a></li>
 							<li><a href="index.php?page=articles">Pages</a></li>
 						</ul>
 					</li>
