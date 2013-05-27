@@ -16,7 +16,8 @@
 {foreach $events as $event}
 <tr>
 <td>{$event->get_location()}</td>
-<td>{$event->get_date()|date_format:#date_format#} - {$event->get_date()|date_format:#time_format#}</td>
+<td>{$event->get_date()|date_format:#date_format#}</td>
+<td>{$event->get_date()|date_format:#time_format#}</td>
 <td><a href="{$event->get_map_link()}">Map</a></td>
 </tr>
 {/foreach}
@@ -28,6 +29,9 @@
 {/block}
 
 {block name=style}
+.event-map {
+	margin-bottom: 10px;
+}
 @media (min-width: 1200px) {
 	.event-map {
 		margin-left: 50px;

@@ -14,6 +14,7 @@ function display_about($smarty) {
 function display_admin($smarty) {
 	global $cms;
 	$smarty->assign('page', 'admin');
+
 	$articles = $cms->get_articles();
 	$published = 0;
 	$unpublished = 0;
@@ -26,6 +27,11 @@ function display_admin($smarty) {
 	$smarty->assign('published', $published);
 	$smarty->assign('unpublished', $unpublished);
 	$smarty->assign('total', $published + $unpublished);
+
+	$events = $cms->get_events();
+	$smarty->assign('upcoming', count($events));
+	$smarty->assign('next_event', $events[0]);
+
 	$smarty->display('admin.tpl');
 }
 
@@ -51,7 +57,10 @@ function display_events($smarty) {
 }
 
 function display_events_dash($smarty) {
+	global $cms;
 	$smarty->assign('page', 'events');
+	$events = $cms->get_events();
+	$smarty->assign('events', $events);
 	$smarty->display('events_dash.tpl');
 }
 
