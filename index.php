@@ -30,6 +30,8 @@ function display_edit_article($smarty) {
 function display_article($smarty) {
 	global $cms;
 	if (isset($_GET['id'])) {
+		if ($_GET['id'] == $cms->get_top_article()->get_id())
+			header('Location:index.php'); // index.php?id=<home_article>
 		$smarty->assign('page', 'article');
 		$article = $cms->get_article($_GET['id']);
 	} else {
