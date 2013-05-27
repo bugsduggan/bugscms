@@ -6,6 +6,7 @@
 
 {block name=centerpanel}
 {if count($events) > 0}
+<img class="event-map" src="{$event_map}" alt="Map of events">
 <table class="table table-striped table-bordered">
 {foreach $events as $event}
 <tr>
@@ -18,4 +19,10 @@
 {else}
 <p class="lead">No events</p>
 {/if}
+{/block}
+
+{block name=style}
+.event-map {
+  margin-bottom: 20px;
+}
 {/block}

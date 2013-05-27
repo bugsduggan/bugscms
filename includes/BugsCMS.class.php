@@ -149,6 +149,16 @@ class BugsCMS {
 		return $this->db->get_events();
 	}
 
+	public function get_event_map() {
+		$size = "256x256";
+		$location = "";
+		$events = $this->db->get_events();
+		foreach ($events as $event) {
+			$location = $location."%7C".htmlspecialchars($event->get_location());
+		}
+		return "http://maps.googleapis.com/maps/api/staticmap?size=$size&maptype=roadmap\&markers=size:mid%7Ccolor:red$location&sensor=false";
+	}
+
 	/* creates the smarty instance */
 	private function init_smarty() {
 		$s = new Smarty();
