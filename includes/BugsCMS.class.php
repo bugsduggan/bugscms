@@ -11,6 +11,7 @@ session_start();
 date_default_timezone_set('UTC');
 
 define('CONFIG', 'bugscms.conf');
+define('DEFAULT_ARTICLE_STATUS', 0); // default to private
 
 class BugsCMSException extends Exception { }
 
@@ -95,7 +96,7 @@ class BugsCMS {
 	public function get_new_article() {
 		$id = $this->db->get_top_article()->get_id() + 1;
 		$user = $this->db->get_user($_SESSION['BUGS_UID']);
-		return new Article($id, 'Title', '<p>Put your content here</p>', $user, true);
+		return new Article($id, 'Title', '<p>Put your content here</p>', $user, DEFAULT_ARTICLE_STATUS);
 	}
 
 	public function get_top_article() {
