@@ -9,6 +9,7 @@ function display_about($smarty) {
 	$smarty->assign('page', 'about');
 	$article = $cms->get_about_article();
 	$smarty->assign('article', $article);
+	$smarty->assign('show_permalink', false);
 	$smarty->display('article.tpl');
 }
 
@@ -29,6 +30,7 @@ function display_edit_article($smarty) {
 
 function display_article($smarty) {
 	global $cms;
+
 	if (isset($_GET['id'])) {
 		if ($_GET['id'] == $cms->get_top_article()->get_id())
 			header('Location:index.php'); // index.php?id=<home_article>
@@ -41,6 +43,14 @@ function display_article($smarty) {
 	if ($article->get_status() == ARTICLE_ABOUT)
 		header('Location:index.php?page=about');
 	$smarty->assign('article', $article);
+
+	// build pager data
+	$smarty->assign('show_permalink', true);
+	if ($cms->has_next($article))
+		$smarty->assign('next', $cms->next($article));
+	if ($cms->has_prev($article))
+		$smarty->assign('prev', $cms->prev($article));
+
 	$smarty->display('article.tpl');
 }
 

@@ -157,6 +157,32 @@ class BugsDB {
 		return $this->query_single($query, false) + 1;
 	}
 
+	public function has_prev_article($id) {
+		$query = "SELECT id FROM articles WHERE status=".ARTICLE_ACTIVE." AND id<$id ORDER BY id DESC LIMIT 1";
+		$id = $this->query_single($query, false);
+		if (!$id) return false;
+		return true;
+	}
+
+	public function prev_article($id) {
+		$query = "SELECT id FROM articles WHERE status=".ARTICLE_ACTIVE." AND id<$id ORDER BY id DESC LIMIT 1";
+		$id = $this->query_single($query, false);
+		return $this->get_article($id);
+	}
+
+	public function has_next_article($id) {
+		$query = "SELECT id FROM articles WHERE status=".ARTICLE_ACTIVE." AND id>$id ORDER BY id ASC LIMIT 1";
+		$id = $this->query_single($query, false);
+		if (!$id) return false;
+		return true;
+	}
+
+	public function next_article($id) {
+		$query = "SELECT id FROM articles WHERE status=".ARTICLE_ACTIVE." AND id>$id ORDER BY id ASC LIMIT 1";
+		$id = $this->query_single($query, false);
+		return $this->get_article($id);
+	}
+
 	public function get_article($id) {
 		$query = "SELECT * FROM articles WHERE id=$id";
 		$result = $this->query_single($query);

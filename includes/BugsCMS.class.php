@@ -118,7 +118,7 @@ class BugsCMS {
 		$id = $this->db->get_next_article_id();
 		echo $id;
 		$user = $this->db->get_user($_SESSION['BUGS_UID']);
-		return new Article($id, 'Title', '<p>Put your content here</p>', $user, DEFAULT_ARTICLE_STATUS);
+		return new Article($id, 'Title', htmlspecialchars('<p>Put your content here</p>'), $user, DEFAULT_ARTICLE_STATUS);
 	}
 
 	public function get_top_article() {
@@ -127,6 +127,22 @@ class BugsCMS {
 
 	public function get_articles() {
 		return $this->db->get_articles();
+	}
+
+	public function has_next($article) {
+		return $this->db->has_next_article($article->get_id());	
+	}
+
+	public function next($article) {
+		return $this->db->next_article($article->get_id());
+	}
+
+	public function has_prev($article) {
+		return $this->db->has_prev_article($article->get_id());
+	}
+
+	public function prev($article) {
+		return $this->db->prev_article($article->get_id());
 	}
 
 	/* creates the smarty instance */
