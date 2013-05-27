@@ -58,6 +58,9 @@ class BugsCMS {
 			case 'logout':
 				$this->logout();
 				break;
+			case 'update_event':
+				$this->update_event();
+				break;
 			case 'update_page':
 				$this->update_page();
 				break;
@@ -119,7 +122,6 @@ class BugsCMS {
 
 	public function get_new_article() {
 		$id = $this->db->get_next_article_id();
-		echo $id;
 		$user = $this->db->get_user($_SESSION['BUGS_UID']);
 		return new Article($id, 'Title', htmlspecialchars('<p>Put your content here</p>'), $user, DEFAULT_ARTICLE_STATUS);
 	}
@@ -155,6 +157,19 @@ class BugsCMS {
 				array_push($events, $event);
 		}
 		return $events;
+	}
+
+	public function get_event($id) {
+		$event = $this->db->get_event($id);
+		if ($event->get_status() == 0)
+			throw new BugsCMSException('Event expired');
+		return $event;
+	}
+
+	public function get_new_event() {
+		$id = $this->db->get_next_event_id();
+		$date = "2013-31-08 05:00";
+		return new Event($id, htmlspecialchars('Stourbridge, UK'), $date, '', 1);
 	}
 
 	public function get_event_map() {
@@ -240,6 +255,17 @@ class BugsCMS {
 	private function logout() {
 		session_destroy();
 		header('Location:index.php?page=home');
+	}
+
+	private function update_event() {
+		$id = $_POST['id'];
+		$location = $_POST['location'];
+		$date = $_POST['date'];
+		$comment = $_POST['comment'];
+		$status = $_POST['status'];
+		$event = new Event($id, $location, $date, $comment, $status);
+		$this->db->update_event($event);
+		header('Location:index.php?page=events');
 	}
 
 	private function update_page() {

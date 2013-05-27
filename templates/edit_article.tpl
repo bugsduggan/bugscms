@@ -31,6 +31,7 @@
 
 		<div class="form-controls">
 			<button type="submit" class="btn btn-primary">Save</button>
+			<a class="btn" href="index.php?page=articles">Cancel</a>
 		</div>
 
 	</form>

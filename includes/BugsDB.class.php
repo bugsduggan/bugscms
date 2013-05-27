@@ -237,6 +237,11 @@ class BugsDB {
 		return $event;
 	}
 
+	public function get_next_event_id() {
+		$query = "SELECT id FROM events ORDER BY id DESC LIMIT 1";
+		return $this->query_single($query, false) + 1;
+	}
+
 	public function get_event($id) {
 		$query = "SELECT * FROM events WHERE id=$id";
 		$result = $this->query_single($query);

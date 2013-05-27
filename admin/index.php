@@ -47,6 +47,17 @@ function display_edit_article($smarty) {
 	$smarty->display('edit_article.tpl');
 }
 
+function display_edit_event($smarty) {
+	global $cms;
+	$smarty->assign('page', 'edit');
+	if (isset($_GET['id']))
+		$event = $cms->get_event($_GET['id']);
+	else
+		$event = $cms->get_new_event();
+	$smarty->assign('event', $event);
+	$smarty->display('edit_event.tpl');
+}
+
 function display_edit_profile($smarty) {
 	$smarty->assign('page', 'edit');
 	$smarty->display('edit_profile.tpl');
@@ -92,6 +103,7 @@ $cms->register_page('admin', 'display_admin');
 $cms->register_page('article', 'display_article');
 $cms->register_page('articles', 'display_articles');
 $cms->register_page('edit_article', 'display_edit_article');
+$cms->register_page('edit_event', 'display_edit_event');
 $cms->register_page('edit_profile', 'display_edit_profile');
 $cms->register_page('events', 'display_events');
 $cms->register_page('events_dash', 'display_events_dash');
