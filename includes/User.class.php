@@ -36,6 +36,10 @@ class User {
 		return $this->email;
 	}
 
+	public function set_email($email) {
+		$this->email = $email;
+	}
+
 	public function is_admin() {
 		return $this->admin;
 	}

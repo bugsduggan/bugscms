@@ -216,26 +216,30 @@ class BugsCMS {
 
 	private function update_profile() {
 		$id = $_POST['id'];
-
-		$current = sha1($_POST['current']);
-		$new = sha1($_POST['new']);
-		$check = sha1($_POST['check']);
-
 		$user = $this->db->get_user($id);
 		$success = true;
-		
-		if ($user->get_password() != $current)
-			$success = false;
-		if ($new != $check)
-			$success = false;
 
-		$user->set_password($new);
+		$email = $_POST['email'];
+		$user->set_email($email);
+
+		if (isset($_POST['new']) && $_POST['new'] != '') {
+			$current = sha1($_POST['current']);
+			$new = sha1($_POST['new']);
+			$check = sha1($_POST['check']);
+		
+			if ($user->get_password() != $current)
+				$success = false;
+			if ($new != $check)
+				$success = false;
+
+			$user->set_password($new);
+		}
 		$this->db->update_user($user);
 
 		if ($success)
-			header('index.php?page=admin');
+			header('Location:index.php?page=admin');
 		else
-			header('index.php?page=edit_profile');
+			header('Location:index.php?page=edit_profile');
 	}
 
 	private function publish() {

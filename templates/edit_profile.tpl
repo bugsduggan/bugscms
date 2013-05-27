@@ -7,7 +7,14 @@
 {block name=centerpanel}
 <form class="form-horizontal" method="post" action="index.php?action=update_profile">
 	
-	<input type="text" id="id" name="id" value="{$user->get_id()}">
+	<input type="hidden" id="id" name="id" value="{$user->get_id()}">
+
+	<div class="control-group">
+		<label class="control-label" for="email">E-mail</label>
+		<div class="controls">
+			<input type="text" id="email" name="email" value="{$user->get_email()}">
+		</div>
+	</div>
 
 	<div class="control-group">
 		<label class="control-label" for="current">Current password</label>
@@ -31,7 +38,7 @@
 	</div>
 
 	<div class="form-controls">
-		<button type="submit" class="btn btn-primary">Login</button>
+		<button type="submit" class="btn btn-primary">Update profile</button>
 		<a href="index.php?page=admin" class="btn">Cancel</a>
 	</div>
 </form>
