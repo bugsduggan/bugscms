@@ -1,6 +1,7 @@
 <?php
 
 require_once(__DIR__.'/Article.class.php');
+require_once(__DIR__.'/Event.class.php');
 require_once(__DIR__.'/User.class.php');
 
 require_once(__DIR__.'/LoremIpsum.class.php');
@@ -221,6 +222,33 @@ class BugsDB {
 			} catch (BugsDBException $e) { }
 		}
 		return $articles;
+	}
+
+	public function get_event($id) {
+		$query = "SELECT * FROM events WHERE id=$id";
+		$result = $this->query_single($query);
+
+		if (count($result) == 0)
+			throw new BugsDBException('Event not found');
+
+		$id = $result['id'];
+		$location = $result['location'];
+		$date = $result['date'];
+		$comment = $result['comment'];
+		$status = $result['status'];
+
+		return new Event($id, $location, $date, $comment, $status);
+	}
+
+	public function get_events() {
+		$events = array();
+		for ($i = 1; $i < $this->next_id('events'); $i++) {
+			try {
+				$event = $this->get_event($i);
+				array_push($events, $event);
+			} catch (BugsDBException $e) { }
+		}
+		return $events;
 	}
 
 	public function get_user_by_username($username) {

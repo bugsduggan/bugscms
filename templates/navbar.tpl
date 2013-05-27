@@ -22,6 +22,8 @@
 						<a href="index.php?page=home"><i class="icon-home icon-white"></i> Home</a></li>
 					{if $page == 'about'}<li class="active">{else}<li>{/if}
 						<a href="index.php?page=about">About</a></li>
+					{if $page == 'events'}<li class="active">{else}<li>{/if}
+						<a href="index.php?page=events">Events</a></li>
         </ul>
 				<ul class="nav pull-right">
 					{if $logged_in}

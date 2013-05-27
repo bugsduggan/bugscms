@@ -28,6 +28,14 @@ function display_edit_article($smarty) {
 		header('Location:admin/index.php?page=edit_article');
 }
 
+function display_events($smarty) {
+	global $cms;
+	$smarty->assign('page', 'events');
+	$events = $cms->get_events();
+	$smarty->assign('events', $events);
+	$smarty->display('events.tpl');
+}
+
 function display_article($smarty) {
 	global $cms;
 
@@ -64,6 +72,7 @@ $cms->register_page('admin', 'display_admin');
 $cms->register_page('article', 'display_article');
 $cms->register_page('articles', 'display_articles');
 $cms->register_page('edit_article', 'display_edit_article');
+$cms->register_page('events', 'display_events');
 $cms->register_page('home', 'display_article');
 $cms->register_page('login', 'display_login');
 

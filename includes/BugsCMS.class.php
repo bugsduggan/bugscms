@@ -145,6 +145,10 @@ class BugsCMS {
 		return $this->db->prev_article($article->get_id());
 	}
 
+	public function get_events() {
+		return $this->db->get_events();
+	}
+
 	/* creates the smarty instance */
 	private function init_smarty() {
 		$s = new Smarty();
