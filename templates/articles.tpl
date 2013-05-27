@@ -44,7 +44,7 @@
 <td><a href="index.php?page=article&id={$article->get_id()}">Preview</a></td>
 <td><a href="index.php?action=publish&id={$article->get_id()}">Publish</a></td>
 <td><a href="index.php?action=set_about&id={$article->get_id()}">Set about</a></td>
-<td><a href="index.php?action=delete&id={$article->get_id()}">Delete</a></td>
+<td><a href="index.php?action=delete_article&id={$article->get_id()}">Delete</a></td>
 </tr>
 {/if}
 {/foreach}
