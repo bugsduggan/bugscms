@@ -115,7 +115,8 @@ class BugsCMS {
 	}
 
 	public function get_new_article() {
-		$id = $this->db->get_top_article()->get_id() + 1;
+		$id = $this->db->get_next_article_id();
+		echo $id;
 		$user = $this->db->get_user($_SESSION['BUGS_UID']);
 		return new Article($id, 'Title', '<p>Put your content here</p>', $user, DEFAULT_ARTICLE_STATUS);
 	}

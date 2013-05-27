@@ -152,6 +152,11 @@ class BugsDB {
 		return $this->get_article($article->get_id());
 	}
 
+	public function get_next_article_id() {
+		$query = "SELECT id FROM articles ORDER BY id DESC LIMIT 1";
+		return $this->query_single($query, false) + 1;
+	}
+
 	public function get_article($id) {
 		$query = "SELECT * FROM articles WHERE id=$id";
 		$result = $this->query_single($query);
