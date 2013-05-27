@@ -215,7 +215,7 @@ class BugsCMS {
 		if (!isset($_GET['id']))
 			$this->display_error('No id specified', 'publish');
 		$article = $this->db->get_article($_GET['id']);
-		$article->set_status($article->ARTICLE_ACTIVE);
+		$article->set_status(ARTICLE_ACTIVE);
 		$this->db->update_article($article);
 		header('Location:../index.php?page=article&id='.$article->get_id());
 	}
@@ -224,7 +224,7 @@ class BugsCMS {
 		if (!isset($_GET['id']))
 			$this->display_error('No id specified', 'unpublish');
 		$article = $this->db->get_article($_GET['id']);
-		$article->set_status($article->ARTICLE_INACTIVE);
+		$article->set_status(ARTICLE_INACTIVE);
 		$this->db->update_article($article);
 		header('Location:index.php?page=articles');
 	}
@@ -234,11 +234,11 @@ class BugsCMS {
 			$this->display_error('No id specified', 'set_about');
 		// unset the old about
 		$article = $this->db->get_about_article();
-		$article->set_status($article->ARTICLE_INACTIVE);
+		$article->set_status(ARTICLE_INACTIVE);
 		$this->db->update_article($article);
 
 		$article = $this->db->get_article($_GET['id']);
-		$article->set_status($article->ARTICLE_ABOUT);
+		$article->set_status(ARTICLE_ABOUT);
 		$this->db->update_article($article);
 		header('Location:index.php?page=about');
 	}
@@ -247,7 +247,7 @@ class BugsCMS {
 		if (!isset($_GET['id']))
 			$this->display_error('No id specified', 'delete');
 		$article = $this->db->get_article($_GET['id']);
-		$article->set_status($article->ARTICLE_DELETED);
+		$article->set_status(ARTICLE_DELETED);
 		$this->db->update_article($article);
 		header('Location:index.php?page=articles');
 	}
