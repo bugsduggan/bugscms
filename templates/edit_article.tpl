@@ -4,31 +4,38 @@
 	edit_article.tpl
 *}
 
-{block name=centerpanel}
-<form class="form-horizontal" method="post" action="index.php?action=update_page">
+{block name=body}
+<div class="container">
+	<div class="page-header">
+		<h1>{$page|capitalize}</h1>
+	</div>
+
+	<form class="form-horizontal" method="post" action="index.php?action=update_page">
 	
-	<input type="hidden" name="id" value="{$article->get_id()}">
-	<input type="hidden" name="status" value="{$article->get_status()}">
+		<input type="hidden" name="id" value="{$article->get_id()}">
+		<input type="hidden" name="status" value="{$article->get_status()}">
 
-	<div class="control-group">
-		<label class="control-label" for="title">Title</label>
-		<div class="controls">
-			<input class="span5" type="text" id="title" name="title" value="{$article->get_title()}">
+		<div class="control-group">
+			<label class="control-label" for="title">Title</label>
+			<div class="controls">
+				<input class="span8" type="text" id="title" name="title" value="{$article->get_title()}">
+			</div>
 		</div>
-	</div>
 	
-	<div class="control-group">
-		<label class="control-label" for="body">Body</label>
-		<div class="controls">
-			<textarea class="span5" id="body" name="body" rows="20">{$article->get_body()}</textarea>
+		<div class="control-group">
+			<label class="control-label" for="body">Body</label>
+			<div class="controls">
+				<textarea class="span8" id="body" name="body" rows="20">{$article->get_body()}</textarea>
+			</div>
 		</div>
-	</div>
 
-	<div class="form-controls">
-		<button type="submit" class="btn btn-primary">Save</button>
-	</div>
+		<div class="form-controls">
+			<button type="submit" class="btn btn-primary">Save</button>
+		</div>
 
-</form>
+	</form>
+</div>
+<div id="push"></div>
 {/block}
 
 {block name=headscript}
@@ -37,7 +44,7 @@
 tinymce.init({
     selector: "textarea",
 		theme: "modern",
-		width: 468,
+		width: 768,
 		plugins: 'link',
 		content_css: "css/tinymce.css"
 });
