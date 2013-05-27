@@ -38,11 +38,8 @@ function display_article($smarty) {
 		$smarty->assign('page', 'home');
 		$article = $cms->get_top_article();
 	}
-	if ($article->get_status() == 2) {
+	if ($article->get_status() == ARTICLE_ABOUT)
 		header('Location:index.php?page=about');
-	} else if ($article->get_status() == 0) {
-		header('Location:admin/index.php?page=preview&id='.$article->get_id());
-	}
 	$smarty->assign('article', $article);
 	$smarty->display('article.tpl');
 }

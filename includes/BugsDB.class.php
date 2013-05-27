@@ -7,6 +7,11 @@ require_once(__DIR__.'/LoremIpsum.class.php');
 
 class BugsDBException extends Exception { }
 
+define('ARTICLE_DELETED', 0);
+define('ARTICLE_INACTIVE', 1);
+define('ARTICLE_ACTIVE', 2);
+define('ARTICLE_ABOUT', 3);
+
 class BugsDB {
 
 	/* private variables */
@@ -55,12 +60,15 @@ class BugsDB {
 		for ($i = 0; $i < 5; $i++) {
 			$body = $body.$lorem->getContent(50, 'html', false);
 		}
-		$this->add_article('About us', $body, $user, 2);
-		$body = '';
-		for ($i = 0; $i < 5; $i++) {
-			$body = $body.$lorem->getContent(50, 'html', false);
+		$this->add_article('About us', $body, $user, ARTICLE_ABOUT);
+
+		for ($j = 1; $j <= 5; $j++) {
+			$body = '';
+			for ($i = 0; $i < 5; $i++) {
+				$body = $body.$lorem->getContent(50, 'html', ($i == 0));
+			}
+			$this->add_article('Lorem ipsum '.$j, $body, $user);
 		}
-		$this->add_article('Lorem ipsum dolor sit amet', $body, $user);
 
 		// return the admin user
 		return $user;
@@ -125,7 +133,7 @@ class BugsDB {
 		return new User($id, $username, $password, $email, $admin);
 	}
 
-	public function add_article($title, $body, $author, $status=1) {
+	public function add_article($title, $body, $author, $status=ARTICLE_INACTIVE) {
 		$id = $this->next_id('articles');
 		$article = new Article($id, $title, $body, $author, $status);
 		return $this->update_article($article);
@@ -163,20 +171,23 @@ class BugsDB {
 	public function get_top_article() {
 		$id = $this->next_id('articles') -1;
 		$article = $this->get_article($id);
-		while ($article->get_status() != 1)
+		while ($article->get_status() != ARTICLE_ACTIVE)
 			$article = $this->get_article(--$id);
 		return $article;
 	}
 
 	public function get_about_article() {
-		$about_id = $this->query_single("SELECT id FROM articles WHERE status = 2", false);
+		$about_id = $this->query_single("SELECT id FROM articles WHERE status = ".ARTICLE_ABOUT, false);
 		return $this->get_article($about_id);
 	}
 
 	public function get_articles() {
 		$articles = array();
 		for ($i = 1; $i < $this->next_id('articles'); $i++) {
-			array_push($articles, $this->get_article($i));
+			try {
+				$article = $this->get_article($i);
+				array_push($articles, $article);
+			} catch (BugsDBException $e) { }
 		}
 		return $articles;
 	}

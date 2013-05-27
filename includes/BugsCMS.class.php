@@ -11,7 +11,7 @@ session_start();
 date_default_timezone_set('UTC');
 
 define('CONFIG', 'bugscms.conf');
-define('DEFAULT_ARTICLE_STATUS', 0); // default to private
+define('DEFAULT_ARTICLE_STATUS', ARTICLE_INACTIVE);
 
 class BugsCMSException extends Exception { }
 
@@ -70,6 +70,9 @@ class BugsCMS {
 			case 'set_about':
 				$this->set_about();
 				break;
+			case 'delete':
+				$this->delete_article();
+				break;
 			default:
 				if ($action != '') {
 					$this->display_error('Invalid action request', $page);
@@ -95,7 +98,13 @@ class BugsCMS {
 	}
 
 	public function get_article($id) {
-		return $this->db->get_article($id);
+		$article = $this->db->get_article($id);
+		if ($article->get_status() == ARTICLE_DELETED)
+			$this->display_error('404 Page not found', '404');
+		if ($article->get_status() == ARTICLE_INACTIVE &&
+			!isset($_SESSION['BUGS_UID']))
+			$this->display_error('404 Page not found', '404');
+		return $article;
 	}
 
 	public function get_about_article() {
@@ -206,7 +215,7 @@ class BugsCMS {
 		if (!isset($_GET['id']))
 			$this->display_error('No id specified', 'publish');
 		$article = $this->db->get_article($_GET['id']);
-		$article->set_status(1);
+		$article->set_status($article->ARTICLE_ACTIVE);
 		$this->db->update_article($article);
 		header('Location:../index.php?page=article&id='.$article->get_id());
 	}
@@ -215,7 +224,7 @@ class BugsCMS {
 		if (!isset($_GET['id']))
 			$this->display_error('No id specified', 'unpublish');
 		$article = $this->db->get_article($_GET['id']);
-		$article->set_status(0);
+		$article->set_status($article->ARTICLE_INACTIVE);
 		$this->db->update_article($article);
 		header('Location:index.php?page=articles');
 	}
@@ -225,13 +234,22 @@ class BugsCMS {
 			$this->display_error('No id specified', 'set_about');
 		// unset the old about
 		$article = $this->db->get_about_article();
-		$article->set_status(0);
+		$article->set_status($article->ARTICLE_INACTIVE);
 		$this->db->update_article($article);
 
 		$article = $this->db->get_article($_GET['id']);
-		$article->set_status(2);
+		$article->set_status($article->ARTICLE_ABOUT);
 		$this->db->update_article($article);
 		header('Location:index.php?page=about');
+	}
+
+	private function delete_article() {
+		if (!isset($_GET['id']))
+			$this->display_error('No id specified', 'delete');
+		$article = $this->db->get_article($_GET['id']);
+		$article->set_status($article->ARTICLE_DELETED);
+		$this->db->update_article($article);
+		header('Location:index.php?page=articles');
 	}
 
 }
