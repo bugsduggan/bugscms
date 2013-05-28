@@ -261,7 +261,7 @@ class BugsDB {
 		$id = $result['id'];
 		$location = $result['location'];
 		$date = $result['date'];
-		$comment = $result['comment'];
+		$comment = htmlspecialchars($result['comment'], ENT_QUOTES);
 		$status = $result['status'];
 
 		$now = date('Y-m-d h:i');
