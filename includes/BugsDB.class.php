@@ -14,9 +14,11 @@ define('ARTICLE_ACTIVE', 2);
 define('ARTICLE_ABOUT', 3);
 
 function event_cmp($evt1, $evt2) {
-	if ($evt1->get_date() < $evt2->get_date())
+	$d1 = strtotime($evt1->get_date());
+	$d2 = strtotime($evt2->get_date());
+	if ($d1 < $d2)
 		return -1;
-	else if ($evt1->get_date() > $evt2->get_date())
+	else if ($d1 > $d2)
 		return 1;
 	else
 		return 0;
@@ -264,7 +266,7 @@ class BugsDB {
 		$comment = htmlspecialchars($result['comment'], ENT_QUOTES);
 		$status = $result['status'];
 
-		$now = date('Y-m-d h:i');
+		$now = date('Y-m-d h:i', time() + (2 * 60 * 60));
 		if ($now > $date)
 			throw new BugsDBException('Event expired');
 
