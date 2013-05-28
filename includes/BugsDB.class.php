@@ -13,6 +13,15 @@ define('ARTICLE_INACTIVE', 1);
 define('ARTICLE_ACTIVE', 2);
 define('ARTICLE_ABOUT', 3);
 
+function event_cmp($evt1, $evt2) {
+	if ($evt1->get_date() < $evt2->get_date())
+		return -1;
+	else if ($evt1->get_date() > $evt2->get_date())
+		return 1;
+	else
+		return 0;
+}
+
 class BugsDB {
 
 	/* private variables */
@@ -266,6 +275,7 @@ class BugsDB {
 				array_push($events, $event);
 			} catch (BugsDBException $e) { }
 		}
+		uasort($events, 'event_cmp');
 		return $events;
 	}
 
