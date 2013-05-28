@@ -23,6 +23,7 @@
 <p class="lead">Event stats:</p>
 <table class="table">
 	<tr><th>Upcoming events:</th><td colspan="2">{$upcoming}</td></tr>
+	{if isset($next_event)}
 	<tr>
 		<th>Next event:</th><td colspan="2">{$next_event->get_location()}</td>
 	</tr>
@@ -30,5 +31,6 @@
 		<th></th><td>{$next_event->get_date()|date_format:#date_format#}</td>
 		<td>{$next_event->get_date()|date_format:#time_format#}</td>
 	</tr>
+	{/if}
 </table>
 {/block}
