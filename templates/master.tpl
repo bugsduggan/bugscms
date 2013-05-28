@@ -59,9 +59,12 @@
 	{block name=style}{/block}
 	</style>
 	<link href="css/bootstrap-responsive.css" rel="stylesheet">
+	<link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" />
 
 	<link href="css/style.css" rel="stylesheet">
 
+  <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+  <script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
 	{block name=headscript}{/block}
 </head>
 
@@ -100,7 +103,6 @@
 	</div>
 	{/block}
 
-	<script src="js/jquery.js"></script>
 	<script src="js/bootstrap.js"></script>
 	<script>
 	{block name=footerscript}{/block}

@@ -1,5 +1,9 @@
 {extends "master.tpl"}
 
+{*
+	edit_event.tpl
+*}
+
 {block name=centerpanel}
 <form class="form-horizontal" method="post" action="index.php?action=update_event">
 
@@ -16,7 +20,9 @@
 	<div class="control-group">
 		<label class="control-label" for="date">Date</label>
 		<div class="controls">
-			<input class="span4" type="text" id="date" name="date" value="{$event->get_date()}">
+			<input class="span2 date-picker" type="text" id="date" name="date" value="{$event->get_date()|date_format:"%d/%m/%Y"}">
+			<input class="span1" type="text" id="hours" name="hours" value="{$event->get_date()|date_format:"%H"}">
+			<input class="span1" type="text" id="mins" name="mins" value="{$event->get_date()|date_format:"%M"}">
 		</div>
 	</div>
 
@@ -33,4 +39,15 @@
 	</div>
 
 </form>
+{/block}
+
+{block name=headscript}
+<script>
+	$(function() {
+		$("#date").datepicker();
+	});
+</script>
+{/block}
+
+{block name=style}
 {/block}
