@@ -99,7 +99,7 @@
 	{block name=footer}
 	<div id="footer">
 		<div class="container">
-			<p class="muted credit pull-right">Built using BugsCMS &copy; <a href="http://tomleaman.co.uk">Tom Leaman</a> 2013.</p>
+			<p class="muted credit pull-right">Built using BugsCMS &copy; <a href="http://tomleaman.co.uk">Tom Leaman</a> 2013</p>
 			<p class="muted credit">{#footer#}</p>
 		</div>
 	</div>
