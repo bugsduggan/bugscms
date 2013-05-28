@@ -69,7 +69,7 @@ function display_events($smarty) {
 
 function display_events_dash($smarty) {
 	global $cms;
-	$smarty->assign('page', 'events');
+	$smarty->assign('page', 'events admin');
 	$events = $cms->get_events();
 	$smarty->assign('events', $events);
 	$smarty->display('events_dash.tpl');
