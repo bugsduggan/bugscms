@@ -241,6 +241,7 @@ class BugsDB {
 		$location = SQLite3::escapeString($event->get_location());
 		$date = $event->get_date();
 		$comment = SQLite3::escapeString($event->get_comment());
+		$comment = str_replace("\r\n", "", $comment);
 		$status = $event->get_status();
 
 		$stm = "INSERT OR REPLACE INTO events VALUES ($id, '$location', '$date', '$comment', $status)";
