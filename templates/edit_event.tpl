@@ -20,9 +20,7 @@
 	<div class="control-group">
 		<label class="control-label" for="date">Date</label>
 		<div class="controls">
-			<input class="span2 date-picker" type="text" id="date" name="date" value="{$event->get_date()|date_format:"%d/%m/%Y"}">
-			<input class="span1" type="text" id="hours" name="hours" value="{$event->get_date()|date_format:"%H"}">
-			<input class="span1" type="text" id="mins" name="mins" value="{$event->get_date()|date_format:"%M"}">
+			<input type="text" id="date" name="date" value="{$event->get_date()}">
 		</div>
 	</div>
 
@@ -42,12 +40,26 @@
 {/block}
 
 {block name=headscript}
-<script>
-	$(function() {
-		$("#date").datepicker();
+<script type="text/javascript" src="js/jquery-ui-timepicker-addon.js"></script>
+<script type="text/javascript" src="js/jquery-ui-sliderAccess.js"></script>
+<script type="text/javascript">
+$(function() {
+	$('#date').datetimepicker({
+		stepMinute: 15
 	});
+});
 </script>
 {/block}
 
 {block name=style}
+.ui-timepicker-div .ui-widget-header { margin-bottom: 8px; }
+.ui-timepicker-div dl { text-align: left; }
+.ui-timepicker-div dl dt { height: 25px; margin-bottom: -25px; }
+.ui-timepicker-div dl dd { margin: 0 10px 10px 65px; }
+.ui-timepicker-div td { font-size: 90%; }
+.ui-tpicker-grid-label { background: none; border: none; margin: 0; padding: 0; }
+
+.ui-timepicker-rtl{ direction: rtl; }
+.ui-timepicker-rtl dl { text-align: right; }
+.ui-timepicker-rtl dl dd { margin: 0 65px 10px 10px; }
 {/block}
