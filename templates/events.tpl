@@ -19,8 +19,8 @@
 </div>
 <table class="table table-striped table-bordered">
 {foreach $events as $event}
-<tr onmouseover="mouse_event(this, 'success', '{$event->get_comment()|escape:"quotes"}', '{$event->get_location()|escape:"quotes"}', '{$event->get_date()|escape:"quotes"}')"
-		onmouseout="mouse_event(this, '', 'Next event:', '{$events[0]->get_location()|escape:"quotes"}', '{$events[0]->get_date()|escape:"quotes"}')">
+<tr onmouseover="mouse_event(this, 'success', '{escape_single_quotes string=$event->get_comment()}', '{$event->get_location()}', '{$event->get_date()}')"
+		onmouseout="mouse_event(this, '', 'Next event:', '{$events[0]->get_location()}', '{$events[0]->get_date()}')">
 <td>{$event->get_location()}</td>
 <td>{$event->get_date()|date_format:#date_format#}</td>
 <td>{$event->get_date()|date_format:#time_format#}</td>

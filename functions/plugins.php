@@ -24,4 +24,8 @@ function lorem_ipsum($params, $smarty) {
 	return $result;
 }
 
+function escape_single_quotes($params, $smarty) {
+	return str_replace('&#039;', '&#92;&#039;', $params['string']);
+}
+
 ?>
