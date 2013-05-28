@@ -48,7 +48,7 @@ tinymce.init({
 	selector: "#comment",
 	theme: "modern",
 	width: 300,
-	plugins: 'link',
+	plugins: 'link image',
 	content_css: "css/tinymce.css"
 });
 

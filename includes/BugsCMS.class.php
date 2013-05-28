@@ -195,7 +195,7 @@ class BugsCMS {
 		$s->configLoad(CONFIG, 'globals');
 
 		$s->registerPlugin("function", "lorem_ipsum", "lorem_ipsum");
-		$s->registerPlugin("function", "escape_single_quotes", "escape_single_quotes");
+		$s->registerPlugin("function", "escape_quotes", "escape_quotes");
 
 		return $s;
 	}

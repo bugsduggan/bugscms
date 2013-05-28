@@ -19,8 +19,8 @@
 </div>
 <table class="table table-striped table-bordered">
 {foreach $events as $event}
-<tr onmouseover="mouse_event(this, 'success', '{escape_single_quotes string=$event->get_comment()}', '{$event->get_location()}', '{$event->get_date()}')"
-		onmouseout="mouse_event(this, '', 'Next event:', '{$events[0]->get_location()}', '{$events[0]->get_date()}')">
+<tr onmouseover="mouse_event(this, 'success', '{if $event->get_id() == $events[0]->get_id()}Next event:{/if}', '{$event->get_comment()}', '{$event->get_location()}', '{$event->get_date()|date_format:#date_format#}')"
+		onmouseout="mouse_event(this, '', 'Next event:', '{$events[0]->get_comment()}', '{$events[0]->get_location()}', '{$events[0]->get_date()|date_format:#date_format#}')">
 <td>{$event->get_location()}</td>
 <td>{$event->get_date()|date_format:#date_format#}</td>
 <td>{$event->get_date()|date_format:#time_format#}</td>
@@ -49,16 +49,17 @@
 
 {block name=headscript}
 <script type="text/javascript">
-function mouse_event(obj, newClass, head, loc, time) {
+function mouse_event(obj, newClass, head, comment, loc, time) {
 	obj.className = newClass;
-	show_info(head, loc, time);
+	show_info(head, comment, loc, time);
 }
-function show_info(head, loc, time) {
-	document.getElementById("comment").innerHTML='<p class="lead">'+head+'</p><p>'+loc+'</p><p>'+time+'</p>';
+function show_info(head, comment, loc, time) {
+	console.log(comment);
+	document.getElementById("comment").innerHTML='<p class="lead">'+head+'</p>'+comment+'<p>'+loc+'</p><p>'+time+'</p>';
 }
 </script>
 {/block}
 
 {block name=footerscript}
-show_info('Next event:', '{$events[0]->get_location()|escape:"quotes"}', '{$events[0]->get_date()|escape:"quotes"}');
+show_info('Next event:', _.unescape('{$events[0]->get_comment()}'), '{$events[0]->get_location()}', '{$events[0]->get_date()|date_format:#date_format#}');
 {/block}
