@@ -11,13 +11,15 @@
 {/if}
 {/block}
 
+{block name=leftpanel}
+	<div id="comment"></div>
+{/block}
+
 {block name=centerpanel}
+
+<img class="img-polaroid event-map" src="{$event_map}" alt="Map of events">
+
 {if count($events) > 0}
-<div class="info">
-	<img class="img-polaroid event-map pull-right" src="{$event_map}" alt="Map of events">
-	<div id="comment" class="span3"></div>
-</div>
-{if count($events) > 1}
 <table class="table table-striped table-bordered">
 {foreach $events as $event}
 <tr onmouseover="mouse_event(this, 'success', '{if $event->get_id() == $events[0]->get_id()}Next event:{/if}', '{$event->get_comment()}', '{$event->get_location()}', '{$event->get_date()|date_format:#date_format#}')"
@@ -29,7 +31,6 @@
 </tr>
 {/foreach}
 </table>
-{/if}
 {else}
 <p class="lead">No events</p>
 {/if}
@@ -37,6 +38,9 @@
 
 {block name=style}
 .event-map {
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
 	margin-bottom: 40px;
 }
 .info {
