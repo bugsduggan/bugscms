@@ -45,6 +45,13 @@
 <script type="text/javascript">
 $(function() {
 	$('#date').datetimepicker({
+		addSliderAccess: true,
+		sliderAccessArgs: { touchonly: false },
+		dateFormat: 'yy-mm-dd',
+		timeFormat: 'HH:mm',
+		hourMin: 8,
+		hourMax: 22,
+		minDate: new Date(),
 		stepMinute: 15
 	});
 });

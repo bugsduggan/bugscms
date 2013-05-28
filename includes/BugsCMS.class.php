@@ -8,7 +8,7 @@ include_once(__DIR__.'/../functions/plugins.php');
 
 session_start();
 
-date_default_timezone_set('UTC');
+date_default_timezone_set('Europe/London');
 
 define('CONFIG', 'bugscms.conf');
 define('DEFAULT_ARTICLE_STATUS', ARTICLE_INACTIVE);

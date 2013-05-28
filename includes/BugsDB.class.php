@@ -264,6 +264,10 @@ class BugsDB {
 		$comment = $result['comment'];
 		$status = $result['status'];
 
+		$now = date('Y-m-d h:i');
+		if ($now > $date)
+			throw new BugsDBException('Event expired');
+
 		return new Event($id, $location, $date, $comment, $status);
 	}
 
