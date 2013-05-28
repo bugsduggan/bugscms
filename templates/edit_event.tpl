@@ -27,7 +27,7 @@
 	<div class="control-group">
 		<label class="control-label" for="comment">Comment</label>
 		<div class="controls">
-			<input class="span4" type="text" id="comment" name="comment" value="{$event->get_comment()}">
+			<textarea class="span4" id="comment" name="comment" rows="12">{$event->get_comment()}</textarea>
 		</div>
 	</div>
 
@@ -42,7 +42,16 @@
 {block name=headscript}
 <script type="text/javascript" src="js/jquery-ui-timepicker-addon.js"></script>
 <script type="text/javascript" src="js/jquery-ui-sliderAccess.js"></script>
+<script type="text/javascript" src="js/tinymce/tinymce.min.js"></script>
 <script type="text/javascript">
+tinymce.init({
+	selector: "#comment",
+	theme: "modern",
+	width: 300,
+	plugins: 'link',
+	content_css: "css/tinymce.css"
+});
+
 $(function() {
 	$('#date').datetimepicker({
 		addSliderAccess: true,

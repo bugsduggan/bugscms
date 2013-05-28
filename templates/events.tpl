@@ -20,7 +20,7 @@
 </div>
 <table class="table table-striped table-bordered">
 {foreach $events as $event}
-<tr onmouseover="mouse_event(this, 'success', '{$event->get_comment()}')" onmouseout="mouse_event(this, '', '')">
+<tr onmouseover="mouse_event(this, 'success', '{$event->get_comment()|escape:'quotes'}')" onmouseout="mouse_event(this, '', '')">
 <td>{$event->get_location()}</td>
 <td>{$event->get_date()|date_format:#date_format#}</td>
 <td>{$event->get_date()|date_format:#time_format#}</td>
