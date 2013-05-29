@@ -169,7 +169,7 @@ class BugsCMS {
 	public function get_new_event() {
 		$id = $this->db->get_next_event_id();
 		$date = "2013-31-08 05:00";
-		return new Event($id, htmlspecialchars('Location'), $date, '', 1);
+		return new Event($id, htmlspecialchars('Location'), $date, '', 1, 0, 0);
 	}
 
 	public function get_map_locations() {
@@ -263,7 +263,19 @@ class BugsCMS {
 		$date = $_POST['date'];
 		$comment = $_POST['comment'];
 		$status = $_POST['status'];
-		$event = new Event($id, $location, $date, $comment, $status);
+
+		// Get geolocation data
+		$request_url = 'http://maps.googleapis.com/maps/api/geocode/json?address='.urlencode($location).'&sensor=false';
+		$response = file_get_contents($request_url);
+		if ($response === false)
+			throw new BugsCMSException('Failed to get location data');
+		$response = json_decode($response);
+		$response = $response->{'results'};
+		$lat = $response[0]->{'geometry'}->{'location'}->{'lat'};
+		$lng = $response[0]->{'geometry'}->{'location'}->{'lng'};
+
+		// Save
+		$event = new Event($id, $location, $date, $comment, $status, $lat, $lng);
 		$this->db->update_event($event);
 		header('Location:index.php?page=events');
 	}

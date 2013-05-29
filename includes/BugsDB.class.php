@@ -57,7 +57,7 @@ class BugsDB {
 		$statement = array(
 			"CREATE TABLE users (id INTEGER PRIMARY KEY, username TEXT NOT NULL, password TEXT NOT NULL, email TEXT NOT NULL, status INTEGER NOT NULL)",
 			"CREATE TABLE articles (id INTEGER PRIMARY KEY, title TEXT NOT NULL, body TEXT NOT NULL, author INTEGER NOT NULL, status INTEGER NOT NULL, FOREIGN KEY (author) REFERENCES users (id))",
-			"CREATE TABLE events (id INTEGER PRIMARY KEY, location TEXT NOT NULL, date TEXT NOT NULL, comment TEXT, status INTEGER NOT NULL)"
+			"CREATE TABLE events (id INTEGER PRIMARY KEY, location TEXT NOT NULL, date TEXT NOT NULL, comment TEXT, status INTEGER NOT NULL, lat REAL, lng REAL)"
 		);
 
 		// loop through and exec
@@ -243,8 +243,10 @@ class BugsDB {
 		$comment = SQLite3::escapeString($event->get_comment());
 		$comment = str_replace("\r\n", "", $comment);
 		$status = $event->get_status();
+		$lat = $event->get_lat();
+		$lng = $event->get_lng();
 
-		$stm = "INSERT OR REPLACE INTO events VALUES ($id, '$location', '$date', '$comment', $status)";
+		$stm = "INSERT OR REPLACE INTO events VALUES ($id, '$location', '$date', '$comment', $status, $lat, $lng)";
 
 		$this->exec($stm);
 		return $event;
@@ -267,12 +269,14 @@ class BugsDB {
 		$date = $result['date'];
 		$comment = htmlspecialchars($result['comment'], ENT_QUOTES);
 		$status = $result['status'];
+		$lat = $result['lat'];
+		$lng = $result['lng'];
 
 		$now = date('Y-m-d h:i', time() + (2 * 60 * 60));
 		if ($now > $date)
 			throw new BugsDBException('Event expired');
 
-		return new Event($id, $location, $date, $comment, $status);
+		return new Event($id, $location, $date, $comment, $status, $lat, $lng);
 	}
 
 	public function get_events() {
