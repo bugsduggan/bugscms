@@ -172,14 +172,13 @@ class BugsCMS {
 		return new Event($id, htmlspecialchars('Location'), $date, '', 1);
 	}
 
-	public function get_event_map() {
-		$size = "512x256";
-		$location = "";
+	public function get_map_locations() {
 		$events = $this->get_events();
+		$location = "";
 		foreach ($events as $event) {
-			$location = $location."%7C".htmlspecialchars_decode($event->get_location(), ENT_QUOTES);
+			$location = $location."%7C".urlencode(htmlspecialchars_decode($event->get_location(), ENT_QUOTES));
 		}
-		return "http://maps.googleapis.com/maps/api/staticmap?size=$size&maptype=roadmap\&markers=size:mid%7Ccolor:red$location&sensor=false";
+		return $location;
 	}
 
 	/* creates the smarty instance */

@@ -4,7 +4,6 @@
 	events.tpl
 *}
 
-
 {block name=rightpanel}
 {if $logged_in}
 <p><a href="index.php?page=events_dash">Add/edit events</a></p>
@@ -17,7 +16,7 @@
 
 {block name=centerpanel}
 
-<img class="img-polaroid event-map" src="{$event_map}" alt="Map of events">
+<div id="map"></div>
 
 {if count($events) > 0}
 <table class="table table-striped table-bordered">
@@ -54,18 +53,10 @@
 {/block}
 
 {block name=headscript}
-<script type="text/javascript">
-function mouse_event(obj, newClass, head, comment, loc, time) {
-	obj.className = newClass;
-	show_info(head, comment, loc, time);
-}
-function show_info(head, comment, loc, time) {
-	console.log(comment);
-	document.getElementById("comment").innerHTML='<p class="lead">'+head+'</p>'+comment+'<p>'+loc+'</p><p>'+time+'</p>';
-}
-</script>
+<script type="text/javascript" src="js/map.js"></script>
 {/block}
 
 {block name=footerscript}
 show_info('Next event:', _.unescape('{$events[0]->get_comment()}'), _.unescape('{$events[0]->get_location()}'), '{$events[0]->get_date()|date_format:#date_format#}');
+show_map('{$map_locations}');
 {/block}

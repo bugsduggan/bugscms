@@ -33,7 +33,7 @@ function display_events($smarty) {
 	$smarty->assign('page', 'events');
 	$events = $cms->get_events();
 	$smarty->assign('events', $events);
-	$smarty->assign('event_map', $cms->get_event_map());
+	$smarty->assign('map_locations', $cms->get_map_locations());
 	$smarty->display('events.tpl');
 }
 
