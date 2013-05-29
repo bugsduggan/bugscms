@@ -66,6 +66,8 @@
 
   <script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
   <script src="http://code.jquery.com/ui/1.10.3/jquery-ui.min.js"></script>
+	<script src="http://maps.google.com/maps/api/js?sensor=false" type="text/javascript"></script>
+	<script src="js/jquery.ui.map.min.js" type="text/javascript"></script>
 	<script src="js/underscore-min.js"></script>
 	{block name=headscript}{/block}
 </head>

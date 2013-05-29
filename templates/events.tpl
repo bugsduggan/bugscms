@@ -16,7 +16,7 @@
 
 {block name=centerpanel}
 
-<div id="map"></div>
+<div id="map" style="width: 600px;height:400px"></div>
 
 {if count($events) > 0}
 <table class="table table-striped table-bordered">
@@ -36,7 +36,7 @@
 {/block}
 
 {block name=style}
-.event-map {
+#map {
 	display: block;
 	margin-left: auto;
 	margin-right: auto;
@@ -46,7 +46,7 @@
 	margin-bottom: 20px;
 }
 @media (max-width:797px) {
-	.event-map {
+	#map {
 		margin-left: 20px;
 	}
 }
@@ -58,5 +58,5 @@
 
 {block name=footerscript}
 show_info('Next event:', _.unescape('{$events[0]->get_comment()}'), _.unescape('{$events[0]->get_location()}'), '{$events[0]->get_date()|date_format:#date_format#}');
-show_map('{$map_locations}');
+show_map('{$events[0]->get_location()}');
 {/block}
