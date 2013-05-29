@@ -30,7 +30,8 @@ function display_admin($smarty) {
 
 	$events = $cms->get_events();
 	$smarty->assign('upcoming', count($events));
-	$smarty->assign('next_event', $events[0]);
+	if (count($events) > 0)
+		$smarty->assign('next_event', $events[0]);
 
 	$smarty->display('admin.tpl');
 }
