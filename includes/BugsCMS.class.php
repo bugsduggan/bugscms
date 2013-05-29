@@ -177,7 +177,7 @@ class BugsCMS {
 		$location = "";
 		$events = $this->get_events();
 		foreach ($events as $event) {
-			$location = $location."%7C".htmlspecialchars($event->get_location());
+			$location = $location."%7C".htmlspecialchars_decode($event->get_location(), ENT_QUOTES);
 		}
 		return "http://maps.googleapis.com/maps/api/staticmap?size=$size&maptype=roadmap\&markers=size:mid%7Ccolor:red$location&sensor=false";
 	}

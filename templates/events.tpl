@@ -22,8 +22,8 @@
 {if count($events) > 0}
 <table class="table table-striped table-bordered">
 {foreach $events as $event}
-<tr onmouseover="mouse_event(this, 'success', '{if $event->get_id() == $events[0]->get_id()}Next event:{/if}', '{$event->get_comment()}', '{$event->get_location()}', '{$event->get_date()|date_format:#date_format#}')"
-		onmouseout="mouse_event(this, '', 'Next event:', '{$events[0]->get_comment()}', '{$events[0]->get_location()}', '{$events[0]->get_date()|date_format:#date_format#}')">
+<tr onmouseover="mouse_event(this, 'success', '{if $event->get_id() == $events[0]->get_id()}Next event:{/if}', '{escape_quotes string=$event->get_comment()}', '{escape_quotes string=$event->get_location()}', '{$event->get_date()|date_format:#date_format#}')"
+		onmouseout="mouse_event(this, '', 'Next event:', '{escape_quotes string=$events[0]->get_comment()}', '{escape_quotes string=$events[0]->get_location()}', '{$events[0]->get_date()|date_format:#date_format#}')">
 <td>{$event->get_location()}</td>
 <td>{$event->get_date()|date_format:#date_format#}</td>
 <td>{$event->get_date()|date_format:#time_format#}</td>
@@ -67,5 +67,5 @@ function show_info(head, comment, loc, time) {
 {/block}
 
 {block name=footerscript}
-show_info('Next event:', _.unescape('{$events[0]->get_comment()}'), '{$events[0]->get_location()}', '{$events[0]->get_date()|date_format:#date_format#}');
+show_info('Next event:', _.unescape('{$events[0]->get_comment()}'), _.unescape('{$events[0]->get_location()}'), '{$events[0]->get_date()|date_format:#date_format#}');
 {/block}

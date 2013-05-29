@@ -263,7 +263,7 @@ class BugsDB {
 			throw new BugsDBException('Event not found');
 
 		$id = $result['id'];
-		$location = $result['location'];
+		$location = htmlspecialchars($result['location'], ENT_QUOTES);
 		$date = $result['date'];
 		$comment = htmlspecialchars($result['comment'], ENT_QUOTES);
 		$status = $result['status'];
