@@ -16,7 +16,7 @@
 
 {block name=centerpanel}
 
-<div id="map" style="width: 600px;height:400px"></div>
+<div id="map" style="width: 600px;height:400px"><p>Map failed to load</p></div>
 
 {if count($events) > 0}
 <table class="table table-striped table-bordered">
@@ -54,9 +54,23 @@
 
 {block name=headscript}
 <script type="text/javascript" src="js/map.js"></script>
+<script type="text/javascript">
+var locations = new Array();
+{foreach $events as $event}
+	locations.push({ldelim}
+		id: "{$event->get_id()}",
+		location: _.unescape('{$event->get_location()}'),
+		date: "{$event->get_date()}",
+		comment: _.unescape('{$event->get_comment()}'),
+		lat: "{$event->get_lat()}",
+		lng: "{$event->get_lng()}"
+	{rdelim});
+{/foreach}
+</script>
 {/block}
 
 {block name=footerscript}
-show_info('Next event:', _.unescape('{$events[0]->get_comment()}'), _.unescape('{$events[0]->get_location()}'), '{$events[0]->get_date()|date_format:#date_format#}');
-show_map({$events[0]->get_lat()}, {$events[0]->get_lng()});
+show_info('Next event:', locations[0]['comment'], locations[0]['location'], locations[0]['date']);
+
+init_map(locations);
 {/block}
