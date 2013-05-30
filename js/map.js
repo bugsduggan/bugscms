@@ -9,9 +9,15 @@ function show_info(head, comment, loc, time) {
 }
 
 function show_map(lat, lng) {
-	var start = new google.maps.LatLng(lat, lng);
-	$('#map').gmap({
-		'center': start,
-		'zoom': 13
+	var latLng = new google.maps.LatLng(lat, lng);
+	var mapOptions = {
+		zoom: 13,
+		center: latLng,
+		mapTypeId: google.maps.MapTypeId.ROADMAP
+	}
+	var map = new google.maps.Map(document.getElementById('map'), mapOptions);
+	var marker = new google.maps.Marker({
+		position: latLng,
+		map: map
 	});
 }
