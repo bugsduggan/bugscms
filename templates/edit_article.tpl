@@ -46,7 +46,7 @@ tinymce.init({
     selector: "textarea",
 		theme: "modern",
 		width: 768,
-		plugins: 'link image',
+		plugins: 'link image code',
 		content_css: "css/tinymce.css"
 });
 </script>
