@@ -22,7 +22,7 @@
 <table class="table table-striped table-bordered">
 {foreach $events as $event}
 <tr onmouseover="mouse_event(this, 'success', '{if $event->get_id() == $events[0]->get_id()}Next event:{/if}', '{escape_quotes string=$event->get_comment()}', '{escape_quotes string=$event->get_location()}', '{$event->get_date()|date_format:#date_format#}', {$event->get_lat()}, {$event->get_lng()})"
-		onmouseout="mouse_event(this, '', 'Next event:', '{escape_quotes string=$events[0]->get_comment()}', '{escape_quotes string=$events[0]->get_location()}', '{$events[0]->get_date()|date_format:#date_format#}', {$event->get_lat()}, {$event->get_lng()})">
+		onmouseout="mouse_event(this, '', 'Next event:', '{escape_quotes string=$events[0]->get_comment()}', '{escape_quotes string=$events[0]->get_location()}', '{$events[0]->get_date()|date_format:#date_format#}', {$events[0]->get_lat()}, {$events[0]->get_lng()})">
 <td>{$event->get_location()}</td>
 <td>{$event->get_date()|date_format:#date_format#}</td>
 <td>{$event->get_date()|date_format:#time_format#}</td>
