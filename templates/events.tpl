@@ -21,8 +21,8 @@
 {if count($events) > 0}
 <table class="table table-striped table-bordered">
 {foreach $events as $event}
-<tr onmouseover="mouse_event(this, 'success', '{if $event->get_id() == $events[0]->get_id()}Next event:{/if}', '{escape_quotes string=$event->get_comment()}', '{escape_quotes string=$event->get_location()}', '{$event->get_date()|date_format:#date_format#}', {$event->get_lat()}, {$event->get_lng()})"
-		onmouseout="mouse_event(this, '', 'Next event:', '{escape_quotes string=$events[0]->get_comment()}', '{escape_quotes string=$events[0]->get_location()}', '{$events[0]->get_date()|date_format:#date_format#}', {$events[0]->get_lat()}, {$events[0]->get_lng()})">
+<tr onmouseover="mouse_over('{$event->get_id()}')"
+		onmouseout="mouse_out('{$event->get_id()}')">
 <td>{$event->get_location()}</td>
 <td>{$event->get_date()|date_format:#date_format#}</td>
 <td>{$event->get_date()|date_format:#time_format#}</td>
@@ -33,6 +33,26 @@
 {else}
 <p class="lead">No events</p>
 {/if}
+{/block}
+
+{block name=headscript}
+<script type="text/javascript" src="js/map.js"></script>
+<script type="text/javascript">
+var locations = new Array();
+{foreach $events as $event}
+	locations.push({ldelim}
+		id: "{$event->get_id()}",
+		location: '{escape_quotes string=$event->get_location()}',
+		date: "{$event->get_date()}",
+		comment: '{escape_quotes string=$event->get_comment()}',
+		lat: "{$event->get_lat()}",
+		lng: "{$event->get_lng()}"
+	{rdelim});
+{/foreach}
+</script>
+{/block}
+
+{block name=footerscript}
 {/block}
 
 {block name=style}
@@ -50,27 +70,4 @@
 		margin-left: 20px;
 	}
 }
-{/block}
-
-{block name=headscript}
-<script type="text/javascript" src="js/map.js"></script>
-<script type="text/javascript">
-var locations = new Array();
-{foreach $events as $event}
-	locations.push({ldelim}
-		id: "{$event->get_id()}",
-		location: _.unescape('{$event->get_location()}'),
-		date: "{$event->get_date()}",
-		comment: _.unescape('{$event->get_comment()}'),
-		lat: "{$event->get_lat()}",
-		lng: "{$event->get_lng()}"
-	{rdelim});
-{/foreach}
-</script>
-{/block}
-
-{block name=footerscript}
-show_info('Next event:', locations[0]['comment'], locations[0]['location'], locations[0]['date']);
-
-init_map(locations);
 {/block}

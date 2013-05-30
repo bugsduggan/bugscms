@@ -26,8 +26,8 @@ function lorem_ipsum($params, $smarty) {
 
 function escape_quotes($params, $smarty) {
 	$input = $params['string'];
-	$result = str_replace('&#039;', '&#92;&#039;', $input);
-	$result = str_replace('&quot;', '&#92;&quot;', $result);
+	$result = str_replace('&#039;', '\\\'', $input);
+	$result = str_replace('&quot;', "\\\"", $result);
 	return $result;
 }
 
