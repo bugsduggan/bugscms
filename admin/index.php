@@ -52,10 +52,13 @@ function display_admin($smarty) {
 function display_edit_article($smarty) {
 	global $cms;
 	$smarty->assign('page', 'edit');
-	if (isset($_GET['id']))
+	if (isset($_GET['id'])) {
 		$article = $cms->get_article($_GET['id']);
-	else
+		$smarty->assign('create_new', false);
+	} else {
 		$article = $cms->get_new_article();
+		$smarty->assign('create_new', true);
+	}
 	$smarty->assign('article', $article);
 	$smarty->display('edit_article.tpl');
 }

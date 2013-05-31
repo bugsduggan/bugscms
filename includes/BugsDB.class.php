@@ -8,6 +8,8 @@ require_once(__DIR__.'/LoremIpsum.class.php');
 
 class BugsDBException extends Exception { }
 
+define('DATE_FORMAT', 'Y-m-d h:i');
+
 define('ARTICLE_DELETED', 0);
 define('ARTICLE_INACTIVE', 1);
 define('ARTICLE_ACTIVE', 2);
@@ -56,7 +58,7 @@ class BugsDB {
 		// create table statements
 		$statement = array(
 			"CREATE TABLE users (id INTEGER PRIMARY KEY, username TEXT NOT NULL, password TEXT NOT NULL, email TEXT NOT NULL, status INTEGER NOT NULL)",
-			"CREATE TABLE articles (id INTEGER PRIMARY KEY, title TEXT NOT NULL, body TEXT NOT NULL, author INTEGER NOT NULL, status INTEGER NOT NULL, FOREIGN KEY (author) REFERENCES users (id))",
+			"CREATE TABLE articles (id INTEGER PRIMARY KEY, title TEXT NOT NULL, body TEXT NOT NULL, status INTEGER NOT NULL, creation_date TEXT NOT NULL, author_id INTEGER NOT NULL, edit_date TEXT NOT NULL, editor_id INTEGER NOT NULL, FOREIGN KEY (author_id) REFERENCES users (id), FOREIGN KEY (editor_id) REFERENCES users (id))",
 			"CREATE TABLE events (id INTEGER PRIMARY KEY, location TEXT NOT NULL, date TEXT NOT NULL, comment TEXT, status INTEGER NOT NULL, lat REAL, lng REAL)"
 		);
 
@@ -66,6 +68,7 @@ class BugsDB {
 
 		// create admin user
 		$user = $this->add_user($username, $password, $email, true);
+		$now = date(DATE_FORMAT, time());
 
 		// create lorem article
 		$lorem = new LoremIpsumGenerator();
@@ -73,14 +76,14 @@ class BugsDB {
 		for ($i = 0; $i < 5; $i++) {
 			$body = $body.$lorem->getContent(50, 'html', false);
 		}
-		$this->add_article('About us', $body, $user, ARTICLE_ABOUT);
+		$this->add_article('About us', $body, ARTICLE_ABOUT, $now, $user, $now, $user);
 
 		for ($j = 1; $j <= 5; $j++) {
 			$body = '';
 			for ($i = 0; $i < 5; $i++) {
 				$body = $body.$lorem->getContent(50, 'html', ($i == 0));
 			}
-			$this->add_article('Lorem ipsum '.$j, $body, $user, ARTICLE_ACTIVE);
+			$this->add_article('Lorem ipsum '.$j, $body, ARTICLE_ACTIVE, $now, $user, $now, $user);
 		}
 
 		// return the admin user
@@ -154,9 +157,9 @@ class BugsDB {
 		return $users;
 	}
 
-	public function add_article($title, $body, $author, $status=ARTICLE_INACTIVE) {
+	public function add_article($title, $body, $status=ARTICLE_INACTIVE, $creation_date, $author, $edit_date, $editor) {
 		$id = $this->next_id('articles');
-		$article = new Article($id, $title, $body, $author, $status);
+		$article = new Article($id, $title, $body, $status, $creation_date, $author, $edit_date, $editor);
 		return $this->update_article($article);
 	}
 
@@ -164,10 +167,13 @@ class BugsDB {
 		$id = $article->get_id();
 		$title = SQLite3::escapeString($article->get_title());
 		$body = SQLite3::escapeString($article->get_body());
-		$author = $article->get_author()->get_id();
 		$status = $article->get_status();
+		$creation_date = $article->get_creation_date();
+		$author_id = $article->get_author()->get_id();
+		$edit_date = $article->get_edit_date();
+		$editor_id = $article->get_editor()->get_id();
 
-		$stm = "INSERT OR REPLACE INTO articles VALUES ($id, '$title', '$body', $author, $status)";
+		$stm = "INSERT OR REPLACE INTO articles VALUES ($id, '$title', '$body', $status, '$creation_date', $author_id, '$edit_date', $editor_id)";
 
 		$this->exec($stm);
 		return $article;
@@ -214,10 +220,13 @@ class BugsDB {
 		$id = $result['id'];
 		$title = $result['title'];
 		$body = htmlspecialchars_decode($result['body']);
-		$author = $this->get_user($result['author']);
 		$status = $result['status'];
+		$creation_date = $result['creation_date'];
+		$author = $this->get_user($result['author_id']);
+		$edit_date = $result['edit_date'];
+		$editor = $this->get_user($result['editor_id']);
 
-		return new Article($id, $title, $body, $author, $status);
+		return new Article($id, $title, $body, $status, $creation_date, $author, $edit_date, $editor);
 	}
 
 	public function get_top_article() {
@@ -280,7 +289,7 @@ class BugsDB {
 		$lat = $result['lat'];
 		$lng = $result['lng'];
 
-		$now = date('Y-m-d h:i', time() + (2 * 60 * 60));
+		$now = date(DATE_FORMAT, time() + (2 * 60 * 60));
 		if ($now > $date)
 			throw new BugsDBException('Event expired');
 

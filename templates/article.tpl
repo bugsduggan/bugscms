@@ -11,6 +11,12 @@
 {/block}
 
 {block name=rightpanel}
+{if $article->get_edit_date() == $article->get_creation_date()}
+<p class="muted">Created by: {$article->get_author()->get_username()} on {$article->get_creation_date()|date_format:#date_format#}</p>
+{else}
+<p class="muted">Last edited by: {$article->get_editor()->get_username()} on {$article->get_edit_date()|date_format:#date_format#}</p>
+{/if}
+
 {if $show_permalink && #permalinks#}
 <p><a href="index.php?page=article&id={$article->get_id()}">Permalink</a></p>
 {/if}
