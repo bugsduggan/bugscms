@@ -11,7 +11,7 @@
 {/block}
 
 {block name=rightpanel}
-{if $show_permalink}
+{if $show_permalink && #permalinks#}
 <p><a href="index.php?page=article&id={$article->get_id()}">Permalink</a></p>
 {/if}
 {if $logged_in}
