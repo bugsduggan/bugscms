@@ -8,7 +8,7 @@ require_once(__DIR__.'/LoremIpsum.class.php');
 
 class BugsDBException extends Exception { }
 
-define('DATE_FORMAT', 'Y-m-d h:i');
+define('DATE_FORMAT', 'Y-m-d H:i');
 
 define('ARTICLE_DELETED', 0);
 define('ARTICLE_INACTIVE', 1);
