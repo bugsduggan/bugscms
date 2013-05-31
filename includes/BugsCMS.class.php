@@ -365,6 +365,8 @@ class BugsCMS {
 
 		$email = $_POST['email'];
 		$user->set_email($email);
+		$avatar = $_POST['avatar'];
+		$user->set_avatar($avatar);
 
 		if (isset($_POST['new']) && $_POST['new'] != '') {
 			$current = sha1($_POST['current']);

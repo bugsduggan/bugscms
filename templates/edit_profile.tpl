@@ -5,9 +5,17 @@
 *}
 
 {block name=centerpanel}
+<img class="img-polaroid pull-right" src="{$user->get_avatar()}" alt="{$user->get_username()}'s avatar"></img>
 <form class="form-horizontal" method="post" action="index.php?action=update_profile">
 	
 	<input type="hidden" id="id" name="id" value="{$user->get_id()}">
+
+	<div class="control-group">
+		<label class="control-label" for="avatar">Link to avatar image</label>
+		<div class="controls">
+			<input type="text" id="avatar" name="avatar" value="{$user->get_avatar()}">
+		</div>
+	</div>
 
 	<div class="control-group">
 		<label class="control-label" for="email">E-mail</label>
