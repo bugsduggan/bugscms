@@ -11,6 +11,22 @@
 
 {if $user->is_admin()}
 <hr>
+<p class="lead">Site status:</p>
+<table class="table">
+	{if #debug#}<tr class="success"><th>Debug</th><td>Enabled</td></tr>
+	{else}<tr class="error"><th>Debug</th><td>Disabled</td></tr>
+	{/if}
+
+	{if #show_login#}<tr class="success"><th>Login</th><td>Enabled</td></tr>
+	{else}<tr class="error"><th>Login</th><td>Disabled</td></tr>
+	{/if}
+
+	{if #permalinks#}<tr class="success"><th>Permalinks</th><td>Enabled</td></tr>
+	{else}<tr class="error"><th>Permalinks</th><td>Disabled</td></tr>
+	{/if}
+</table>
+
+<hr>
 <p class="pull-right"><a href="index.php?page=articles">Edit pages</a></p>
 <p class="lead">Page stats:</p>
 <table class="table">
