@@ -10,6 +10,7 @@ function display_about($smarty) {
 	$article = $cms->get_about_article();
 	$smarty->assign('article', $article);
 	$smarty->assign('show_permalink', false);
+	$smarty->assign('show_author', false);
 	$smarty->display('article.tpl');
 }
 
@@ -63,6 +64,7 @@ function display_article($smarty) {
 
 	// build pager data
 	$smarty->assign('show_permalink', true);
+	$smarty->assign('show_author', true);
 	if ($cms->has_next($article))
 		$smarty->assign('next', $cms->next($article));
 	if ($cms->has_prev($article))
