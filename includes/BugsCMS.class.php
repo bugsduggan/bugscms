@@ -206,6 +206,10 @@ class BugsCMS {
 		return $s;
 	}
 
+	public function show_login() {
+		return $this->smarty->getConfigVars('show_login');
+	}
+
 	/* creates the BugsDB instance */
 	private function init_db() {
 		$db = new BugsDB(__DIR__.'/../'.$this->smarty->getConfigVars('db_name'));

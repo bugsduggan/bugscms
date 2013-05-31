@@ -86,7 +86,8 @@ $cms->register_page('events', 'display_events');
 $cms->register_page('events_dash', 'display_events_dash');
 $cms->register_page('home', 'display_article');
 $cms->register_page('login', 'display_login');
-$cms->register_page('register', 'display_register');
+if ($cms->show_login())
+	$cms->register_page('register', 'display_register');
 
 $cms->display();
 
