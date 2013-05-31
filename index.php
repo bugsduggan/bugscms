@@ -41,6 +41,10 @@ function display_events_dash($smarty) {
 	header('Location:admin/index.php?page=events_dash');
 }
 
+function display_events_dash($smarty) {
+	header('Location:admin/index.php?page=events_dash');
+}
+
 function display_article($smarty) {
 	global $cms;
 
@@ -84,6 +88,7 @@ $cms->register_page('articles', 'display_articles');
 $cms->register_page('edit_article', 'display_edit_article');
 $cms->register_page('events', 'display_events');
 $cms->register_page('events_dash', 'display_events_dash');
+$cms->register_page('users_dash', 'display_users_dash');
 $cms->register_page('home', 'display_article');
 $cms->register_page('login', 'display_login');
 if ($cms->show_login())
