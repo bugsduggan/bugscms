@@ -91,7 +91,7 @@ class BugsDB {
 	}
 
 	/* adds a user the the database and returns the user object */
-	public function add_user($username, $password, $email, $admin=false, $avatar="#") {
+	public function add_user($username, $password, $email, $admin=false, $avatar="http://placehold.it/100x100") {
 		// find the next id
 		$id = $this->next_id('users');
 
@@ -119,7 +119,7 @@ class BugsDB {
 		$avatar = $user->get_avatar();
 
 		// prepare statement
-		$stm = "INSERT OR REPLACE INTO users VALUES ($id, '$username', '$password', '$email', $status, $avatar)";	
+		$stm = "INSERT OR REPLACE INTO users VALUES ($id, '$username', '$password', '$email', $status, '$avatar')";	
 
 		// exec and return
 		$this->exec($stm);
