@@ -146,6 +146,14 @@ class BugsDB {
 		return new User($id, $username, $password, $email, $admin);
 	}
 
+	public function get_users() {
+		$users = array();
+		for ($i = 1; $i < $this->next_id('users'); $i++) {
+			array_push($users, $this->get_user($i));
+		}
+		return $users;
+	}
+
 	public function add_article($title, $body, $author, $status=ARTICLE_INACTIVE) {
 		$id = $this->next_id('articles');
 		$article = new Article($id, $title, $body, $author, $status);

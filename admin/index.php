@@ -26,12 +26,24 @@ function display_admin($smarty) {
 	}
 	$smarty->assign('published', $published);
 	$smarty->assign('unpublished', $unpublished);
-	$smarty->assign('total', $published + $unpublished);
+	$smarty->assign('total_articles', $published + $unpublished);
 
 	$events = $cms->get_events();
 	$smarty->assign('upcoming', count($events));
 	if (count($events) > 0)
 		$smarty->assign('next_event', $events[0]);
+
+	$admins = 0;
+	$users = 0;
+	foreach ($cms->get_users() as $u) {
+		if ($u->is_admin())
+			$admins++;
+		else
+			$users++;
+	}
+	$smarty->assign('admins', $admins);
+	$smarty->assign('users', $users);
+	$smarty->assign('total_users', $admins + $users);
 
 	$smarty->display('admin.tpl');
 }

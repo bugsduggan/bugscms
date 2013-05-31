@@ -15,7 +15,7 @@
 <table class="table">
 	<tr><th>Published pages:</th><td>{$published}</td></tr>
 	<tr><th>Hidden pages:</th><td>{$unpublished}</td></tr>
-	<tr><th>Total:</th><td>{$total}</td></tr>
+	<tr><th>Total:</th><td>{$total_articles}</td></tr>
 </table>
 
 <hr>
@@ -32,5 +32,14 @@
 		<td>{$next_event->get_date()|date_format:#time_format#}</td>
 	</tr>
 	{/if}
+</table>
+
+<hr>
+<p class="pull-right"><a href="index.php?page=users_dash">Manage users</a></p>
+<p class="lead">User stats:</p>
+<table class="table">
+	<tr><th>Admin users:</th><td>{$admins}</td></tr>
+	<tr><th>Users:</th><td>{$users}</td></tr>
+	<tr><th>Total:</th><td>{$total_users}</td></tr>
 </table>
 {/block}

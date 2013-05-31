@@ -109,6 +109,10 @@ class BugsCMS {
 		}
 	}
 
+	public function get_users() {
+		return $this->db->get_users();
+	}
+
 	public function get_article($id) {
 		$article = $this->db->get_article($id);
 		if ($article->get_status() == ARTICLE_DELETED)
