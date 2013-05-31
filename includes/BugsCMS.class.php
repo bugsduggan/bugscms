@@ -118,6 +118,10 @@ class BugsCMS {
 		}
 	}
 
+	public function get_user() {
+		return $this->db->get_user($_SESSION['BUGS_UID']);
+	}
+
 	public function get_users() {
 		return $this->db->get_users();
 	}

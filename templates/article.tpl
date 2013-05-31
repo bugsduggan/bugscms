@@ -26,7 +26,7 @@
 {if $show_permalink && #permalinks#}
 <p><a href="index.php?page=article&id={$article->get_id()}">Permalink</a></p>
 {/if}
-{if $logged_in}
+{if $logged_in && $user->is_admin()}
 <p><a href="index.php?page=edit_article&id={$article->get_id()}">Edit</a></p>
 {/if}
 {/block}

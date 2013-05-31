@@ -5,7 +5,7 @@
 *}
 
 {block name=rightpanel}
-{if $logged_in}
+{if $logged_in && $user->is_admin()}
 <p><a href="index.php?page=events_dash">Add/edit events</a></p>
 {/if}
 {/block}

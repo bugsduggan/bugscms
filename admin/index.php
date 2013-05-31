@@ -51,6 +51,8 @@ function display_admin($smarty) {
 /* single edit */
 function display_edit_article($smarty) {
 	global $cms;
+	if (!$cms->get_user()->is_admin())
+		throw new BugsCMSException('User not authorized');
 	$smarty->assign('page', 'edit');
 	if (isset($_GET['id'])) {
 		$article = $cms->get_article($_GET['id']);
@@ -65,6 +67,8 @@ function display_edit_article($smarty) {
 
 function display_edit_event($smarty) {
 	global $cms;
+	if (!$cms->get_user()->is_admin())
+		throw new BugsCMSException('User not authorized');
 	$smarty->assign('page', 'edit');
 	if (isset($_GET['id']))
 		$event = $cms->get_event($_GET['id']);
@@ -85,6 +89,8 @@ function display_events($smarty) {
 
 function display_events_dash($smarty) {
 	global $cms;
+	if (!$cms->get_user()->is_admin())
+		throw new BugsCMSException('User not authorized');
 	$smarty->assign('page', 'events admin');
 	$events = $cms->get_events();
 	$smarty->assign('events', $events);
@@ -94,6 +100,8 @@ function display_events_dash($smarty) {
 /* full list */
 function display_articles($smarty) {
 	global $cms;
+	if (!$cms->get_user()->is_admin())
+		throw new BugsCMSException('User not authorized');
 	$smarty->assign('page', 'pages');
 	$smarty->assign('articles', $cms->get_articles());
 	$smarty->display('articles.tpl');
@@ -108,6 +116,8 @@ function display_article($smarty) {
 
 function display_preview($smarty) {
 	global $cms;
+	if (!$cms->get_user()->is_admin())
+		throw new BugsCMSException('User not authorized');
 	$smarty->assign('page', 'preview');
 	$article = $cms->get_article($_GET['id']);
 	$smarty->assign('article', $article);
@@ -116,6 +126,8 @@ function display_preview($smarty) {
 
 function display_users_dash($smarty) {
 	global $cms;
+	if (!$cms->get_user()->is_admin())
+		throw new BugsCMSException('User not authorized');
 	$smarty->assign('page', 'users');
 	$users = $cms->get_users();
 	$smarty->assign('users', $users);
