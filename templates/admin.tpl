@@ -9,6 +9,7 @@
 <p class="lead">{$user->get_username()|capitalize}'s profile</p>
 <p>Email: <a href="mailto:{$user->get_email()}">{$user->get_email()}</a></p>
 
+{if $user->is_admin()}
 <hr>
 <p class="pull-right"><a href="index.php?page=articles">Edit pages</a></p>
 <p class="lead">Page stats:</p>
@@ -42,4 +43,5 @@
 	<tr><th>Users:</th><td>{$users}</td></tr>
 	<tr><th>Total:</th><td>{$total_users}</td></tr>
 </table>
+{/if}
 {/block}
