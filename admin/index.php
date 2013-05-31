@@ -111,6 +111,14 @@ function display_preview($smarty) {
 	$smarty->display('article.tpl');
 }
 
+function display_users_dash($smarty) {
+	global $cms;
+	$smarty->assign('page', 'users');
+	$users = $cms->get_users();
+	$smarty->assign('users', $users);
+	$smarty->display('users.tpl');
+}
+
 $cms->register_page('about', 'display_about');
 $cms->register_page('admin', 'display_admin');
 $cms->register_page('article', 'display_article');
@@ -122,6 +130,7 @@ $cms->register_page('events', 'display_events');
 $cms->register_page('events_dash', 'display_events_dash');
 $cms->register_page('home', 'display_article');
 $cms->register_page('preview', 'display_preview');
+$cms->register_page('users_dash', 'display_users_dash');
 
 $cms->display();
 
