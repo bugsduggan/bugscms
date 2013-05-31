@@ -1,7 +1,7 @@
 {extends "master.tpl"}
 
 {*
-	blank.tpl
+	login.tpl
 *}
 
 {block name=centerpanel}

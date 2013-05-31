@@ -39,11 +39,8 @@
 					</li>
 					{/if}
 					{if !$logged_in && #show_login#}
-					<form class="navbar-search" method="post" action="index.php?action=login">
-						<input class="search-query span2" type="text" id="username" name="username" placeholder="Username">
-						<input class="search-query span2" type="password" id="password" name="password" placeholder="Password">
-						<button type="submit" class="btn btn-primary">Login</button>
-					</form>
+					<li><a href="index.php?page=register">Register</a></li>
+					<li><a href="index.php?page=login">Login</a></li>
 					{/if}
 				</ul>
       </div><!--/.nav-collapse -->

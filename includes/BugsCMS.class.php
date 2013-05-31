@@ -58,6 +58,9 @@ class BugsCMS {
 			case 'logout':
 				$this->logout();
 				break;
+			case 'register':
+				$this->register();
+				break;
 			case 'update_event':
 				$this->update_event();
 				break;
@@ -255,6 +258,20 @@ class BugsCMS {
 	private function logout() {
 		session_destroy();
 		header('Location:index.php?page=home');
+	}
+
+	private function register() {
+		$username = $_POST['username'];
+		$email = $_POST['email'];
+		$password = $_POST['password'];
+		$confirm = $_POST['password2'];
+
+		if ($password == $confirm) {
+			$user = $this->db->add_user($username, $password, $email);
+			$this->auth($user);
+		}
+
+		header('Location:index.php');
 	}
 
 	private function update_event() {
