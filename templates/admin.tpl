@@ -8,7 +8,7 @@
 <div id="profile">
 	<p class="pull-right"><a href="index.php?page=edit_profile">Edit profile</a></p>
 	<p class="lead">{$user->get_username()|capitalize}'s profile</p>
-	<img style="float:left; margin: 10px; width:100px; height:100px;" src="{$user->get_avatar()}" alt="{$user->get_username()}'s avatar"></img>
+	<img class="img-polaroid" style="float:left; margin: 10px; width:100px; height:100px;" src="{$user->get_avatar()}" alt="{$user->get_username()}'s avatar"></img>
 	<p style="padding-top: 10px;">Email: <a href="mailto:{$user->get_email()}">{$user->get_email()}</a></p>
 </div>
 
