@@ -57,7 +57,7 @@ class BugsDB {
 
 		// create table statements
 		$statement = array(
-			"CREATE TABLE users (id INTEGER PRIMARY KEY, username TEXT NOT NULL, password TEXT NOT NULL, email TEXT NOT NULL, status INTEGER NOT NULL)",
+			"CREATE TABLE users (id INTEGER PRIMARY KEY, username TEXT NOT NULL, password TEXT NOT NULL, email TEXT NOT NULL, status INTEGER NOT NULL, avatar TEXT NOT NULL)",
 			"CREATE TABLE articles (id INTEGER PRIMARY KEY, title TEXT NOT NULL, body TEXT NOT NULL, status INTEGER NOT NULL, creation_date TEXT NOT NULL, author_id INTEGER NOT NULL, edit_date TEXT NOT NULL, editor_id INTEGER NOT NULL, FOREIGN KEY (author_id) REFERENCES users (id), FOREIGN KEY (editor_id) REFERENCES users (id))",
 			"CREATE TABLE events (id INTEGER PRIMARY KEY, location TEXT NOT NULL, date TEXT NOT NULL, comment TEXT, status INTEGER NOT NULL, lat REAL, lng REAL)"
 		);
@@ -91,7 +91,7 @@ class BugsDB {
 	}
 
 	/* adds a user the the database and returns the user object */
-	public function add_user($username, $password, $email, $admin=false) {
+	public function add_user($username, $password, $email, $admin=false, $avatar="#") {
 		// find the next id
 		$id = $this->next_id('users');
 
@@ -99,7 +99,7 @@ class BugsDB {
 		$password = sha1($password);
 
 		// create a user object
-		$user = new User($id, $username, $password, $email, $admin);
+		$user = new User($id, $username, $password, $email, $admin, $avatar);
 		
 		// update the database and return
 		return $this->update_user($user);
@@ -116,9 +116,10 @@ class BugsDB {
 			$status = 1;
 		else
 			$status = 0;
+		$avatar = $user->get_avatar();
 
 		// prepare statement
-		$stm = "INSERT OR REPLACE INTO users VALUES ($id, '$username', '$password', '$email', $status)";	
+		$stm = "INSERT OR REPLACE INTO users VALUES ($id, '$username', '$password', '$email', $status, $avatar)";	
 
 		// exec and return
 		$this->exec($stm);
@@ -144,9 +145,10 @@ class BugsDB {
 			$admin = true;
 		else
 			$admin = false;
+		$avatar = $result['avatar'];
 
 		// create and return object
-		return new User($id, $username, $password, $email, $admin);
+		return new User($id, $username, $password, $email, $admin, $avatar);
 	}
 
 	public function get_users() {
