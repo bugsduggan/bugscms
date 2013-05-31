@@ -44,6 +44,10 @@ class User {
 		return $this->admin;
 	}
 
+	public function set_admin($admin) {
+		$this->admin = $admin;
+	}
+
 }
 
 ?>

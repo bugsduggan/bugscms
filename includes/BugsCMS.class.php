@@ -61,6 +61,12 @@ class BugsCMS {
 			case 'register':
 				$this->register();
 				break;
+			case 'promote_user':
+				$this->promote_user();
+				break;
+			case 'demote_user':
+				$this->demote_user();
+				break;
 			case 'update_event':
 				$this->update_event();
 				break;
@@ -280,6 +286,22 @@ class BugsCMS {
 		}
 
 		header('Location:index.php');
+	}
+
+	private function promote_user() {
+		$id = $_GET['id'];
+		$user = $this->db->get_user($id);
+		$user->set_admin(true);
+		$this->db->update_user($user);
+		header('Location:index.php?page=users_dash');
+	}
+
+	private function demote_user() {
+		$id = $_GET['id'];
+		$user = $this->db->get_user($id);
+		$user->set_admin(false);
+		$this->db->update_user($user);
+		header('Location:index.php?page=users_dash');
 	}
 
 	private function update_event() {
