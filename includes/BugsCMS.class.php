@@ -70,8 +70,11 @@ class BugsCMS {
 			case 'update_event':
 				$this->update_event();
 				break;
-			case 'update_page':
-				$this->update_page();
+			case 'create_article':
+				$this->create_article();
+				break;
+			case 'update_article':
+				$this->update_article();
 				break;
 			case 'update_profile':
 				$this->update_profile();
@@ -136,7 +139,7 @@ class BugsCMS {
 	public function get_new_article() {
 		$id = $this->db->get_next_article_id();
 		$user = $this->db->get_user($_SESSION['BUGS_UID']);
-		return new Article($id, 'Title', htmlspecialchars('<p>Put your content here</p>'), $user, DEFAULT_ARTICLE_STATUS);
+		return new Article($id, 'Title', htmlspecialchars('<p>Put your content here</p>'), DEFAULT_ARTICLE_STATUS, date(DATE_FORMAT, time), $user, date(DATE_FORMAT, time), $user);
 	}
 
 	public function get_top_article() {
@@ -327,13 +330,30 @@ class BugsCMS {
 		header('Location:index.php?page=events');
 	}
 
-	private function update_page() {
+	private function update_article() {
 		$id = $_POST['id'];
 		$title = htmlspecialchars($_POST['title']);
 		$body = htmlspecialchars($_POST['body']);
-		$author = $this->db->get_user($_SESSION['BUGS_UID']);
 		$status = $_POST['status'];
-		$article = new Article($id, $title, $body, $author, $status);
+		$creation_date = $_POST['creation_date'];
+		$author = $this->db->get_user($_POST['author_id']);
+		$edit_date = date(DATE_FORMAT, time());
+		$editor = $this->db->get_user($_SESSION['BUGS_UID']);
+
+		$article = new Article($id, $title, $body, $status, $creation_date, $author, $edit_date, $editor);
+		$this->db->update_article($article);
+		header('Location:index.php?page=article&id='.$id);
+	}
+
+	private function create_article() {
+		$id = $_POST['id'];
+		$title = htmlspecialchars($_POST['title']);
+		$body = htmlspecialchars($_POST['body']);
+		$status = $_POST['status'];
+		$creation_date = date(DATE_FORMAT, time);
+		$author = $this->db->get_user($_SESSION['BUGS_UID']);
+
+		$article = new Article($id, $title, $body, $status, $creation_date, $author, $creation_date, $author);
 		$this->db->update_article($article);
 		header('Location:index.php?page=article&id='.$id);
 	}

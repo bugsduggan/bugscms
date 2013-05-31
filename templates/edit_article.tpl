@@ -10,10 +10,16 @@
 		<h1>{$page|capitalize}</h1>
 	</div>
 
-	<form class="form-horizontal" method="post" action="index.php?action=update_page">
+	{if $create_new}
+	<form class="form-horizontal" method="post" action="index.php?action=create_article">
+	{else}
+	<form class="form-horizontal" method="post" action="index.php?action=update_article">
+	{/if}
 	
 		<input type="hidden" name="id" value="{$article->get_id()}">
 		<input type="hidden" name="status" value="{$article->get_status()}">
+		<input type="hidden" name="creation_date" value="{$article->get_creation_date()}">
+		<input type="hidden" name="author_id" value="{$article->get_author()->get_id()}">
 
 		<div class="control-group">
 			<label class="control-label" for="title">Title</label>
