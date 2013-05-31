@@ -41,8 +41,8 @@ function display_events_dash($smarty) {
 	header('Location:admin/index.php?page=events_dash');
 }
 
-function display_events_dash($smarty) {
-	header('Location:admin/index.php?page=events_dash');
+function display_users_dash($smarty) {
+	header('Location:admin/index.php?page=users_dash');
 }
 
 function display_article($smarty) {
