@@ -32,9 +32,10 @@
 					<li class="dropdown">
 						<a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon-cog icon-white"></i></a>
 						<ul class="dropdown-menu">
-							<li><a href="index.php?page=admin"><i class="icon-user"></i> Profile</a></li>
+							<li><a href="index.php?page=admin"><i class="icon-list"></i> Profile</a></li>
 							<li><a href="index.php?page=articles"><i class="icon-book"></i> Pages</a></li>
 							<li><a href="index.php?page=events_dash"><i class="icon-bullhorn"></i> Events</a></li>
+							<li><a href="index.php?page=users_dash"><i class="icon-user"></i> Users</a></li>
 						</ul>
 					</li>
 					{/if}
