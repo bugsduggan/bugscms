@@ -282,17 +282,25 @@ class BugsCMS {
 	}
 
 	private function register() {
+		$error = false;
 		$username = $_POST['username'];
 		$email = $_POST['email'];
 		$password = $_POST['password'];
 		$confirm = $_POST['password2'];
 
-		if ($password == $confirm) {
-			$user = $this->db->add_user($username, $password, $email);
-			$this->auth($user);
-		}
+		if($this->db->user_exists($username, $email) > 0) 
+			$error = true;
+		
+		if($error) {
+			header('Location:index.php?page=register');
+		} else {
+			if ($password == $confirm) {
+				$user = $this->db->add_user($username, $password, $email);
+				$this->auth($user);
+			}
 
-		header('Location:index.php');
+			header('Location:index.php');
+		} 
 	}
 
 	private function promote_user() {

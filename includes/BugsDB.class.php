@@ -159,6 +159,12 @@ class BugsDB {
 		return $users;
 	}
 
+	public function user_exists($username, $email) {
+		$count = $this->query_single("SELECT COUNT(*) FROM users WHERE username = '{$username}' OR email = '{$email}'");
+		$count = $count['COUNT(*)'];
+		return $count > 0;
+	}
+
 	public function add_article($title, $body, $status=ARTICLE_INACTIVE, $creation_date, $author, $edit_date, $editor) {
 		$id = $this->next_id('articles');
 		$article = new Article($id, $title, $body, $status, $creation_date, $author, $edit_date, $editor);
