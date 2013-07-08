@@ -288,9 +288,9 @@ class BugsCMS {
 		$password = $_POST['password'];
 		$confirm = $_POST['password2'];
 
-		if($this->db->user_exists($username, $email) > 0) 
+		if($this->db->user_exists($username, $email))
 			$error = true;
-		
+
 		if($error) {
 			header('Location:index.php?page=register');
 		} else {
@@ -300,7 +300,7 @@ class BugsCMS {
 			}
 
 			header('Location:index.php');
-		} 
+		}
 	}
 
 	private function promote_user() {
