@@ -25,3 +25,11 @@ Configuration options (such as the site name) are kept in `config/bugscms.conf`.
 There are two files, `css/style.css` and `admin/css/style.css` which override the basic stylesheets for the public and
 admin parts of the site respectively. There is also `admin/css/tinymce.css` which controls the style of the TinyMCE
 controlled textareas.
+
+Contributing
+============
+
+Contributions are always welcome, just fork this repo, make your changes and
+issue a pull request.
+
+Contributors are encouraged to join #bugscms on freenode.
