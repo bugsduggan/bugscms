@@ -2,13 +2,13 @@ Installation instructions
 =========================
 
 ```
-git clone git@github.com:bugsduggan/bugs_cms.git
-mkdir bugs_cms/templates_c
-mkdir bugs_cms/cache
-chmod 775 bugs_cms/templates_c
-chmod 775 bugs_cms/cache
-chown -R <you>:<webuser> bugs_cms
-chmod 775 bugs_cms
+git clone git@github.com:bugsduggan/bugscms.git
+mkdir bugscms/templates_c
+mkdir bugscms/cache
+chmod 775 bugscms/templates_c
+chmod 775 bugscms/cache
+chown -R <you>:<webuser> bugscms
+chmod 775 bugscms
 ```
 
 You'll then want to navigate to the site. Your initial login will be 'admin' and 'password', you are strongly encouraged
